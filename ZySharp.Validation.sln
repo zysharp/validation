@@ -1,0 +1,42 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.30907.101
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ZySharp.Validation", "ZySharp.Validation\ZySharp.Validation.csproj", "{2396A734-2273-4285-A7A3-2C7F89CEC057}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{0061F8B5-AEA1-472D-BFF0-93C96DB2B7F0}"
+	ProjectSection(SolutionItems) = preProject
+		.editorconfig = .editorconfig
+	EndProjectSection
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ZySharp.Validation.Tests", "ZySharp.Validation.Tests\ZySharp.Validation.Tests.csproj", "{D608FB0E-B1A2-4090-A88B-05B0E1057972}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ZySharp.Validation.Examples", "ZySharp.Validation.Examples\ZySharp.Validation.Examples.csproj", "{EF00B73C-11C6-482F-B8B7-951356AE8D75}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{2396A734-2273-4285-A7A3-2C7F89CEC057}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{2396A734-2273-4285-A7A3-2C7F89CEC057}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{2396A734-2273-4285-A7A3-2C7F89CEC057}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{2396A734-2273-4285-A7A3-2C7F89CEC057}.Release|Any CPU.Build.0 = Release|Any CPU
+		{D608FB0E-B1A2-4090-A88B-05B0E1057972}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{D608FB0E-B1A2-4090-A88B-05B0E1057972}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{D608FB0E-B1A2-4090-A88B-05B0E1057972}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{D608FB0E-B1A2-4090-A88B-05B0E1057972}.Release|Any CPU.Build.0 = Release|Any CPU
+		{EF00B73C-11C6-482F-B8B7-951356AE8D75}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{EF00B73C-11C6-482F-B8B7-951356AE8D75}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{EF00B73C-11C6-482F-B8B7-951356AE8D75}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{EF00B73C-11C6-482F-B8B7-951356AE8D75}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {9167BEDF-028B-4EE5-A71A-BECF5DBD8C87}
+	EndGlobalSection
+EndGlobal

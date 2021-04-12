@@ -1,0 +1,34 @@
+name: GitHub Actions
+
+on:
+  push:
+    branches:
+      - master
+  pull_request:
+    types: [closed]
+    branches:
+      - master
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    name: GitHub Actions CI/CD
+    steps:
+
+      - name: Checkout
+        uses: actions/checkout@v2
+
+      - name: Setup .NET Core
+        uses: actions/setup-dotnet@v1       
+          
+      - name: Install dependencies
+        run: dotnet restore
+
+      - name: Test
+        run: dotnet test --no-restore
+
+      - name: Generate NuGet packages
+        run: dotnet pack --configuration Release --no-restore -o out
+
+      - name: Publish to NuGet
+        run: dotnet nuget push out/*.nupkg -k ${{secrets.NUGET_API_KEY}} -s https://api.nuget.org/v3/index.json --skip-duplicate
