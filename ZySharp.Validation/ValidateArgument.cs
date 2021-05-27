@@ -10,6 +10,9 @@ using JetBrains.Annotations;
 
 namespace ZySharp.Validation
 {
+    /// <summary>
+    /// Provides various methods for basic argument validation.
+    /// </summary>
     public static class ValidateArgument
     {
         #region Selector Methods

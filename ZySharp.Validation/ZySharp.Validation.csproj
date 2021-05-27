@@ -5,13 +5,14 @@
     <IsPackable>true</IsPackable>
     <IncludeSymbols>true</IncludeSymbols>
     <SymbolPackageFormat>snupkg</SymbolPackageFormat>
+    <GenerateDocumentationFile>true</GenerateDocumentationFile>
     <PackageId>ZySharp.Validation</PackageId>
-    <Version>1.0.3</Version>
+    <Version>1.0.4</Version>
     <Authors>Florian Bernd</Authors>
     <Company />
     <Copyright />
     <PackageLicenseFile>LICENSE</PackageLicenseFile>
-    <PackageProjectUrl></PackageProjectUrl>
+    <PackageProjectUrl>https://github.com/flobernd/zysharp-validation</PackageProjectUrl>
     <RepositoryUrl>https://github.com/flobernd/zysharp-validation</RepositoryUrl>
     <RepositoryType>Git</RepositoryType>
     <GeneratePackageOnBuild>false</GeneratePackageOnBuild>
