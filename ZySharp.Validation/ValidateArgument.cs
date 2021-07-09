@@ -150,6 +150,40 @@ namespace ZySharp.Validation
             return validator;
         }
 
+        /// <summary>
+        /// Selects an enumerable property for validation.
+        /// </summary>
+        /// <typeparam name="T">The type of the current value.</typeparam>
+        /// <typeparam name="TNext">The type of the selected property.</typeparam>
+        /// <param name="validator">The current validator context.</param>
+        /// <param name="selector">
+        ///     The property selector expression.
+        ///     <para>
+        ///         The expression must be a `MemberExpression` (e.g. `x => x.Property`) or a `ParameterExpression`
+        ///         to select the current value (e.g. `x => x`).
+        ///     </para>
+        /// </param>
+        /// <param name="action">The action to perform for the selected enumerable property.</param>
+        /// <returns>The unmodified validator context.</returns>
+        public static IValidatorContext<T> AsEnumerable<T, TNext>(this IValidatorContext<T> validator,
+            Expression<Func<T, IEnumerable<TNext>>> selector, Action<IValidatorContext<IEnumerable<TNext>>> action)
+            where T : class
+        {
+            ValidationInternals.ValidateNotNull(validator, nameof(validator));
+            ValidationInternals.ValidateNotNull(selector, nameof(selector));
+            ValidationInternals.ValidateNotNull(action, nameof(action));
+
+            var name = (selector.Body is ParameterExpression)
+                ? null
+                : ValidationInternals.GetPropertyName(selector);
+            var value = selector.Compile().Invoke(validator.Value);
+
+            var context = new ValidatorContext<IEnumerable<TNext>>(value, validator.Path, name);
+            action.Invoke(context);
+
+            return validator;
+        }
+
         #endregion Selector Methods
 
         #region Validation: Basic
@@ -555,6 +589,62 @@ namespace ZySharp.Validation
         }
 
         #endregion Validation: Ranges
+
+        #region Validation: IEnumerable
+
+        /// <summary>
+        /// Throws if the enumerable contains no elements.
+        /// </summary>
+        /// <typeparam name="TValue">The type of the enumerable elements.</typeparam>  
+        /// <param name="validator">The current validator context.</param>
+        /// <returns>The unmodified validator context.</returns>
+        public static IValidatorContext<IEnumerable<TValue>> NotEmpty<TValue>(
+            this IValidatorContext<IEnumerable<TValue>> validator)
+        {
+            ValidationInternals.ValidateNotNull(validator, nameof(validator));
+
+            if (!validator.Value.Any())
+            {
+                throw new ArgumentException(string.Format(CultureInfo.InvariantCulture,
+                        Resources.ArgumentMustNotBeEmpty, ValidationInternals.FormatName(validator.Path, null)),
+                    validator.Path.First());
+            }
+
+            return validator;
+        }
+
+        /// <summary>
+        /// Throws if the enumerable contains duplicate values.
+        /// </summary>
+        /// <typeparam name="TValue">The type of the enumerable elements.</typeparam>
+        /// <typeparam name="TKey">The type of the enumerable element keys.</typeparam>
+        /// <param name="validator">The current validator context.</param>
+        /// <param name="keySelector">The key selector.</param>
+        /// <returns>The unmodified validator context.</returns>
+        public static IValidatorContext<IEnumerable<TValue>> Distinct<TValue, TKey>(
+            this IValidatorContext<IEnumerable<TValue>> validator, Func<TValue, TKey> keySelector)
+        {
+            ValidationInternals.ValidateNotNull(validator, nameof(validator));
+            ValidationInternals.ValidateNotNull(keySelector, nameof(keySelector));
+
+            var duplicates = validator.Value
+                .GroupBy(keySelector)
+                .Where(x => (x.Count() != 1))
+                .Select(x => x.Key)
+                .ToList();
+
+            if (duplicates.Any())
+            {
+                throw new ArgumentException(string.Format(CultureInfo.InvariantCulture,
+                        Resources.EnumerableMustBeDistinct, ValidationInternals.FormatName(validator.Path, null),
+                        string.Join(", ", duplicates.Select(x => $"'{x}'").ToList())),
+                    validator.Path.First());
+            }
+
+            return validator;
+        }
+
+        #endregion Validation: IEnumerable
 
         #region Validation: Stream
 

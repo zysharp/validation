@@ -156,6 +156,9 @@
   <data name="ArgumentMustNotBeValue" xml:space="preserve">
     <value>The argument '{0}' must not be '{1}'.</value>
   </data>
+  <data name="EnumerableMustBeDistinct" xml:space="preserve">
+    <value>The argument '{0}' must contain only distinct values. Duplicate keys: [{1}].</value>
+  </data>
   <data name="ExpressionMustBeMemberExpression" xml:space="preserve">
     <value>Expression '{0}' must be a member-expression.</value>
   </data>

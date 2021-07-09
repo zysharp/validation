@@ -178,6 +178,15 @@ namespace ZySharp.Validation {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to The argument &apos;{0}&apos; must contain only distinct values. Duplicate keys: [{1}]..
+        /// </summary>
+        internal static string EnumerableMustBeDistinct {
+            get {
+                return ResourceManager.GetString("EnumerableMustBeDistinct", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Expression &apos;{0}&apos; must be a member-expression..
         /// </summary>
         internal static string ExpressionMustBeMemberExpression {
