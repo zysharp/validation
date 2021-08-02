@@ -398,7 +398,7 @@ namespace ZySharp.Validation
         public static IValidatorContext<T?> NotEqual<T>(this IValidatorContext<T?> validator, T value)
             where T : struct
         {
-            return validator.When(x => x.HasValue, v => v.Select(x => x.Value, v => v.Equal(value)));
+            return validator.When(x => x.HasValue, v => v.Select(x => x.Value, v => v.NotEqual(value)));
         }
 
         /// <summary>
@@ -427,7 +427,7 @@ namespace ZySharp.Validation
         public static IValidatorContext<T?> NotEqual<T>(this IValidatorContext<T?> validator, params T[] values)
             where T : struct
         {
-            return validator.When(x => x.HasValue, v => v.Select(x => x.Value, v => v.Equal(values)));
+            return validator.When(x => x.HasValue, v => v.Select(x => x.Value, v => v.NotEqual(values)));
         }
 
         #endregion Validation: Equality
