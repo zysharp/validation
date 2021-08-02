@@ -24,7 +24,7 @@ namespace ZySharp.Validation
         /// <param name="value">The value of the argument to validate.</param>
         /// <param name="name">The name of the argument to validate.</param>
         /// <returns>A validator context for the given argument.</returns>
-        public static IValidatorContext<T> For<T>([ValidatedNotNull][NoEnumeration]T value, string name)
+        public static IValidatorContext<T> For<T>([ValidatedNotNull][NoEnumeration] T value, string name)
         {
             ValidationInternals.ValidateNotNull(name, nameof(name));
 
@@ -595,7 +595,7 @@ namespace ZySharp.Validation
         /// <summary>
         /// Throws if the enumerable contains no elements.
         /// </summary>
-        /// <typeparam name="TValue">The type of the enumerable elements.</typeparam>  
+        /// <typeparam name="TValue">The type of the enumerable elements.</typeparam>
         /// <param name="validator">The current validator context.</param>
         /// <returns>The unmodified validator context.</returns>
         public static IValidatorContext<IEnumerable<TValue>> NotEmpty<TValue>(
@@ -621,7 +621,7 @@ namespace ZySharp.Validation
         /// <param name="validator">The current validator context.</param>
         /// <param name="keySelector">The key selector.</param>
         /// <returns>The unmodified validator context.</returns>
-        public static IValidatorContext<IEnumerable<TValue>> Distinct<TValue, TKey>(
+        public static IValidatorContext<IEnumerable<TValue>> HasDistinctElements<TValue, TKey>(
             this IValidatorContext<IEnumerable<TValue>> validator, Func<TValue, TKey> keySelector)
         {
             ValidationInternals.ValidateNotNull(validator, nameof(validator));
@@ -654,7 +654,7 @@ namespace ZySharp.Validation
         /// <typeparam name="T">The type of the current value.</typeparam>
         /// <param name="validator">The current validator context.</param>
         /// <returns>The unmodified validator context.</returns>
-        public static IValidatorContext<T> Readable<T>(this IValidatorContext<T> validator)
+        public static IValidatorContext<T> IsReadable<T>(this IValidatorContext<T> validator)
             where T : Stream
         {
             ValidationInternals.ValidateNotNull(validator, nameof(validator));
@@ -675,7 +675,7 @@ namespace ZySharp.Validation
         /// <typeparam name="T">The type of the current value.</typeparam>
         /// <param name="validator">The current validator context.</param>
         /// <returns>The unmodified validator context.</returns>
-        public static IValidatorContext<T> Writeable<T>(this IValidatorContext<T> validator)
+        public static IValidatorContext<T> IsWritable<T>(this IValidatorContext<T> validator)
             where T : Stream
         {
             ValidationInternals.ValidateNotNull(validator, nameof(validator));
@@ -696,7 +696,7 @@ namespace ZySharp.Validation
         /// <typeparam name="T">The type of the current value.</typeparam>
         /// <param name="validator">The current validator context.</param>
         /// <returns>The unmodified validator context.</returns>
-        public static IValidatorContext<T> Seekable<T>(this IValidatorContext<T> validator)
+        public static IValidatorContext<T> IsSeekable<T>(this IValidatorContext<T> validator)
             where T : Stream
         {
             ValidationInternals.ValidateNotNull(validator, nameof(validator));
@@ -721,7 +721,7 @@ namespace ZySharp.Validation
         /// <typeparam name="T">The type of the current value.</typeparam>
         /// <param name="validator">The current validator context.</param>
         /// <returns>The unmodified validator context.</returns>
-        public static IValidatorContext<T> Absolute<T>(this IValidatorContext<T> validator)
+        public static IValidatorContext<T> IsAbsolute<T>(this IValidatorContext<T> validator)
             where T : Uri
         {
             ValidationInternals.ValidateNotNull(validator, nameof(validator));
