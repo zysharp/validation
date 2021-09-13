@@ -355,6 +355,7 @@ namespace ZySharp.Validation
         public static IValidatorContext<T> Equal<T>(this IValidatorContext<T> validator, params T[] values)
         {
             ValidationInternals.ValidateNotNull(validator, nameof(validator));
+            ValidationInternals.ValidateNotNull(values, nameof(values));
 
             var isValidValue = values.Any(x => EqualityComparer<T>.Default.Equals(validator.Value, x));
             if (!isValidValue)
@@ -411,9 +412,10 @@ namespace ZySharp.Validation
         public static IValidatorContext<T> NotEqual<T>(this IValidatorContext<T> validator, params T[] values)
         {
             ValidationInternals.ValidateNotNull(validator, nameof(validator));
+            ValidationInternals.ValidateNotNull(values, nameof(values));
 
-            var isValidValue = values.All(x => !EqualityComparer<T>.Default.Equals(validator.Value, x));
-            if (!isValidValue)
+            var isInvalidValue = values.Any(x => EqualityComparer<T>.Default.Equals(validator.Value, x));
+            if (isInvalidValue)
             {
                 throw new ArgumentNullException(validator.Path.First(), string.Format(CultureInfo.InvariantCulture,
                     Resources.ArgumentMustNotBeOneOf, ValidationInternals.FormatName(validator.Path, null),
@@ -589,6 +591,104 @@ namespace ZySharp.Validation
         }
 
         #endregion Validation: Ranges
+
+        #region Validation: Runtime Type
+
+        /// <summary>
+        /// Throws if the type of the current value is not equal to the expected type.
+        /// </summary>
+        /// <typeparam name="T">The type of the current value.</typeparam>
+        /// <param name="validator">The current validator context.</param>
+        /// <param name="type">The expected type.</param>
+        /// <returns>The unmodified validator context.</returns>
+        public static IValidatorContext<T> HasType<T>(this IValidatorContext<T> validator, Type type)
+            where T : class
+        {
+            ValidationInternals.ValidateNotNull(validator, nameof(validator));
+            ValidationInternals.ValidateNotNull(type, nameof(type));
+
+            if (validator.Value?.GetType() != type)
+            {
+                throw new ArgumentNullException(validator.Path.First(), string.Format(CultureInfo.InvariantCulture,
+                    Resources.ArgumentMustBeOfType, ValidationInternals.FormatName(validator.Path, null),
+                    type.FullName));
+            }
+
+            return validator;
+        }
+
+        /// <summary>
+        /// Throws if the type of the current value is not equal to one of the allowed types.
+        /// </summary>
+        /// <typeparam name="T">The type of the current value.</typeparam>
+        /// <param name="validator">The current validator context.</param>
+        /// <param name="types">The allowed types.</param>
+        /// <returns>The unmodified validator context.</returns>
+        public static IValidatorContext<T> HasType<T>(this IValidatorContext<T> validator, params Type[] types)
+        {
+            ValidationInternals.ValidateNotNull(validator, nameof(validator));
+            ValidationInternals.ValidateNotNull(types, nameof(types));
+
+            var type = validator.Value?.GetType();
+            var isValidValue = types.Any(x => (type == x));
+            if (!isValidValue)
+            {
+                throw new ArgumentNullException(validator.Path.First(), string.Format(CultureInfo.InvariantCulture,
+                    Resources.ArgumentMustBeOfTypes, ValidationInternals.FormatName(validator.Path, null),
+                    string.Join(", ", types.Select(x => $"'{x?.FullName ?? "null"}'").ToList())));
+            }
+
+            return validator;
+        }
+
+        /// <summary>
+        /// Throws if the type of the current value is equal to the blacklisted type.
+        /// </summary>
+        /// <typeparam name="T">The type of the current value.</typeparam>
+        /// <param name="validator">The current validator context.</param>
+        /// <param name="type">The blacklisted type.</param>
+        /// <returns>The unmodified validator context.</returns>
+        public static IValidatorContext<T> NotHasType<T>(this IValidatorContext<T> validator, Type type)
+            where T : class
+        {
+            ValidationInternals.ValidateNotNull(validator, nameof(validator));
+            ValidationInternals.ValidateNotNull(type, nameof(type));
+
+            if (validator.Value?.GetType() == type)
+            {
+                throw new ArgumentNullException(validator.Path.First(), string.Format(CultureInfo.InvariantCulture,
+                    Resources.ArgumentMustNotBeOfType, ValidationInternals.FormatName(validator.Path, null),
+                    type.FullName));
+            }
+
+            return validator;
+        }
+
+        /// <summary>
+        /// Throws if the type of the current value is equal to one of the blacklisted types.
+        /// </summary>
+        /// <typeparam name="T">The type of the current value.</typeparam>
+        /// <param name="validator">The current validator context.</param>
+        /// <param name="types">The blacklisted types.</param>
+        /// <returns>The unmodified validator context.</returns>
+        public static IValidatorContext<T> NotHasType<T>(this IValidatorContext<T> validator, params Type[] types)
+        {
+            ValidationInternals.ValidateNotNull(validator, nameof(validator));
+            ValidationInternals.ValidateNotNull(types, nameof(types));
+
+            var type = validator.Value?.GetType();
+            var isInvalidValue = types.Any(x => (type == x));
+            if (isInvalidValue)
+            {
+                throw new ArgumentNullException(validator.Path.First(), string.Format(CultureInfo.InvariantCulture,
+                    Resources.ArgumentMustNotBeOfTypes, ValidationInternals.FormatName(validator.Path, null),
+                    string.Join(", ", types.Select(x => $"'{x?.FullName ?? "null"}'").ToList())));
+            }
+
+            return validator;
+        }
+
+        #endregion Validation: Runtime Type
 
         #region Validation: IEnumerable
 

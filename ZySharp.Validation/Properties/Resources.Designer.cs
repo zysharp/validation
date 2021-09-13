@@ -106,6 +106,24 @@ namespace ZySharp.Validation {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to The argument &apos;{0}&apos; must be of type &apos;{1}&apos;..
+        /// </summary>
+        internal static string ArgumentMustBeOfType {
+            get {
+                return ResourceManager.GetString("ArgumentMustBeOfType", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to The argument &apos;{0}&apos; must be of type [{1}]..
+        /// </summary>
+        internal static string ArgumentMustBeOfTypes {
+            get {
+                return ResourceManager.GetString("ArgumentMustBeOfTypes", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to The argument &apos;{0}&apos; must be one of [{1}]..
         /// </summary>
         internal static string ArgumentMustBeOneOf {
@@ -156,6 +174,24 @@ namespace ZySharp.Validation {
         internal static string ArgumentMustNotBeNullOrWhitespace {
             get {
                 return ResourceManager.GetString("ArgumentMustNotBeNullOrWhitespace", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to The argument &apos;{0}&apos; must not be of type &apos;{1}&apos;..
+        /// </summary>
+        internal static string ArgumentMustNotBeOfType {
+            get {
+                return ResourceManager.GetString("ArgumentMustNotBeOfType", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to The argument &apos;{0}&apos; must not be of type [{1}]..
+        /// </summary>
+        internal static string ArgumentMustNotBeOfTypes {
+            get {
+                return ResourceManager.GetString("ArgumentMustNotBeOfTypes", resourceCulture);
             }
         }
         

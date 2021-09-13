@@ -9,7 +9,7 @@ namespace ZySharp.Validation
 {
     internal static class ValidationInternals
     {
-        public static void ValidateNotNull<T>(T value, string name)
+        public static void ValidateNotNull<T>([ValidatedNotNull] T value, string name)
             where T : class
         {
             if (value is null)

@@ -132,6 +132,12 @@
   <data name="ArgumentMustBeLessThanOrEqualTo" xml:space="preserve">
     <value>The argument '{0}' must be less than or equal to '{1}'.</value>
   </data>
+  <data name="ArgumentMustBeOfType" xml:space="preserve">
+    <value>The argument '{0}' must be of type '{1}'.</value>
+  </data>
+  <data name="ArgumentMustBeOfTypes" xml:space="preserve">
+    <value>The argument '{0}' must be of type [{1}].</value>
+  </data>
   <data name="ArgumentMustBeOneOf" xml:space="preserve">
     <value>The argument '{0}' must be one of [{1}].</value>
   </data>
@@ -149,6 +155,12 @@
   </data>
   <data name="ArgumentMustNotBeNullOrWhitespace" xml:space="preserve">
     <value>The argument '{0}' must not be 'null' or whitespace.</value>
+  </data>
+  <data name="ArgumentMustNotBeOfType" xml:space="preserve">
+    <value>The argument '{0}' must not be of type '{1}'.</value>
+  </data>
+  <data name="ArgumentMustNotBeOfTypes" xml:space="preserve">
+    <value>The argument '{0}' must not be of type [{1}].</value>
   </data>
   <data name="ArgumentMustNotBeOneOf" xml:space="preserve">
     <value>The argument '{0}' must not be one of [{1}].</value>
