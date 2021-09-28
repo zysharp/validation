@@ -61,6 +61,24 @@ namespace ZySharp.Validation {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to The type of argument &apos;{0}&apos; must be derived from &apos;{1}&apos;..
+        /// </summary>
+        internal static string ArgumentMustBeDerivedFromType {
+            get {
+                return ResourceManager.GetString("ArgumentMustBeDerivedFromType", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to The type of argument &apos;{0}&apos; must be derived from [{1}]..
+        /// </summary>
+        internal static string ArgumentMustBeDerivedFromTypes {
+            get {
+                return ResourceManager.GetString("ArgumentMustBeDerivedFromTypes", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to The argument &apos;{0}&apos; must be greater than &apos;{1}&apos;..
         /// </summary>
         internal static string ArgumentMustBeGreaterThan {
@@ -138,6 +156,24 @@ namespace ZySharp.Validation {
         internal static string ArgumentMustBeValue {
             get {
                 return ResourceManager.GetString("ArgumentMustBeValue", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to The type of argument &apos;{0}&apos; must not be derived from &apos;{1}&apos;..
+        /// </summary>
+        internal static string ArgumentMustNotBeDerivedFromType {
+            get {
+                return ResourceManager.GetString("ArgumentMustNotBeDerivedFromType", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to The type of argument &apos;{0}&apos; must not be derived from [{1}]..
+        /// </summary>
+        internal static string ArgumentMustNotBeDerivedFromTypes {
+            get {
+                return ResourceManager.GetString("ArgumentMustNotBeDerivedFromTypes", resourceCulture);
             }
         }
         
