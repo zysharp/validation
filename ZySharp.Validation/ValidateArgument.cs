@@ -251,6 +251,24 @@ namespace ZySharp.Validation
             return validator.When(x => x.HasValue, v => v.Select(x => x.Value, v => v.NotEmpty()));
         }
 
+        /// <inheritdoc cref="NotEmpty{T}(ZySharp.Validation.IValidatorContext{T})"/>
+        public static IValidatorContext<string> NotEmpty(this IValidatorContext<string> validator)
+        {
+            // String implements `IEnumerable<char>`. We have to create this specialized overload
+            // to prevent the wrong method from begin used.
+
+            ValidationInternals.ValidateNotNull(validator, nameof(validator));
+
+            if ((validator.Value is not null) && (validator.Value.Length == 0))
+            {
+                throw new ArgumentException(string.Format(CultureInfo.InvariantCulture,
+                        Resources.ArgumentMustNotBeEmpty, ValidationInternals.FormatName(validator.Path, null)),
+                    validator.Path.First());
+            }
+
+            return validator;
+        }
+
         /// <summary>
         /// Throws if the current value is `null` or empty (contains the default value of the current type).
         /// <para>
@@ -797,6 +815,11 @@ namespace ZySharp.Validation
         {
             ValidationInternals.ValidateNotNull(validator, nameof(validator));
 
+            if (validator.Value is null)
+            {
+                return validator;
+            }
+
             if (!validator.Value.Any())
             {
                 throw new ArgumentException(string.Format(CultureInfo.InvariantCulture,
@@ -820,6 +843,11 @@ namespace ZySharp.Validation
         {
             ValidationInternals.ValidateNotNull(validator, nameof(validator));
             ValidationInternals.ValidateNotNull(keySelector, nameof(keySelector));
+
+            if (validator.Value is null)
+            {
+                return validator;
+            }
 
             var duplicates = validator.Value
                 .GroupBy(keySelector)
@@ -853,6 +881,11 @@ namespace ZySharp.Validation
         {
             ValidationInternals.ValidateNotNull(validator, nameof(validator));
 
+            if (validator.Value is null)
+            {
+                return validator;
+            }
+
             if (!validator.Value.CanRead)
             {
                 throw new ArgumentException(string.Format(CultureInfo.InvariantCulture,
@@ -874,6 +907,11 @@ namespace ZySharp.Validation
         {
             ValidationInternals.ValidateNotNull(validator, nameof(validator));
 
+            if (validator.Value is null)
+            {
+                return validator;
+            }
+
             if (!validator.Value.CanWrite)
             {
                 throw new ArgumentException(string.Format(CultureInfo.InvariantCulture,
@@ -894,6 +932,11 @@ namespace ZySharp.Validation
             where T : Stream
         {
             ValidationInternals.ValidateNotNull(validator, nameof(validator));
+
+            if (validator.Value is null)
+            {
+                return validator;
+            }
 
             if (!validator.Value.CanSeek)
             {
@@ -919,6 +962,11 @@ namespace ZySharp.Validation
             where T : Uri
         {
             ValidationInternals.ValidateNotNull(validator, nameof(validator));
+
+            if (validator.Value is null)
+            {
+                return validator;
+            }
 
             if (!validator.Value.IsAbsoluteUri)
             {
