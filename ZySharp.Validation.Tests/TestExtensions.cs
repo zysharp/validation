@@ -2,7 +2,7 @@
 
 namespace ZySharp.Validation.Tests
 {
-    public static class TestExtensions
+    internal static class TestExtensions
     {
         public static IValidatorContext<T> AssertEqualValueAndPath<T>(this IValidatorContext<T> validator, T value, string path)
         {

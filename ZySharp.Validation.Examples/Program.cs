@@ -41,11 +41,18 @@ namespace ZySharp.Validation.Examples
                 );
         }
 
+        private static void ValidateReference(DateTime start, DateTime end)
+        {
+            ValidateArgument.For(start, nameof(start))
+                .LessThan(ArgumentReference.For(end, nameof(end)));
+        }
+
         private static void Main(string[] args)
         {
             ValidateProperty(Assembly.GetExecutingAssembly());
             ValidateEnumerable(new List<Guid> { Guid.NewGuid(), Guid.NewGuid(), Guid.NewGuid() });
             ValidateNullable(1337);
+            ValidateReference(DateTime.UtcNow, DateTime.MaxValue);
         }
     }
 }

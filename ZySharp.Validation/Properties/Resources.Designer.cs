@@ -79,7 +79,16 @@ namespace ZySharp.Validation {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to The argument &apos;{0}&apos; must be greater than &apos;{1}&apos;..
+        ///   Looks up a localized string similar to The value of argument &apos;{0}&apos; must be equal to the value of argument `{1}`. Values: &apos;{0}&apos; = &apos;{2}&apos;, &apos;{1}&apos; = &apos;{3}&apos;.
+        /// </summary>
+        internal static string ArgumentMustBeEqualToReference {
+            get {
+                return ResourceManager.GetString("ArgumentMustBeEqualToReference", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to The value of argument &apos;{0}&apos; must be greater than &apos;{1}&apos;..
         /// </summary>
         internal static string ArgumentMustBeGreaterThan {
             get {
@@ -88,7 +97,7 @@ namespace ZySharp.Validation {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to The argument &apos;{0}&apos; must be greater than or equal to &apos;{1}&apos;..
+        ///   Looks up a localized string similar to The value of argument &apos;{0}&apos; must be greater than or equal to &apos;{1}&apos;..
         /// </summary>
         internal static string ArgumentMustBeGreaterThanOrEqualTo {
             get {
@@ -97,7 +106,25 @@ namespace ZySharp.Validation {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to The argument &apos;{0}&apos; must be in range [&apos;{1}&apos;..&apos;{2}&apos;]..
+        ///   Looks up a localized string similar to The value of argument &apos;{0}&apos; must be greater than or equal to the value of argument `{1}`. Values: &apos;{0}&apos; = &apos;{2}&apos;, &apos;{1}&apos; = &apos;{3}&apos;.
+        /// </summary>
+        internal static string ArgumentMustBeGreaterThanOrEqualToReference {
+            get {
+                return ResourceManager.GetString("ArgumentMustBeGreaterThanOrEqualToReference", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to The value of argument &apos;{0}&apos; must be greater than the value of argument `{1}`. Values: &apos;{0}&apos; = &apos;{2}&apos;, &apos;{1}&apos; = &apos;{3}&apos;.
+        /// </summary>
+        internal static string ArgumentMustBeGreaterThanReference {
+            get {
+                return ResourceManager.GetString("ArgumentMustBeGreaterThanReference", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to The value of argument &apos;{0}&apos; must be in range [&apos;{1}&apos;..&apos;{2}&apos;]..
         /// </summary>
         internal static string ArgumentMustBeInRange {
             get {
@@ -106,7 +133,7 @@ namespace ZySharp.Validation {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to The argument &apos;{0}&apos; must be less than &apos;{1}&apos;..
+        ///   Looks up a localized string similar to The value of argument &apos;{0}&apos; must be less than &apos;{1}&apos;..
         /// </summary>
         internal static string ArgumentMustBeLessThan {
             get {
@@ -115,7 +142,7 @@ namespace ZySharp.Validation {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to The argument &apos;{0}&apos; must be less than or equal to &apos;{1}&apos;..
+        ///   Looks up a localized string similar to The value of argument &apos;{0}&apos; must be less than or equal to &apos;{1}&apos;..
         /// </summary>
         internal static string ArgumentMustBeLessThanOrEqualTo {
             get {
@@ -124,7 +151,25 @@ namespace ZySharp.Validation {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to The argument &apos;{0}&apos; must be of type &apos;{1}&apos;..
+        ///   Looks up a localized string similar to The value of argument &apos;{0}&apos; must be less than or equal to the value of argument `{1}`. Values: &apos;{0}&apos; = &apos;{2}&apos;, &apos;{1}&apos; = &apos;{3}&apos;.
+        /// </summary>
+        internal static string ArgumentMustBeLessThanOrEqualToReference {
+            get {
+                return ResourceManager.GetString("ArgumentMustBeLessThanOrEqualToReference", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to The value of argument &apos;{0}&apos; must be less than the value of argument `{1}`. Values: &apos;{0}&apos; = &apos;{2}&apos;, &apos;{1}&apos; = &apos;{3}&apos;.
+        /// </summary>
+        internal static string ArgumentMustBeLessThanReference {
+            get {
+                return ResourceManager.GetString("ArgumentMustBeLessThanReference", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to The type of argument &apos;{0}&apos; must be &apos;{1}&apos;..
         /// </summary>
         internal static string ArgumentMustBeOfType {
             get {
@@ -133,7 +178,7 @@ namespace ZySharp.Validation {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to The argument &apos;{0}&apos; must be of type [{1}]..
+        ///   Looks up a localized string similar to The type of argument &apos;{0}&apos; must be [{1}]..
         /// </summary>
         internal static string ArgumentMustBeOfTypes {
             get {
@@ -151,7 +196,7 @@ namespace ZySharp.Validation {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to The argument &apos;{0}&apos; must be &apos;{1}&apos;..
+        ///   Looks up a localized string similar to The value of argument &apos;{0}&apos; must be &apos;{1}&apos;..
         /// </summary>
         internal static string ArgumentMustBeValue {
             get {
@@ -178,7 +223,7 @@ namespace ZySharp.Validation {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to The argument &apos;{0}&apos; must not be empty..
+        ///   Looks up a localized string similar to The value of argument &apos;{0}&apos; must not be empty..
         /// </summary>
         internal static string ArgumentMustNotBeEmpty {
             get {
@@ -187,7 +232,16 @@ namespace ZySharp.Validation {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to The argument &apos;{0}&apos; must not be &apos;null&apos;..
+        ///   Looks up a localized string similar to The value of argument &apos;{0}&apos; must not be equal to the value of argument `{1}`. Values: &apos;{0}&apos; = &apos;{2}&apos;, &apos;{1}&apos; = &apos;{3}&apos;.
+        /// </summary>
+        internal static string ArgumentMustNotBeEqualToReference {
+            get {
+                return ResourceManager.GetString("ArgumentMustNotBeEqualToReference", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to The value of argument &apos;{0}&apos; must not be &apos;null&apos;..
         /// </summary>
         internal static string ArgumentMustNotBeNull {
             get {
@@ -196,20 +250,11 @@ namespace ZySharp.Validation {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to The argument &apos;{0}&apos; must not be &apos;null&apos; or empty..
+        ///   Looks up a localized string similar to The value of argument &apos;{0}&apos; must not be &apos;null&apos; or empty..
         /// </summary>
         internal static string ArgumentMustNotBeNullOrEmpty {
             get {
                 return ResourceManager.GetString("ArgumentMustNotBeNullOrEmpty", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to The argument &apos;{0}&apos; must not be &apos;null&apos; or whitespace..
-        /// </summary>
-        internal static string ArgumentMustNotBeNullOrWhitespace {
-            get {
-                return ResourceManager.GetString("ArgumentMustNotBeNullOrWhitespace", resourceCulture);
             }
         }
         
@@ -232,7 +277,7 @@ namespace ZySharp.Validation {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to The argument &apos;{0}&apos; must not be one of [{1}]..
+        ///   Looks up a localized string similar to The value of argument &apos;{0}&apos; must not be one of [{1}]..
         /// </summary>
         internal static string ArgumentMustNotBeOneOf {
             get {
@@ -241,7 +286,7 @@ namespace ZySharp.Validation {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to The argument &apos;{0}&apos; must not be &apos;{1}&apos;..
+        ///   Looks up a localized string similar to The value of argument &apos;{0}&apos; must not be &apos;{1}&apos;..
         /// </summary>
         internal static string ArgumentMustNotBeValue {
             get {

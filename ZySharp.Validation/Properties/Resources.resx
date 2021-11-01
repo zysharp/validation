@@ -123,32 +123,47 @@
   <data name="ArgumentMustBeDerivedFromTypes" xml:space="preserve">
     <value>The type of argument '{0}' must be derived from [{1}].</value>
   </data>
+  <data name="ArgumentMustBeEqualToReference" xml:space="preserve">
+    <value>The value of argument '{0}' must be equal to the value of argument `{1}`. Values: '{0}' = '{2}', '{1}' = '{3}'</value>
+  </data>
   <data name="ArgumentMustBeGreaterThan" xml:space="preserve">
-    <value>The argument '{0}' must be greater than '{1}'.</value>
+    <value>The value of argument '{0}' must be greater than '{1}'.</value>
   </data>
   <data name="ArgumentMustBeGreaterThanOrEqualTo" xml:space="preserve">
-    <value>The argument '{0}' must be greater than or equal to '{1}'.</value>
+    <value>The value of argument '{0}' must be greater than or equal to '{1}'.</value>
+  </data>
+  <data name="ArgumentMustBeGreaterThanOrEqualToReference" xml:space="preserve">
+    <value>The value of argument '{0}' must be greater than or equal to the value of argument `{1}`. Values: '{0}' = '{2}', '{1}' = '{3}'</value>
+  </data>
+  <data name="ArgumentMustBeGreaterThanReference" xml:space="preserve">
+    <value>The value of argument '{0}' must be greater than the value of argument `{1}`. Values: '{0}' = '{2}', '{1}' = '{3}'</value>
   </data>
   <data name="ArgumentMustBeInRange" xml:space="preserve">
-    <value>The argument '{0}' must be in range ['{1}'..'{2}'].</value>
+    <value>The value of argument '{0}' must be in range ['{1}'..'{2}'].</value>
   </data>
   <data name="ArgumentMustBeLessThan" xml:space="preserve">
-    <value>The argument '{0}' must be less than '{1}'.</value>
+    <value>The value of argument '{0}' must be less than '{1}'.</value>
   </data>
   <data name="ArgumentMustBeLessThanOrEqualTo" xml:space="preserve">
-    <value>The argument '{0}' must be less than or equal to '{1}'.</value>
+    <value>The value of argument '{0}' must be less than or equal to '{1}'.</value>
+  </data>
+  <data name="ArgumentMustBeLessThanOrEqualToReference" xml:space="preserve">
+    <value>The value of argument '{0}' must be less than or equal to the value of argument `{1}`. Values: '{0}' = '{2}', '{1}' = '{3}'</value>
+  </data>
+  <data name="ArgumentMustBeLessThanReference" xml:space="preserve">
+    <value>The value of argument '{0}' must be less than the value of argument `{1}`. Values: '{0}' = '{2}', '{1}' = '{3}'</value>
   </data>
   <data name="ArgumentMustBeOfType" xml:space="preserve">
-    <value>The argument '{0}' must be of type '{1}'.</value>
+    <value>The type of argument '{0}' must be '{1}'.</value>
   </data>
   <data name="ArgumentMustBeOfTypes" xml:space="preserve">
-    <value>The argument '{0}' must be of type [{1}].</value>
+    <value>The type of argument '{0}' must be [{1}].</value>
   </data>
   <data name="ArgumentMustBeOneOf" xml:space="preserve">
     <value>The argument '{0}' must be one of [{1}].</value>
   </data>
   <data name="ArgumentMustBeValue" xml:space="preserve">
-    <value>The argument '{0}' must be '{1}'.</value>
+    <value>The value of argument '{0}' must be '{1}'.</value>
   </data>
   <data name="ArgumentMustNotBeDerivedFromType" xml:space="preserve">
     <value>The type of argument '{0}' must not be derived from '{1}'.</value>
@@ -157,16 +172,16 @@
     <value>The type of argument '{0}' must not be derived from [{1}].</value>
   </data>
   <data name="ArgumentMustNotBeEmpty" xml:space="preserve">
-    <value>The argument '{0}' must not be empty.</value>
+    <value>The value of argument '{0}' must not be empty.</value>
+  </data>
+  <data name="ArgumentMustNotBeEqualToReference" xml:space="preserve">
+    <value>The value of argument '{0}' must not be equal to the value of argument `{1}`. Values: '{0}' = '{2}', '{1}' = '{3}'</value>
   </data>
   <data name="ArgumentMustNotBeNull" xml:space="preserve">
-    <value>The argument '{0}' must not be 'null'.</value>
+    <value>The value of argument '{0}' must not be 'null'.</value>
   </data>
   <data name="ArgumentMustNotBeNullOrEmpty" xml:space="preserve">
-    <value>The argument '{0}' must not be 'null' or empty.</value>
-  </data>
-  <data name="ArgumentMustNotBeNullOrWhitespace" xml:space="preserve">
-    <value>The argument '{0}' must not be 'null' or whitespace.</value>
+    <value>The value of argument '{0}' must not be 'null' or empty.</value>
   </data>
   <data name="ArgumentMustNotBeOfType" xml:space="preserve">
     <value>The argument '{0}' must not be of type '{1}'.</value>
@@ -175,10 +190,10 @@
     <value>The argument '{0}' must not be of type [{1}].</value>
   </data>
   <data name="ArgumentMustNotBeOneOf" xml:space="preserve">
-    <value>The argument '{0}' must not be one of [{1}].</value>
+    <value>The value of argument '{0}' must not be one of [{1}].</value>
   </data>
   <data name="ArgumentMustNotBeValue" xml:space="preserve">
-    <value>The argument '{0}' must not be '{1}'.</value>
+    <value>The value of argument '{0}' must not be '{1}'.</value>
   </data>
   <data name="EnumerableMustBeDistinct" xml:space="preserve">
     <value>The argument '{0}' must contain only distinct values. Duplicate keys: [{1}].</value>

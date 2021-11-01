@@ -20,7 +20,7 @@ namespace ZySharp.Validation.Tests
         [InlineData(DateTimeKind.Local, DateTimeKind.Utc)]
         public void Test_Equal_Throws(DateTimeKind expected, DateTimeKind value)
         {
-            var exception = Assert.Throws<ArgumentNullException>(() =>
+            var exception = Assert.Throws<ArgumentException>(() =>
             {
                 ValidateArgument
                     .For(value, nameof(value))
@@ -44,7 +44,7 @@ namespace ZySharp.Validation.Tests
         [InlineData(new[] { DateTimeKind.Local, DateTimeKind.Unspecified }, DateTimeKind.Utc)]
         public void Test_Equal_List_Throws(DateTimeKind[] blacklist, DateTimeKind value)
         {
-            var exception = Assert.Throws<ArgumentNullException>(() =>
+            var exception = Assert.Throws<ArgumentException>(() =>
             {
                 ValidateArgument
                     .For(value, nameof(value))
@@ -68,7 +68,7 @@ namespace ZySharp.Validation.Tests
         [InlineData(DateTimeKind.Local, DateTimeKind.Local)]
         public void Test_NotEqual_Throws(DateTimeKind disallowed, DateTimeKind value)
         {
-            var exception = Assert.Throws<ArgumentNullException>(() =>
+            var exception = Assert.Throws<ArgumentException>(() =>
             {
                 ValidateArgument
                     .For(value, nameof(value))
@@ -92,7 +92,7 @@ namespace ZySharp.Validation.Tests
         [InlineData(new[] { DateTimeKind.Local, DateTimeKind.Unspecified }, DateTimeKind.Unspecified)]
         public void Test_NotEqual_List_Throws(DateTimeKind[] blacklist, DateTimeKind value)
         {
-            var exception = Assert.Throws<ArgumentNullException>(() =>
+            var exception = Assert.Throws<ArgumentException>(() =>
             {
                 ValidateArgument
                     .For(value, nameof(value))

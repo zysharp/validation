@@ -3,7 +3,8 @@
 namespace ZySharp.Validation
 {
     internal sealed class ValidatorContext<T> :
-        IValidatorContext<T>
+        IValidatorContext<T>,
+        IArgumentReference<T>
     {
         public IList<string> Path { get; internal set; }
 
