@@ -33,6 +33,10 @@ namespace ZySharp.Validation
 
         /// <summary>
         /// Selects a property for validation.
+        /// <para>
+        ///     All validations for the selected property will be skipped if the current validator context contains
+        ///     a <c>null</c> value.
+        /// </para>
         /// </summary>
         /// <typeparam name="T">The type of the current value.</typeparam>
         /// <typeparam name="TNext">The type of the selected property.</typeparam>
@@ -40,7 +44,7 @@ namespace ZySharp.Validation
         /// <param name="selector">
         ///     The property selector expression.
         ///     <para>
-        ///         The expression must be a `MemberExpression` (e.g. `x => x.Property`).
+        ///         The expression must be a <see cref="MemberExpression"/> (e.g. <c>x => x.Property</c>).
         ///     </para>
         /// </param>
         /// <param name="action">The action to perform for the selected property.</param>
@@ -52,6 +56,11 @@ namespace ZySharp.Validation
             ValidationInternals.ValidateNotNull(selector, nameof(selector));
             ValidationInternals.ValidateNotNull(action, nameof(action));
 
+            if (validator.Value is null)
+            {
+                return validator;
+            }
+
             var name = ValidationInternals.GetPropertyName(selector);
             var value = selector.Compile().Invoke(validator.Value);
 
@@ -62,19 +71,24 @@ namespace ZySharp.Validation
         }
 
         /// <summary>
-        /// Selects all elements of a `IEnumerable` property for validation.
+        /// Selects all elements of a <see cref="IEnumerable{T}"/> property for validation.
+        /// <para>
+        ///     All validations for the selected property will be skipped if the current validator context contains
+        ///     a <c>null</c> value.
+        /// </para>
         /// </summary>
         /// <typeparam name="T">The type of the current value.</typeparam>
-        /// <typeparam name="TItem">The type of an individual item in the `IEnumerable` property.</typeparam>
+        /// <typeparam name="TItem">The type of an individual item in the <see cref="IEnumerable{T}"/>.</typeparam>
         /// <param name="validator">The current validator context.</param>
         /// <param name="selector">
         ///     The property selector expression.
         ///     <para>
-        ///         The expression must be a `MemberExpression` (e.g. `x => x.Property`) or a `ParameterExpression`
-        ///         to select all elements of the current value (e.g. `x => x`).
+        ///         The expression must be a <see cref="MemberExpression"/> (e.g. <c>x => x.Property</c>) or
+        ///         a <see cref="ParameterExpression"/> to select all elements of the current
+        ///         value (e.g. <c>x => x</c>).
         ///     </para>
         /// </param>
-        /// <param name="action">The action to perform for each item of the selected `IEnumerable` property.</param>
+        /// <param name="action">The action to perform for each item of the <see cref="IEnumerable{T}"/>.</param>
         /// <returns>The unmodified validator context.</returns>
         public static IValidatorContext<T> ForEach<T, TItem>(this IValidatorContext<T> validator,
             Expression<Func<T, IEnumerable<TItem>>> selector, Action<IValidatorContext<TItem>> action)
@@ -82,6 +96,11 @@ namespace ZySharp.Validation
             ValidationInternals.ValidateNotNull(validator, nameof(validator));
             ValidationInternals.ValidateNotNull(selector, nameof(selector));
             ValidationInternals.ValidateNotNull(action, nameof(action));
+
+            if (validator.Value is null)
+            {
+                return validator;
+            }
 
             var name = (selector.Body is ParameterExpression)
                 ? null
@@ -159,8 +178,8 @@ namespace ZySharp.Validation
         /// <param name="selector">
         ///     The property selector expression.
         ///     <para>
-        ///         The expression must be a `MemberExpression` (e.g. `x => x.Property`) or a `ParameterExpression`
-        ///         to select the current value (e.g. `x => x`).
+        ///         The expression must be a <see cref="MemberExpression"/> (e.g. <c>x => x.Property</c>) or
+        ///         a <see cref="ParameterExpression"/> to select the current value (e.g. <c>x => x</c>`).
         ///     </para>
         /// </param>
         /// <param name="action">The action to perform for the selected enumerable property.</param>
@@ -189,7 +208,7 @@ namespace ZySharp.Validation
         #region Validation: Basic
 
         /// <summary>
-        /// Throws if the current value is `null`.
+        /// Throws if the current value is <c>null</c>.
         /// </summary>
         /// <typeparam name="T">The type of the current value.</typeparam>
         /// <param name="validator">The current validator context.</param>
@@ -270,9 +289,10 @@ namespace ZySharp.Validation
         }
 
         /// <summary>
-        /// Throws if the current value is `null` or empty (contains the default value of the current type).
+        /// Throws if the current value is <c>null</c> or empty (contains the default value of the current type).
         /// <para>
-        ///     This validation as well applies to empty strings or `IEnumerable` types without at least one element.
+        ///     This validation as well applies to empty strings or <see cref="IEnumerable{T}"/> types without at
+        ///     least one element.
         /// </para>
         /// </summary>
         /// <typeparam name="T">The type of the current value.</typeparam>
