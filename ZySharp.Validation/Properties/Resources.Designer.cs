@@ -304,11 +304,20 @@ namespace ZySharp.Validation {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Expression &apos;{0}&apos; must be a member-expression..
+        ///   Looks up a localized string similar to The given expression &apos;{0}&apos; must be a member-expression..
         /// </summary>
         internal static string ExpressionMustBeMemberExpression {
             get {
                 return ResourceManager.GetString("ExpressionMustBeMemberExpression", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to The current reference must not contain a &apos;null&apos; value..
+        /// </summary>
+        internal static string ReferenceMustNotContainNullValue {
+            get {
+                return ResourceManager.GetString("ReferenceMustNotContainNullValue", resourceCulture);
             }
         }
         

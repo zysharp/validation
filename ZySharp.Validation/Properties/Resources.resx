@@ -199,7 +199,10 @@
     <value>The argument '{0}' must contain only distinct values. Duplicate keys: [{1}].</value>
   </data>
   <data name="ExpressionMustBeMemberExpression" xml:space="preserve">
-    <value>Expression '{0}' must be a member-expression.</value>
+    <value>The given expression '{0}' must be a member-expression.</value>
+  </data>
+  <data name="ReferenceMustNotContainNullValue" xml:space="preserve">
+    <value>The current reference must not contain a 'null' value.</value>
   </data>
   <data name="StreamMustBeReadable" xml:space="preserve">
     <value>The argument '{0}' must be a readable stream.</value>

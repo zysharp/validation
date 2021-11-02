@@ -1,4 +1,6 @@
 ﻿using System;
+using System.Collections.Generic;
+using System.Linq;
 using System.Linq.Expressions;
 
 using JetBrains.Annotations;
@@ -26,6 +28,9 @@ namespace ZySharp.Validation
 
         /// <summary>
         /// Selects a property reference.
+        /// <para>
+        ///     The current argument reference must not contain a <c>null</c> value.
+        /// </para>
         /// </summary>
         /// <typeparam name="T">The type of the current value.</typeparam>
         /// <typeparam name="TNext">The type of the selected property.</typeparam>
@@ -33,7 +38,7 @@ namespace ZySharp.Validation
         /// <param name="selector">
         ///     The property selector expression.
         ///     <para>
-        ///         The expression must be a `MemberExpression` (e.g. `x => x.Property`).
+        ///         The expression must be a <see cref="MemberExpression"/> (e.g. <c>x => x.Property.Sub</c>).
         ///     </para>
         /// </param>
         /// <returns>A new reference to the selected property.</returns>
@@ -43,10 +48,15 @@ namespace ZySharp.Validation
             ValidationInternals.ValidateNotNull(reference, nameof(reference));
             ValidationInternals.ValidateNotNull(selector, nameof(selector));
 
-            var name = ValidationInternals.GetPropertyName(selector);
+            if (reference.Value is null)
+            {
+                throw new ArgumentException(Resources.ReferenceMustNotContainNullValue, nameof(reference));
+            }
+
+            var path = ValidationInternals.GetPropertyPath(selector);
             var value = selector.Compile().Invoke(reference.Value);
 
-            var result = new ValidatorContext<TNext>(value, reference.Path, name);
+            var result = new ValidatorContext<TNext>(value, reference.Path.Concat(path), null);
 
             return result;
         }

@@ -22,16 +22,41 @@ namespace ZySharp.Validation
         public static string GetPropertyName<TSource, TProperty>(Expression<Func<TSource, TProperty>> selector)
         {
             Contract.Assert(selector != null);
+            Contract.Assert(selector.NodeType == ExpressionType.Lambda);
 
-            if ((selector.NodeType != ExpressionType.Lambda) ||
-                (selector.Body is not MemberExpression member) ||
-                (member.Expression.NodeType != ExpressionType.Parameter))
+            if ((selector.Body is not MemberExpression member) || (member.Expression.NodeType != ExpressionType.Parameter))
             {
                 throw new ArgumentException(string.Format(CultureInfo.InvariantCulture,
                     Resources.ExpressionMustBeMemberExpression, selector), nameof(selector));
             }
 
             return member.Member.Name;
+        }
+
+        public static IReadOnlyCollection<string> GetPropertyPath<TSource, TProperty>(Expression<Func<TSource, TProperty>> selector)
+        {
+            Contract.Assert(selector != null);
+            Contract.Assert(selector.NodeType == ExpressionType.Lambda);
+
+            var result = new List<string>();
+
+            Expression current = selector.Body;
+            do
+            {
+                if (current is not MemberExpression member)
+                {
+                    throw new ArgumentException(string.Format(CultureInfo.InvariantCulture,
+                        Resources.ExpressionMustBeMemberExpression, selector), nameof(selector));
+                }
+
+                result.Add(member.Member.Name);
+                current = member.Expression;
+
+            } while (current is not ParameterExpression);
+
+            result.Reverse();
+
+            return result;
         }
 
         public static string FormatName(IList<string> path, string name)
