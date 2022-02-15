@@ -5,6 +5,7 @@ using System.Globalization;
 using System.IO;
 using System.Linq;
 using System.Linq.Expressions;
+using System.Text.RegularExpressions;
 
 using JetBrains.Annotations;
 
@@ -370,7 +371,7 @@ namespace ZySharp.Validation
             if (!EqualityComparer<T>.Default.Equals(validator.Value, value))
             {
                 throw new ArgumentException(string.Format(CultureInfo.InvariantCulture,
-                    Resources.ArgumentMustBeValue, ValidationInternals.FormatName(validator.Path, null), value), 
+                    Resources.ArgumentMustBeValue, ValidationInternals.FormatName(validator.Path, null), value),
                     validator.Path.First());
             }
 
@@ -404,9 +405,9 @@ namespace ZySharp.Validation
             if (!EqualityComparer<T>.Default.Equals(validator.Value, reference.Value))
             {
                 throw new ArgumentException(string.Format(CultureInfo.InvariantCulture,
-                    Resources.ArgumentMustBeEqualToReference, 
-                    ValidationInternals.FormatName(validator.Path, null), 
-                    ValidationInternals.FormatName(reference.Path, null), 
+                    Resources.ArgumentMustBeEqualToReference,
+                    ValidationInternals.FormatName(validator.Path, null),
+                    ValidationInternals.FormatName(reference.Path, null),
                     validator.Value, reference.Value),
                     validator.Path.First());
             }
@@ -439,7 +440,7 @@ namespace ZySharp.Validation
             {
                 throw new ArgumentException(string.Format(CultureInfo.InvariantCulture,
                     Resources.ArgumentMustBeOneOf, ValidationInternals.FormatName(validator.Path, null),
-                    string.Join(", ", values.Select(x => $"'{x}'").ToList())), 
+                    string.Join(", ", values.Select(x => $"'{x}'").ToList())),
                     validator.Path.First());
             }
 
@@ -467,7 +468,7 @@ namespace ZySharp.Validation
             if (EqualityComparer<T>.Default.Equals(validator.Value, value))
             {
                 throw new ArgumentException(string.Format(CultureInfo.InvariantCulture,
-                    Resources.ArgumentMustNotBeValue, ValidationInternals.FormatName(validator.Path, null), value), 
+                    Resources.ArgumentMustNotBeValue, ValidationInternals.FormatName(validator.Path, null), value),
                     validator.Path.First());
             }
 
@@ -536,7 +537,7 @@ namespace ZySharp.Validation
             {
                 throw new ArgumentException(string.Format(CultureInfo.InvariantCulture,
                     Resources.ArgumentMustNotBeOneOf, ValidationInternals.FormatName(validator.Path, null),
-                    string.Join(", ", values.Select(x => $"'{x}'").ToList())), 
+                    string.Join(", ", values.Select(x => $"'{x}'").ToList())),
                     validator.Path.First());
             }
 
@@ -607,7 +608,7 @@ namespace ZySharp.Validation
             if (validator.Value.CompareTo(threshold) <= 0)
             {
                 throw new ArgumentException(string.Format(CultureInfo.InvariantCulture,
-                    Resources.ArgumentMustBeGreaterThan, 
+                    Resources.ArgumentMustBeGreaterThan,
                     ValidationInternals.FormatName(validator.Path, null), threshold),
                     validator.Path.First());
             }
@@ -633,7 +634,7 @@ namespace ZySharp.Validation
         /// <param name="validator">The current validator context.</param>
         /// <param name="threshold">A reference to the threshold value.</param>
         /// <returns>The unmodified validator context.</returns>
-        public static IValidatorContext<T> GreaterThan<T>(this IValidatorContext<T> validator, 
+        public static IValidatorContext<T> GreaterThan<T>(this IValidatorContext<T> validator,
             IArgumentReference<T> threshold)
             where T : struct, IComparable<T>
         {
@@ -676,7 +677,7 @@ namespace ZySharp.Validation
             if (validator.Value.CompareTo(threshold) < 0)
             {
                 throw new ArgumentException(string.Format(CultureInfo.InvariantCulture,
-                    Resources.ArgumentMustBeGreaterThanOrEqualTo, 
+                    Resources.ArgumentMustBeGreaterThanOrEqualTo,
                     ValidationInternals.FormatName(validator.Path, null), threshold),
                     validator.Path.First());
             }
@@ -702,7 +703,7 @@ namespace ZySharp.Validation
         /// <param name="validator">The current validator context.</param>
         /// <param name="threshold">A reference to the threshold value.</param>
         /// <returns>The unmodified validator context.</returns>
-        public static IValidatorContext<T> GreaterThanOrEqualTo<T>(this IValidatorContext<T> validator, 
+        public static IValidatorContext<T> GreaterThanOrEqualTo<T>(this IValidatorContext<T> validator,
             IArgumentReference<T> threshold)
             where T : struct, IComparable<T>
         {
@@ -723,7 +724,7 @@ namespace ZySharp.Validation
         }
 
         /// <inheritdoc cref="GreaterThanOrEqualTo{T}(ZySharp.Validation.IValidatorContext{T},ZySharp.Validation.IArgumentReference{T})"/>
-        public static IValidatorContext<T?> GreaterThanOrEqualTo<T>(this IValidatorContext<T?> validator, 
+        public static IValidatorContext<T?> GreaterThanOrEqualTo<T>(this IValidatorContext<T?> validator,
             IArgumentReference<T> threshold)
             where T : struct, IComparable<T>
         {
@@ -745,7 +746,7 @@ namespace ZySharp.Validation
             if (validator.Value.CompareTo(threshold) >= 0)
             {
                 throw new ArgumentException(string.Format(CultureInfo.InvariantCulture,
-                    Resources.ArgumentMustBeLessThan, 
+                    Resources.ArgumentMustBeLessThan,
                     ValidationInternals.FormatName(validator.Path, null), threshold),
                     validator.Path.First());
             }
@@ -771,7 +772,7 @@ namespace ZySharp.Validation
         /// <param name="validator">The current validator context.</param>
         /// <param name="threshold">A reference to the threshold value.</param>
         /// <returns>The unmodified validator context.</returns>
-        public static IValidatorContext<T> LessThan<T>(this IValidatorContext<T> validator, 
+        public static IValidatorContext<T> LessThan<T>(this IValidatorContext<T> validator,
             IArgumentReference<T> threshold)
             where T : struct, IComparable<T>
         {
@@ -813,7 +814,7 @@ namespace ZySharp.Validation
             if (validator.Value.CompareTo(threshold) > 0)
             {
                 throw new ArgumentException(string.Format(CultureInfo.InvariantCulture,
-                    Resources.ArgumentMustBeLessThanOrEqualTo, 
+                    Resources.ArgumentMustBeLessThanOrEqualTo,
                     ValidationInternals.FormatName(validator.Path, null), threshold),
                     validator.Path.First());
             }
@@ -839,7 +840,7 @@ namespace ZySharp.Validation
         /// <param name="validator">The current validator context.</param>
         /// <param name="threshold">A reference to the threshold value.</param>
         /// <returns>The unmodified validator context.</returns>
-        public static IValidatorContext<T> LessThanOrEqualTo<T>(this IValidatorContext<T> validator, 
+        public static IValidatorContext<T> LessThanOrEqualTo<T>(this IValidatorContext<T> validator,
             IArgumentReference<T> threshold)
             where T : struct, IComparable<T>
         {
@@ -860,7 +861,7 @@ namespace ZySharp.Validation
         }
 
         /// <inheritdoc cref="LessThanOrEqualTo{T}(ZySharp.Validation.IValidatorContext{T},ZySharp.Validation.IArgumentReference{T})"/>
-        public static IValidatorContext<T?> LessThanOrEqualTo<T>(this IValidatorContext<T?> validator, 
+        public static IValidatorContext<T?> LessThanOrEqualTo<T>(this IValidatorContext<T?> validator,
             IArgumentReference<T> threshold)
             where T : struct, IComparable<T>
         {
@@ -1127,6 +1128,44 @@ namespace ZySharp.Validation
 
         #endregion Validation: IEnumerable
 
+        #region Validation: String
+
+        /// <summary>
+        /// Throws if the string does not match the given pattern.
+        /// </summary>
+        /// <param name="validator">The current validator context.</param>
+        /// <param name="regex">The regular expression containing the pattern.</param>
+        /// <returns>The unmodified validator context.</returns>
+        public static IValidatorContext<string> MustMatchPattern(this IValidatorContext<string> validator, Regex regex)
+        {
+            ValidationInternals.ValidateNotNull(validator, nameof(validator));
+            ValidationInternals.ValidateNotNull(validator, nameof(regex));
+
+            if (validator.Value is null)
+            {
+                return validator;
+            }
+
+            if (!regex.IsMatch(validator.Value))
+            {
+                throw new ArgumentException(string.Format(CultureInfo.InvariantCulture,
+                        Resources.StringMustMatchPattern, ValidationInternals.FormatName(validator.Path, null), regex),
+                    validator.Path.First());
+            }
+
+            return validator;
+        }
+
+        /// <inheritdoc cref="MustMatchPattern(ZySharp.Validation.IValidatorContext{string},System.Text.RegularExpressions.Regex)"/>
+        public static IValidatorContext<string> MustMatchPattern(this IValidatorContext<string> validator, string regex)
+        {
+            ValidationInternals.ValidateNotNull(regex, nameof(regex));
+
+            return MustMatchPattern(validator, new Regex(regex));
+        }
+
+        #endregion Validation: String
+
         #region Validation: Stream
 
         /// <summary>
@@ -1148,7 +1187,7 @@ namespace ZySharp.Validation
             if (!validator.Value.CanRead)
             {
                 throw new ArgumentException(string.Format(CultureInfo.InvariantCulture,
-                    Resources.StreamMustBeReadable, ValidationInternals.FormatName(validator.Path, null)),
+                        Resources.StreamMustBeReadable, ValidationInternals.FormatName(validator.Path, null)),
                     validator.Path.First());
             }
 
@@ -1174,7 +1213,7 @@ namespace ZySharp.Validation
             if (!validator.Value.CanWrite)
             {
                 throw new ArgumentException(string.Format(CultureInfo.InvariantCulture,
-                    Resources.StreamMustBeWriteable, ValidationInternals.FormatName(validator.Path, null)),
+                        Resources.StreamMustBeWriteable, ValidationInternals.FormatName(validator.Path, null)),
                     validator.Path.First());
             }
 
@@ -1200,7 +1239,7 @@ namespace ZySharp.Validation
             if (!validator.Value.CanSeek)
             {
                 throw new ArgumentException(string.Format(CultureInfo.InvariantCulture,
-                    Resources.StreamMustBeSeekable, ValidationInternals.FormatName(validator.Path, null)),
+                        Resources.StreamMustBeSeekable, ValidationInternals.FormatName(validator.Path, null)),
                     validator.Path.First());
             }
 

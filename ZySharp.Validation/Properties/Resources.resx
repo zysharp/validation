@@ -213,6 +213,9 @@
   <data name="StreamMustBeWriteable" xml:space="preserve">
     <value>The argument '{0}' must be a writeable stream.</value>
   </data>
+  <data name="StringMustMatchPattern" xml:space="preserve">
+    <value>The value of argument '{0}' must match the pattern '{1}'.</value>
+  </data>
   <data name="UriMustBeAbsolute" xml:space="preserve">
     <value>The argument '{0}' must be an absolute URI.</value>
   </data>
