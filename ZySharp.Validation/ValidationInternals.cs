@@ -4,6 +4,7 @@ using System.Diagnostics.Contracts;
 using System.Globalization;
 using System.Linq;
 using System.Linq.Expressions;
+using System.Reflection;
 
 namespace ZySharp.Validation
 {
@@ -51,7 +52,6 @@ namespace ZySharp.Validation
 
                 result.Add(member.Member.Name);
                 current = member.Expression;
-
             } while (current is not ParameterExpression);
 
             result.Reverse();
@@ -73,6 +73,46 @@ namespace ZySharp.Validation
                 : path.Concat(new[] { name });
 
             return string.Join(".", items);
+        }
+
+        /// <summary>
+        /// Removes the current stackframe from the exception.
+        /// <para>
+        ///     This will ensure the stack-trace starts with the code that called the validation method instead of
+        ///     some code inside this library.
+        /// </para>
+        /// </summary>
+        /// <remarks>This does only work when called from inside a <c>catch</c> block.</remarks>
+        /// <param name="exception">The exception.</param>
+        public static void RemoveStackFrame(Exception exception)
+        {
+            Contract.Assert(exception is not null);
+
+            var t = typeof(Exception);
+            var f = t.GetField("_stackTrace", BindingFlags.Instance | BindingFlags.NonPublic | BindingFlags.SetField);
+
+            f?.SetValue(exception, null);
+        }
+
+        public static IValidatorContext<T> Perform<T>([ValidatedNotNull] this IValidatorContext<T> validator, Action action, 
+            bool skipNullValue = true)
+        {
+            ValidateNotNull(validator, nameof(validator));
+            Contract.Assert(action is not null);
+
+            if (validator.Exception is not null)
+            {
+                return validator;
+            }
+
+            if (skipNullValue && (validator.Value is null))
+            {
+                return validator;
+            }
+
+            action();
+
+            return validator;
         }
     }
 }
