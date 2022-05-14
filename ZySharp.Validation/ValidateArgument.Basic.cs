@@ -1,5 +1,4 @@
-﻿using System;
-using System.Collections;
+﻿using System.Collections;
 using System.Collections.Generic;
 using System.Globalization;
 using System.Linq;
@@ -130,70 +129,55 @@ namespace ZySharp.Validation
         /// <param name="validator">The current validator context.</param>
         /// <returns>The unmodified validator context.</returns>
         public static IValidatorContext<T> NotNullOrEmpty<T>(this IValidatorContext<T> validator)
-            where T : class
         {
-            ValidationInternals.ValidateNotNull(validator, nameof(validator));
-
-            if (validator.Exception is not null)
+            return validator.Perform(() =>
             {
-                return validator;
-            }
+                if (validator.Value is null)
+                {
+                    validator.SetArgumentNullException(
+                        string.Format(CultureInfo.InvariantCulture, Resources.ArgumentMustNotBeNullOrEmpty,
+                            ValidationInternals.FormatName(validator.Path, null)));
+                    return;
+                }
+                if (validator.Value.Equals(default(T)))
+                {
+                    validator.SetArgumentException(
+                        string.Format(CultureInfo.InvariantCulture, Resources.ArgumentMustNotBeNullOrEmpty,
+                            ValidationInternals.FormatName(validator.Path, null)));
+                    return;
+                }
 
-            validator.NotNull();
+                var isEmptyEnum = (validator.Value is IEnumerable enumerable) && !enumerable.GetEnumerator().MoveNext();
+                var isEmptyString = validator.Value is string { Length: 0 };
 
-            if (validator.Exception is not null)
-            {
-                validator.SetArgumentNullException(
-                    string.Format(CultureInfo.InvariantCulture, Resources.ArgumentMustNotBeNullOrEmpty,
-                        ValidationInternals.FormatName(validator.Path, null)));
-                return validator;
-            }
-
-            var isEmptyEnum = (validator.Value is IEnumerable enumerable) && !enumerable.GetEnumerator().MoveNext();
-            var isEmptyString = validator.Value is string { Length: 0 };
-
-            if (isEmptyEnum || isEmptyString)
-            {
-                validator.SetArgumentException(
-                    string.Format(CultureInfo.InvariantCulture, Resources.ArgumentMustNotBeNullOrEmpty,
-                        ValidationInternals.FormatName(validator.Path, null)));
-            }
-
-            return validator;
+                if (isEmptyEnum || isEmptyString)
+                {
+                    validator.SetArgumentException(
+                        string.Format(CultureInfo.InvariantCulture, Resources.ArgumentMustNotBeNullOrEmpty,
+                            ValidationInternals.FormatName(validator.Path, null)));
+                }
+            }, false);
         }
 
         /// <inheritdoc cref="NotNullOrEmpty{T}(IValidatorContext{T})"/>
         public static IValidatorContext<T?> NotNullOrEmpty<T>(this IValidatorContext<T?> validator)
             where T : struct
         {
-            ValidationInternals.ValidateNotNull(validator, nameof(validator));
-
-            if (validator.Exception is not null)
+            return validator.Perform(() =>
             {
-                return validator;
-            }
-
-            if (!validator.Value.HasValue)
-            {
-                validator.SetArgumentNullException(
-                    string.Format(CultureInfo.InvariantCulture, Resources.ArgumentMustNotBeNullOrEmpty,
-                        ValidationInternals.FormatName(validator.Path, null)));
-                return validator;
-            }
-
-            try
-            {
-                validator.NotEmpty();
-            }
-            catch (ArgumentException)
-            {
-                validator.SetArgumentException(
-                    string.Format(CultureInfo.InvariantCulture, Resources.ArgumentMustNotBeNullOrEmpty,
-                        ValidationInternals.FormatName(validator.Path, null)));
-                return validator;
-            }
-
-            return validator;
+                if (!validator.Value.HasValue)
+                {
+                    validator.SetArgumentNullException(
+                        string.Format(CultureInfo.InvariantCulture, Resources.ArgumentMustNotBeNullOrEmpty,
+                            ValidationInternals.FormatName(validator.Path, null)));
+                }
+                if (validator.Value.Equals(default(T)))
+                {
+                    validator.SetArgumentException(
+                        string.Format(CultureInfo.InvariantCulture, Resources.ArgumentMustNotBeNullOrEmpty,
+                            ValidationInternals.FormatName(validator.Path, null)));
+                }
+            }, false);
         }
 
         #endregion NotNullOrEmpty

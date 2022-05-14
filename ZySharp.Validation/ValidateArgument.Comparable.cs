@@ -307,24 +307,15 @@ namespace ZySharp.Validation
         public static IValidatorContext<T> InRange<T>(this IValidatorContext<T> validator, T min, T max)
             where T : IComparable<T>
         {
-            ValidationInternals.ValidateNotNull(validator, nameof(validator));
-
-            if (validator.Exception is not null)
+            return validator.Perform(() =>
             {
-                return validator;
-            }
-
-            validator.GreaterThanOrEqualTo(min);
-            validator.LessThanOrEqualTo(max);
-
-            if (validator.Exception is not null)
-            {
-                validator.SetArgumentException(
-                    string.Format(CultureInfo.InvariantCulture, Resources.ArgumentMustBeInRange,
-                        ValidationInternals.FormatName(validator.Path, null), min, max));
-            }
-
-            return validator;
+                if ((validator.Value.CompareTo(min) < 0) || (validator.Value.CompareTo(max) > 0))
+                {
+                    validator.SetArgumentException(
+                        string.Format(CultureInfo.InvariantCulture, Resources.ArgumentMustBeInRange,
+                            ValidationInternals.FormatName(validator.Path, null), min, max));
+                }
+            });
         }
 
         /// <inheritdoc cref="InRange{T}(IValidatorContext{T},T,T)"/>
