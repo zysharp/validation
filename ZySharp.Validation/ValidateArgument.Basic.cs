@@ -16,7 +16,6 @@ namespace ZySharp.Validation
         /// <param name="validator">The current validator context.</param>
         /// <returns>The unmodified validator context.</returns>
         public static IValidatorContext<T> NotNull<T>(this IValidatorContext<T> validator)
-            where T : class
         {
             return validator.Perform(() =>
             {
@@ -55,7 +54,6 @@ namespace ZySharp.Validation
         /// <param name="validator">The current validator context.</param>
         /// <returns>The unmodified validator context.</returns>
         public static IValidatorContext<T> NotEmpty<T>(this IValidatorContext<T> validator)
-            where T : struct
         {
             return validator.Perform(() =>
             {
