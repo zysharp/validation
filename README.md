@@ -2,6 +2,8 @@
 
 ![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg)
 [![GitHub Actions](https://github.com/flobernd/zysharp-validation/actions/workflows/main.yml/badge.svg)](https://github.com/flobernd/zysharp-validation/actions)
+[![Quality Gate Status](https://sonarcloud.io/api/project_badges/measure?project=flobernd_zysharp-validation&metric=alert_status)](https://sonarcloud.io/summary/new_code?id=flobernd_zysharp-validation)
+[![Coverage](https://sonarcloud.io/api/project_badges/measure?project=flobernd_zysharp-validation&metric=coverage)](https://sonarcloud.io/summary/new_code?id=flobernd_zysharp-validation)
 [![NuGet](https://img.shields.io/nuget/v/ZySharp.Validation.svg)](https://nuget.org/packages/ZySharp.Validation)
 [![Nuget](https://img.shields.io/nuget/dt/ZySharp.Validation.svg)](https://nuget.org/packages/ZySharp.Validation)
 
