@@ -1,4 +1,4 @@
-name: SonarCloud
+name: Build
 
 on:
   push:
@@ -8,8 +8,8 @@ on:
     types: [opened, synchronize, reopened]
 
 jobs:
-  build:
-    name: Analyze
+  ci:
+    name: CI
     runs-on: windows-latest
     steps:
 
@@ -59,3 +59,22 @@ jobs:
           dotnet build --no-incremental
           dotnet-coverage collect 'dotnet test' -f xml  -o 'coverage.xml'
           .\.sonar\scanner\dotnet-sonarscanner end /d:sonar.login="${{ secrets.SONAR_TOKEN }}"
+
+  cd:
+    runs-on: ubuntu-latest
+    name: CD
+    needs: ci
+    if: ${{ github.event_name == 'push' && github.ref == 'refs/heads/master' }}
+    steps:
+
+      - name: Checkout
+        uses: actions/checkout@v2
+
+      - name: Setup .NET Core
+        uses: actions/setup-dotnet@v1
+
+      - name: Generate NuGet packages
+        run: dotnet pack --configuration Release -o out
+
+      - name: Publish to NuGet
+        run: dotnet nuget push out/*.nupkg -k ${{secrets.NUGET_API_KEY}} -s https://api.nuget.org/v3/index.json --skip-duplicate
