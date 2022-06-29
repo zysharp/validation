@@ -31,7 +31,7 @@ namespace ZySharp.Validation
             where T : struct
         {
             return validator.Perform(() =>
-                validator.When(x => x.HasValue, v => v.Select(x => x.Value, v => v.Equal(value))));
+                validator.When(x => x.HasValue, v => v.Select(x => x!.Value, v => v.Equal(value))));
         }
 
         /// <summary>
@@ -69,7 +69,7 @@ namespace ZySharp.Validation
             where T : struct
         {
             return validator.Perform(() =>
-                validator.When(x => x.HasValue, v => v.Select(x => x.Value, v => v.Equal(reference))));
+                validator.When(x => x.HasValue, v => v.Select(x => x!.Value, v => v.Equal(reference))));
         }
 
         /// <summary>
@@ -101,7 +101,7 @@ namespace ZySharp.Validation
             where T : struct
         {
             return validator.Perform(() =>
-                validator.When(x => x.HasValue, v => v.Select(x => x.Value, v => v.Equal(values))));
+                validator.When(x => x.HasValue, v => v.Select(x => x!.Value, v => v.Equal(values))));
         }
 
         /// <summary>
@@ -129,7 +129,7 @@ namespace ZySharp.Validation
             where T : struct
         {
             return validator.Perform(() =>
-                validator.When(x => x.HasValue, v => v.Select(x => x.Value, v => v.NotEqual(value))));
+                validator.When(x => x.HasValue, v => v.Select(x => x!.Value, v => v.NotEqual(value))));
         }
 
         /// <summary>
@@ -167,7 +167,7 @@ namespace ZySharp.Validation
             where T : struct
         {
             return validator.Perform(() =>
-                validator.When(x => x.HasValue, v => v.Select(x => x.Value, v => v.NotEqual(reference))));
+                validator.When(x => x.HasValue, v => v.Select(x => x!.Value, v => v.NotEqual(reference))));
         }
 
         /// <summary>
@@ -199,7 +199,7 @@ namespace ZySharp.Validation
             where T : struct
         {
             return validator.Perform(() =>
-                validator.When(x => x.HasValue, v => v.Select(x => x.Value, v => v.NotEqual(values))));
+                validator.When(x => x.HasValue, v => v.Select(x => x!.Value, v => v.NotEqual(values))));
         }
     }
 }

@@ -57,7 +57,7 @@ namespace ZySharp.Validation
         {
             return validator.Perform(() =>
             {
-                if (validator.Value.Equals(default(T)))
+                if (Equals(validator.Value, default(T)))
                 {
                     validator.SetArgumentException(
                         string.Format(CultureInfo.InvariantCulture, Resources.ArgumentMustNotBeEmpty,
@@ -71,7 +71,7 @@ namespace ZySharp.Validation
             where T : struct
         {
             return validator.Perform(() =>
-                validator.When(x => x.HasValue, v => v.Select(x => x.Value, v => v.NotEmpty())));
+                validator.When(x => x.HasValue, v => v.Select(x => x!.Value, v => v.NotEmpty())));
         }
 
         /// <summary>

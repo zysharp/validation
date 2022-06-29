@@ -22,7 +22,7 @@ namespace ZySharp.Validation
         /// <summary>
         /// The current exception object.
         /// </summary>
-        public Exception Exception { get; }
+        public Exception? Exception { get; }
 
         /// <summary>
         /// Assigns a new <see cref="ArgumentException"/> to the <see cref="Exception"/> property.

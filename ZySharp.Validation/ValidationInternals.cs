@@ -23,9 +23,9 @@ namespace ZySharp.Validation
         public static string GetPropertyName<TSource, TProperty>(Expression<Func<TSource, TProperty>> selector)
         {
             Contract.Assert(selector != null);
-            Contract.Assert(selector.NodeType == ExpressionType.Lambda);
+            Contract.Assert(selector!.NodeType == ExpressionType.Lambda);
 
-            if ((selector.Body is not MemberExpression member) || (member.Expression.NodeType != ExpressionType.Parameter))
+            if ((selector.Body is not MemberExpression member) || (member.Expression!.NodeType != ExpressionType.Parameter))
             {
                 throw new ArgumentException(string.Format(CultureInfo.InvariantCulture,
                     Resources.ExpressionMustBeMemberExpression, selector), nameof(selector));
@@ -37,7 +37,7 @@ namespace ZySharp.Validation
         public static IReadOnlyCollection<string> GetPropertyPath<TSource, TProperty>(Expression<Func<TSource, TProperty>> selector)
         {
             Contract.Assert(selector != null);
-            Contract.Assert(selector.NodeType == ExpressionType.Lambda);
+            Contract.Assert(selector!.NodeType == ExpressionType.Lambda);
 
             var result = new List<string>();
 
@@ -51,7 +51,7 @@ namespace ZySharp.Validation
                 }
 
                 result.Add(member.Member.Name);
-                current = member.Expression;
+                current = member.Expression!;
             } while (current is not ParameterExpression);
 
             result.Reverse();
@@ -59,7 +59,7 @@ namespace ZySharp.Validation
             return result;
         }
 
-        public static string FormatName(IList<string> path, string name)
+        public static string? FormatName(IList<string> path, string? name)
         {
             Contract.Assert(path != null);
 
@@ -94,7 +94,7 @@ namespace ZySharp.Validation
             f?.SetValue(exception, null);
         }
 
-        public static IValidatorContext<T> Perform<T>([ValidatedNotNull] this IValidatorContext<T> validator, Action action, 
+        public static IValidatorContext<T> Perform<T>([ValidatedNotNull] this IValidatorContext<T> validator, Action action,
             bool skipNullValue = true)
         {
             ValidateNotNull(validator, nameof(validator));
@@ -110,7 +110,7 @@ namespace ZySharp.Validation
                 return validator;
             }
 
-            action();
+            action!();
 
             return validator;
         }

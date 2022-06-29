@@ -33,7 +33,7 @@ namespace ZySharp.Validation
             where T : struct, IComparable<T>
         {
             return validator.Perform(() =>
-                validator.When(x => x.HasValue, v => v.Select(x => x.Value, v => v.GreaterThan(threshold))));
+                validator.When(x => x.HasValue, v => v.Select(x => x!.Value, v => v.GreaterThan(threshold))));
         }
 
         /// <summary>
@@ -72,7 +72,7 @@ namespace ZySharp.Validation
             where T : struct, IComparable<T>
         {
             return validator.Perform(() =>
-                validator.When(x => x.HasValue, v => v.Select(x => x.Value, v => v.GreaterThan(threshold))));
+                validator.When(x => x.HasValue, v => v.Select(x => x!.Value, v => v.GreaterThan(threshold))));
         }
 
         #endregion GreaterThan
@@ -105,7 +105,7 @@ namespace ZySharp.Validation
             where T : struct, IComparable<T>
         {
             return validator.Perform(() =>
-                validator.When(x => x.HasValue, v => v.Select(x => x.Value, v => v.GreaterThanOrEqualTo(threshold))));
+                validator.When(x => x.HasValue, v => v.Select(x => x!.Value, v => v.GreaterThanOrEqualTo(threshold))));
         }
 
         /// <summary>
@@ -144,7 +144,7 @@ namespace ZySharp.Validation
             where T : struct, IComparable<T>
         {
             return validator.Perform(() =>
-                validator.When(x => x.HasValue, v => v.Select(x => x.Value, v => v.GreaterThanOrEqualTo(threshold))));
+                validator.When(x => x.HasValue, v => v.Select(x => x!.Value, v => v.GreaterThanOrEqualTo(threshold))));
         }
 
         #endregion GreaterThanOrEqualTo
@@ -176,7 +176,7 @@ namespace ZySharp.Validation
         public static IValidatorContext<T?> LessThan<T>(this IValidatorContext<T?> validator, T threshold)
             where T : struct, IComparable<T>
         {
-            return validator.When(x => x.HasValue, v => v.Select(x => x.Value, v => v.LessThan(threshold)));
+            return validator.When(x => x.HasValue, v => v.Select(x => x!.Value, v => v.LessThan(threshold)));
         }
 
         /// <summary>
@@ -214,7 +214,7 @@ namespace ZySharp.Validation
             where T : struct, IComparable<T>
         {
             return validator.Perform(() =>
-                validator.When(x => x.HasValue, v => v.Select(x => x.Value, v => v.LessThan(threshold))));
+                validator.When(x => x.HasValue, v => v.Select(x => x!.Value, v => v.LessThan(threshold))));
         }
 
         #endregion LessThan
@@ -247,7 +247,7 @@ namespace ZySharp.Validation
             where T : struct, IComparable<T>
         {
             return validator.Perform(() =>
-                validator.When(x => x.HasValue, v => v.Select(x => x.Value, v => v.LessThanOrEqualTo(threshold))));
+                validator.When(x => x.HasValue, v => v.Select(x => x!.Value, v => v.LessThanOrEqualTo(threshold))));
         }
 
         /// <summary>
@@ -286,7 +286,7 @@ namespace ZySharp.Validation
             where T : struct, IComparable<T>
         {
             return validator.Perform(() =>
-                validator.When(x => x.HasValue, v => v.Select(x => x.Value, v => v.LessThanOrEqualTo(threshold))));
+                validator.When(x => x.HasValue, v => v.Select(x => x!.Value, v => v.LessThanOrEqualTo(threshold))));
         }
 
         #endregion LessThanOrEqualTo
@@ -323,7 +323,7 @@ namespace ZySharp.Validation
             where T : struct, IComparable<T>
         {
             return validator.Perform(() =>
-                validator.When(x => x.HasValue, v => v.Select(x => x.Value, v => v.InRange(min, max))));
+                validator.When(x => x.HasValue, v => v.Select(x => x!.Value, v => v.InRange(min, max))));
         }
 
         #endregion InRange

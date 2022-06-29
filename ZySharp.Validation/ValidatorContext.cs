@@ -13,7 +13,7 @@ namespace ZySharp.Validation
 
         public T Value { get; internal set; }
 
-        public Exception Exception { get; internal set; }
+        public Exception? Exception { get; internal set; }
 
         internal ValidatorContext(T value, string name)
         {
@@ -21,7 +21,7 @@ namespace ZySharp.Validation
             Path = new List<string> { name };
         }
 
-        internal ValidatorContext(T value, IEnumerable<string> path, string name)
+        internal ValidatorContext(T value, IEnumerable<string> path, string? name)
         {
             Value = value;
             Path = new List<string>(path);
@@ -50,7 +50,7 @@ namespace ZySharp.Validation
         {
             Contract.Assert(validator is not null);
 
-            Exception = validator.Exception;
+            Exception = validator!.Exception;
         }
     }
 }
