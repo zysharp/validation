@@ -20,22 +20,24 @@ In case of a validation failure, an exception will be thrown immediately without
 `ZySharp Validation` provides a fluent API to validate arguments:
 
 ```csharp
-ValidateArgument.For(args, nameof(args))
+ValidateArgument.For(args, nameof(args), v => v
     .NotNull()
     .NotEmpty()
     ...
+);
 ```
 
 Validations of sub-properties or collections are executed in separate contexts:
 
 ```csharp
-ValidateArgument.For(args, nameof(args))
+ValidateArgument.For(args, nameof(args), v => v
     .NotNull()
-    .For(x => x.SubProperty, v => v     // <- Switch to sub-property context
+    .For(x => x.SubProperty, v => v // <- Switch to sub-property context
         .NotEmpty()
         .InRange(1, 100)
-    )                                   // <- Switch back to the original context
-    .NotEmpty();
+    )                               // <- Switch back to the original context
+    .NotEmpty()
+);
 ```
 
 ## License
