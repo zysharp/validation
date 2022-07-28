@@ -15,7 +15,7 @@ namespace ZySharp.Validation
         /// <typeparam name="T">The type of the current value.</typeparam>
         /// <param name="validator">The current validator context.</param>
         /// <returns>The unmodified validator context.</returns>
-        public static IValidatorContext<T> NotNull<T>(this IValidatorContext<T> validator)
+        public static IValidatorContext<T?> NotNull<T>(this IValidatorContext<T?> validator)
         {
             return validator.Perform(() =>
             {
@@ -80,12 +80,12 @@ namespace ZySharp.Validation
         /// <typeparam name="TValue">The type of the enumerable elements.</typeparam>
         /// <param name="validator">The current validator context.</param>
         /// <returns>The unmodified validator context.</returns>
-        public static IValidatorContext<IEnumerable<TValue>> NotEmpty<TValue>(
-            this IValidatorContext<IEnumerable<TValue>> validator)
+        public static IValidatorContext<IEnumerable<TValue>?> NotEmpty<TValue>(
+            this IValidatorContext<IEnumerable<TValue>?> validator)
         {
             return validator.Perform(() =>
             {
-                if (!validator.Value.Any())
+                if (!validator.Value!.Any())
                 {
                     validator.SetArgumentException(
                         string.Format(CultureInfo.InvariantCulture, Resources.ArgumentMustNotBeEmpty,
@@ -99,11 +99,11 @@ namespace ZySharp.Validation
         /// </summary>
         /// <param name="validator">The current validator context.</param>
         /// <returns>The unmodified validator context.</returns>
-        public static IValidatorContext<string> NotEmpty(this IValidatorContext<string> validator)
+        public static IValidatorContext<string?> NotEmpty(this IValidatorContext<string?> validator)
         {
             return validator.Perform(() =>
             {
-                if (validator.Value.Length == 0)
+                if (validator.Value!.Length == 0)
                 {
                     validator.SetArgumentException(
                         string.Format(CultureInfo.InvariantCulture, Resources.ArgumentMustNotBeEmpty,
@@ -126,7 +126,7 @@ namespace ZySharp.Validation
         /// <typeparam name="T">The type of the current value.</typeparam>
         /// <param name="validator">The current validator context.</param>
         /// <returns>The unmodified validator context.</returns>
-        public static IValidatorContext<T> NotNullOrEmpty<T>(this IValidatorContext<T> validator)
+        public static IValidatorContext<T?> NotNullOrEmpty<T>(this IValidatorContext<T?> validator)
         {
             return validator.Perform(() =>
             {

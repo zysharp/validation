@@ -24,8 +24,8 @@ namespace ZySharp.Validation
         /// </param>
         /// <param name="action">The action to perform for the selected property.</param>
         /// <returns>The unmodified validator context.</returns>
-        public static IValidatorContext<T> For<T, TNext>(this IValidatorContext<T> validator,
-            Expression<Func<T, TNext>> selector, Action<IValidatorContext<TNext>> action)
+        public static IValidatorContext<T?> For<T, TNext>(this IValidatorContext<T?> validator,
+            Expression<Func<T, TNext?>> selector, Action<IValidatorContext<TNext?>> action)
         {
             ValidationInternals.ValidateNotNull(selector, nameof(selector));
             ValidationInternals.ValidateNotNull(action, nameof(action));
@@ -33,9 +33,9 @@ namespace ZySharp.Validation
             return validator.Perform(() =>
             {
                 var name = ValidationInternals.GetPropertyName(selector);
-                var value = selector.Compile().Invoke(validator.Value);
+                var value = selector.Compile().Invoke(validator.Value!);
 
-                var context = new ValidatorContext<TNext>(value, validator.Path, name);
+                var context = new ValidatorContext<TNext?>(value, validator.Path, name);
                 action.Invoke(context);
 
                 validator.SetForeignException(context);
@@ -62,8 +62,8 @@ namespace ZySharp.Validation
         /// </param>
         /// <param name="action">The action to perform for each item of the <see cref="IEnumerable{T}"/>.</param>
         /// <returns>The unmodified validator context.</returns>
-        public static IValidatorContext<T> ForEach<T, TItem>(this IValidatorContext<T> validator,
-            Expression<Func<T, IEnumerable<TItem>>> selector, Action<IValidatorContext<TItem>> action)
+        public static IValidatorContext<T?> ForEach<T, TItem>(this IValidatorContext<T?> validator,
+            Expression<Func<T, IEnumerable<TItem?>?>> selector, Action<IValidatorContext<TItem?>> action)
         {
             ValidationInternals.ValidateNotNull(selector, nameof(selector));
             ValidationInternals.ValidateNotNull(action, nameof(action));
@@ -73,7 +73,7 @@ namespace ZySharp.Validation
                 var name = (selector.Body is ParameterExpression)
                     ? null
                     : ValidationInternals.GetPropertyName(selector);
-                var value = selector.Compile().Invoke(validator.Value);
+                var value = selector.Compile().Invoke(validator.Value!);
 
                 if (value is null)
                 {
@@ -84,8 +84,8 @@ namespace ZySharp.Validation
                 foreach (var item in value)
                 {
                     var context = (name is null)
-                        ? new ValidatorContext<TItem>(item, $"{ValidationInternals.FormatName(validator.Path, null)}[{i++}]")
-                        : new ValidatorContext<TItem>(item, validator.Path, $"{name}[{i++}]");
+                        ? new ValidatorContext<TItem?>(item, $"{ValidationInternals.FormatName(validator.Path, null)}[{i++}]")
+                        : new ValidatorContext<TItem?>(item, validator.Path, $"{name}[{i++}]");
 
                     action.Invoke(context);
 
@@ -106,8 +106,8 @@ namespace ZySharp.Validation
         /// <param name="predicate">The filter predicate.</param>
         /// <param name="action">The action to perform if the condition is met.</param>
         /// <returns>The unmodified validator context.</returns>
-        public static IValidatorContext<T> When<T>(this IValidatorContext<T> validator, Func<T, bool> predicate,
-            Action<IValidatorContext<T>> action)
+        public static IValidatorContext<T?> When<T>(this IValidatorContext<T?> validator, Func<T?, bool> predicate,
+            Action<IValidatorContext<T?>> action)
         {
             ValidationInternals.ValidateNotNull(validator, nameof(validator));
             ValidationInternals.ValidateNotNull(predicate, nameof(predicate));
@@ -135,8 +135,8 @@ namespace ZySharp.Validation
         /// <param name="selector">The selector lambda.</param>
         /// <param name="action">The action to perform with the projected value.</param>
         /// <returns>The unmodified validator context.</returns>
-        public static IValidatorContext<T> Select<T, TNew>(this IValidatorContext<T> validator, Func<T, TNew> selector,
-            Action<IValidatorContext<TNew>> action)
+        public static IValidatorContext<T?> Select<T, TNew>(this IValidatorContext<T> validator, Func<T?, TNew?> selector,
+            Action<IValidatorContext<TNew?>> action)
         {
             ValidationInternals.ValidateNotNull(validator, nameof(validator));
             ValidationInternals.ValidateNotNull(selector, nameof(selector));
@@ -147,7 +147,7 @@ namespace ZySharp.Validation
                 return validator;
             }
 
-            var context = new ValidatorContext<TNew>(selector.Invoke(validator.Value), validator.Path, null);
+            var context = new ValidatorContext<TNew?>(selector.Invoke(validator.Value), validator.Path, null);
             action.Invoke(context);
 
             validator.SetForeignException(context);
@@ -169,29 +169,20 @@ namespace ZySharp.Validation
         /// </param>
         /// <param name="action">The action to perform for the selected enumerable property.</param>
         /// <returns>The unmodified validator context.</returns>
-        public static IValidatorContext<T> AsEnumerable<T, TNext>(this IValidatorContext<T> validator,
-            Expression<Func<T, IEnumerable<TNext>>> selector, Action<IValidatorContext<IEnumerable<TNext>>> action)
+        public static IValidatorContext<T?> AsEnumerable<T, TNext>(this IValidatorContext<T?> validator,
+            Expression<Func<T, IEnumerable<TNext?>?>> selector, Action<IValidatorContext<IEnumerable<TNext?>?>> action)
             where T : class
         {
-            ValidationInternals.ValidateNotNull(validator, nameof(validator));
-            ValidationInternals.ValidateNotNull(selector, nameof(selector));
-            ValidationInternals.ValidateNotNull(action, nameof(action));
-
-            if (validator.Exception is not null)
+            return validator.Perform(() =>
             {
-                return validator;
-            }
+                var name = (selector.Body is ParameterExpression)
+                    ? null
+                    : ValidationInternals.GetPropertyName(selector);
+                var value = selector.Compile().Invoke(validator.Value!);
 
-            var name = (selector.Body is ParameterExpression)
-                ? null
-                : ValidationInternals.GetPropertyName(selector);
-            var value = selector.Compile().Invoke(validator.Value);
-
-            var context = new ValidatorContext<IEnumerable<TNext>>(value, validator.Path, name);
-            action.Invoke(context);
-
-            validator.SetForeignException(context);
-            return validator;
+                var context = new ValidatorContext<IEnumerable<TNext?>?>(value, validator.Path, name);
+                action.Invoke(context);
+            });
         }
     }
 }

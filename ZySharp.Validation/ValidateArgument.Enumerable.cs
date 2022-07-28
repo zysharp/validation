@@ -8,21 +8,21 @@ namespace ZySharp.Validation
     public static partial class ValidateArgument
     {
         /// <summary>
-        /// Throws if the enumerable contains duplicate values.
+        /// Throws if the enumerable contains duplicate values for the specified property.
         /// </summary>
         /// <typeparam name="TValue">The type of the enumerable elements.</typeparam>
         /// <typeparam name="TKey">The type of the enumerable element keys.</typeparam>
         /// <param name="validator">The current validator context.</param>
         /// <param name="keySelector">The key selector.</param>
         /// <returns>The unmodified validator context.</returns>
-        public static IValidatorContext<IEnumerable<TValue>> HasDistinctElements<TValue, TKey>(
-            this IValidatorContext<IEnumerable<TValue>> validator, Func<TValue, TKey> keySelector)
+        public static IValidatorContext<IEnumerable<TValue?>?> HasDistinctElements<TValue, TKey>(
+            this IValidatorContext<IEnumerable<TValue?>?> validator, Func<TValue, TKey?> keySelector)
         {
             ValidationInternals.ValidateNotNull(keySelector, nameof(keySelector));
 
             return validator.Perform(() =>
             {
-                var duplicates = validator.Value
+                var duplicates = validator.Value!
                     .GroupBy(keySelector)
                     .Where(x => (x.Count() != 1))
                     .Select(x => x.Key)

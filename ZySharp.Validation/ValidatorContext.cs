@@ -11,17 +11,17 @@ namespace ZySharp.Validation
     {
         public IList<string> Path { get; internal set; }
 
-        public T Value { get; internal set; }
+        public T? Value { get; internal set; }
 
         public Exception? Exception { get; internal set; }
 
-        internal ValidatorContext(T value, string name)
+        internal ValidatorContext(T? value, string name)
         {
             Value = value;
             Path = new List<string> { name };
         }
 
-        internal ValidatorContext(T value, IEnumerable<string> path, string? name)
+        internal ValidatorContext(T? value, IEnumerable<string> path, string? name)
         {
             Value = value;
             Path = new List<string>(path);

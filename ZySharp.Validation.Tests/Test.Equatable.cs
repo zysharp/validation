@@ -1,26 +1,27 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics.CodeAnalysis;
 
 using Xunit;
 
 namespace ZySharp.Validation.Tests
 {
-    public sealed partial class Test
+    public sealed class TestEquatable
     {
         #region Equal
 
         public static IEnumerable<object[]> DataEqualRef => new List<object[]>
         {
-            new object[] { new RefTestCaseWithParam<object, object>(null  , null  , false) },
-            new object[] { new RefTestCaseWithParam<Obj   , Obj   >(Obj.A , Obj.A , false) },
-            new object[] { new RefTestCaseWithParam<Obj   , Obj   >(Obj.A , Obj.B , true ) },
-            new object[] { new RefTestCaseWithParam<string, string>("A"   , "A"   , false) },
-            new object[] { new RefTestCaseWithParam<string, string>("A"   , "B"   , true ) }
+            new object[] { new RefTestCaseWithParam<object, object                      >(null               , null                , false) },
+            new object[] { new RefTestCaseWithParam<TestConstants.Obj, TestConstants.Obj>(TestConstants.Obj.A, TestConstants.Obj.A , false) },
+            new object[] { new RefTestCaseWithParam<TestConstants.Obj, TestConstants.Obj>(TestConstants.Obj.A, TestConstants.Obj.B , true ) },
+            new object[] { new RefTestCaseWithParam<string, string                      >("A"                , "A"                 , false) },
+            new object[] { new RefTestCaseWithParam<string, string                      >("A"                , "B"                 , true ) }
         };
 
         [Theory]
         [MemberData(nameof(DataEqualRef))]
-        public void Test_Equal_Ref<T>(RefTestCaseWithParam<T, T> test)
+        public void EqualRef<T>([NotNull] RefTestCaseWithParam<T, T> test)
             where T : class
         {
             TestExtensions.TestValidation(test, v => v.Equal(test.Parameter));
@@ -28,7 +29,7 @@ namespace ZySharp.Validation.Tests
 
         [Theory]
         [MemberData(nameof(DataEqualRef))]
-        public void Test_Equal_Ref_ArgumentReference<T>(RefTestCaseWithParam<T, T> test)
+        public void EqualRefArgumentReference<T>([NotNull] RefTestCaseWithParam<T, T> test)
             where T : class
         {
             TestExtensions.TestValidation(test, v => v.Equal(ArgumentReference.For(test.Parameter, "param")));
@@ -36,20 +37,20 @@ namespace ZySharp.Validation.Tests
 
         public static IEnumerable<object[]> DataEqualVal => new List<object[]>
         {
-            new object[] { new ValTestCaseWithParam<int     , int     >(0        , 0        , false) },
-            new object[] { new ValTestCaseWithParam<int     , int     >(null     , 0        , false) },
-            new object[] { new ValTestCaseWithParam<int     , int     >(0        , 1        , true ) },
-            new object[] { new ValTestCaseWithParam<Guid    , Guid    >(GuidA    , GuidA    , false) },
-            new object[] { new ValTestCaseWithParam<Guid    , Guid    >(null     , GuidA    , false) },
-            new object[] { new ValTestCaseWithParam<Guid    , Guid    >(GuidA    , GuidB    , true ) },
-            new object[] { new ValTestCaseWithParam<TimeSpan, TimeSpan>(TimeSpanA, TimeSpanA, false) },
-            new object[] { new ValTestCaseWithParam<TimeSpan, TimeSpan>(null     , TimeSpanA, false) },
-            new object[] { new ValTestCaseWithParam<TimeSpan, TimeSpan>(TimeSpanA, TimeSpanB, true ) }
+            new object[] { new ValTestCaseWithParam<int     , int     >(0                      , 0                      , false) },
+            new object[] { new ValTestCaseWithParam<int     , int     >(null                   , 0                      , false) },
+            new object[] { new ValTestCaseWithParam<int     , int     >(0                      , 1                      , true ) },
+            new object[] { new ValTestCaseWithParam<Guid    , Guid    >(TestConstants.GuidA    , TestConstants.GuidA    , false) },
+            new object[] { new ValTestCaseWithParam<Guid    , Guid    >(null                   , TestConstants.GuidA    , false) },
+            new object[] { new ValTestCaseWithParam<Guid    , Guid    >(TestConstants.GuidA    , TestConstants.GuidB    , true ) },
+            new object[] { new ValTestCaseWithParam<TimeSpan, TimeSpan>(TestConstants.TimeSpanA, TestConstants.TimeSpanA, false) },
+            new object[] { new ValTestCaseWithParam<TimeSpan, TimeSpan>(null                   , TestConstants.TimeSpanA, false) },
+            new object[] { new ValTestCaseWithParam<TimeSpan, TimeSpan>(TestConstants.TimeSpanA, TestConstants.TimeSpanB, true ) }
         };
 
         [Theory]
         [MemberData(nameof(DataEqualVal))]
-        public void Test_Equal_Val<T>(ValTestCaseWithParam<T, T> test)
+        public void EqualVal<T>([NotNull] ValTestCaseWithParam<T, T> test)
             where T : struct
         {
             TestExtensions.TestValidation(test, v => v.Equal(test.Parameter));
@@ -57,7 +58,7 @@ namespace ZySharp.Validation.Tests
 
         [Theory]
         [MemberData(nameof(DataEqualVal))]
-        public void Test_Equal_Val_ArgumentReference<T>(ValTestCaseWithParam<T, T> test)
+        public void EqualValArgumentReference<T>([NotNull] ValTestCaseWithParam<T, T> test)
             where T : struct
         {
             TestExtensions.TestValidation(test, v => v.Equal(ArgumentReference.For(test.Parameter, "param")));
@@ -65,40 +66,40 @@ namespace ZySharp.Validation.Tests
 
         public static IEnumerable<object[]> DataEqualRefMultiple => new List<object[]>
         {
-            new object[] { new RefTestCaseWithParam<object, object[]>(null  , new object[]{ Obj.A, null   }, false) },
-            new object[] { new RefTestCaseWithParam<Obj   , Obj[]   >(Obj.A , new       []{ Obj.B, Obj.A  }, false) },
-            new object[] { new RefTestCaseWithParam<Obj   , Obj[]   >(Obj.A , new       []{ Obj.B         }, true ) },
-            new object[] { new RefTestCaseWithParam<string, string[]>("A"   , new       []{ "B", "A"      }, false) },
-            new object[] { new RefTestCaseWithParam<string, string[]>("A"   , new       []{ "B", "C", "D" }, true ) }
+            new object[] { new RefTestCaseWithParam<object, object?[]                     >(null               , new object?[]{ TestConstants.Obj.A, null                }, false) },
+            new object[] { new RefTestCaseWithParam<TestConstants.Obj, TestConstants.Obj[]>(TestConstants.Obj.A, new []       { TestConstants.Obj.B, TestConstants.Obj.A }, false) },
+            new object[] { new RefTestCaseWithParam<TestConstants.Obj, TestConstants.Obj[]>(TestConstants.Obj.A, new []       { TestConstants.Obj.B                      }, true ) },
+            new object[] { new RefTestCaseWithParam<string, string[]                      >("A"                , new []       { "B", "A"                                 }, false) },
+            new object[] { new RefTestCaseWithParam<string, string[]                      >("A"                , new []       { "B", "C", "D"                            }, true ) }
         };
 
         [Theory]
         [MemberData(nameof(DataEqualRefMultiple))]
-        public void Test_Equal_Ref_Multiple<T>(RefTestCaseWithParam<T, T[]> test)
+        public void EqualRefMultiple<T>([NotNull] RefTestCaseWithParam<T, T[]> test)
             where T : class
         {
-            TestExtensions.TestValidation(test, v => v.Equal(test.Parameter));
+            TestExtensions.TestValidation(test, v => v.Equal(test.Parameter!));
         }
 
         public static IEnumerable<object[]> DataEqualValMultiple => new List<object[]>
         {
-            new object[] { new ValTestCaseWithParam<int     , int[]     >(0        , new []{ 1, 0                 }, false) },
-            new object[] { new ValTestCaseWithParam<int     , int[]     >(null     , new []{ 0                    }, false) },
-            new object[] { new ValTestCaseWithParam<int     , int[]     >(0        , new []{ 1                    }, true ) },
-            new object[] { new ValTestCaseWithParam<Guid    , Guid[]    >(GuidA    , new []{ GuidB, GuidA         }, false) },
-            new object[] { new ValTestCaseWithParam<Guid    , Guid[]    >(null     , new []{ GuidA                }, false) },
-            new object[] { new ValTestCaseWithParam<Guid    , Guid[]    >(GuidA    , new []{ GuidB                }, true ) },
-            new object[] { new ValTestCaseWithParam<TimeSpan, TimeSpan[]>(TimeSpanA, new []{ TimeSpanB, TimeSpanA }, false) },
-            new object[] { new ValTestCaseWithParam<TimeSpan, TimeSpan[]>(null     , new []{ TimeSpanA            }, false) },
-            new object[] { new ValTestCaseWithParam<TimeSpan, TimeSpan[]>(TimeSpanA, new []{ TimeSpanB            }, true ) }
+            new object[] { new ValTestCaseWithParam<int     , int[]     >(0                      , new []{ 1, 0                                             }, false) },
+            new object[] { new ValTestCaseWithParam<int     , int[]     >(null                   , new []{ 0                                                }, false) },
+            new object[] { new ValTestCaseWithParam<int     , int[]     >(0                      , new []{ 1                                                }, true ) },
+            new object[] { new ValTestCaseWithParam<Guid    , Guid[]    >(TestConstants.GuidA    , new []{ TestConstants.GuidB, TestConstants.GuidA         }, false) },
+            new object[] { new ValTestCaseWithParam<Guid    , Guid[]    >(null                   , new []{ TestConstants.GuidA                              }, false) },
+            new object[] { new ValTestCaseWithParam<Guid    , Guid[]    >(TestConstants.GuidA    , new []{ TestConstants.GuidB                              }, true ) },
+            new object[] { new ValTestCaseWithParam<TimeSpan, TimeSpan[]>(TestConstants.TimeSpanA, new []{ TestConstants.TimeSpanB, TestConstants.TimeSpanA }, false) },
+            new object[] { new ValTestCaseWithParam<TimeSpan, TimeSpan[]>(null                   , new []{ TestConstants.TimeSpanA                          }, false) },
+            new object[] { new ValTestCaseWithParam<TimeSpan, TimeSpan[]>(TestConstants.TimeSpanA, new []{ TestConstants.TimeSpanB                          }, true ) }
         };
 
         [Theory]
         [MemberData(nameof(DataEqualValMultiple))]
-        public void Test_Equal_Val_Multiple<T>(ValTestCaseWithParam<T, T[]> test)
+        public void EqualValMultiple<T>([NotNull] ValTestCaseWithParam<T, T[]> test)
             where T : struct
         {
-            TestExtensions.TestValidation(test, v => v.Equal(test.Parameter));
+            TestExtensions.TestValidation(test, v => v.Equal(test.Parameter!));
         }
 
         #endregion Equal
@@ -108,15 +109,15 @@ namespace ZySharp.Validation.Tests
         public static IEnumerable<object[]> DataNotEqualRef => new List<object[]>
         {
             new object[] { new RefTestCaseWithParam<object, object>(null  , null  , true ) },
-            new object[] { new RefTestCaseWithParam<Obj   , Obj   >(Obj.A , Obj.A , true ) },
-            new object[] { new RefTestCaseWithParam<Obj   , Obj   >(Obj.A , Obj.B , false) },
+            new object[] { new RefTestCaseWithParam<TestConstants.Obj   , TestConstants.Obj   >(TestConstants.Obj.A , TestConstants.Obj.A , true ) },
+            new object[] { new RefTestCaseWithParam<TestConstants.Obj   , TestConstants.Obj   >(TestConstants.Obj.A , TestConstants.Obj.B , false) },
             new object[] { new RefTestCaseWithParam<string, string>("A"   , "A"   , true ) },
             new object[] { new RefTestCaseWithParam<string, string>("A"   , "B"   , false) }
         };
 
         [Theory]
         [MemberData(nameof(DataNotEqualRef))]
-        public void Test_NotEqual_Ref<T>(RefTestCaseWithParam<T, T> test)
+        public void NotEqualRef<T>([NotNull] RefTestCaseWithParam<T, T> test)
             where T : class
         {
             TestExtensions.TestValidation(test, v => v.NotEqual(test.Parameter));
@@ -124,7 +125,7 @@ namespace ZySharp.Validation.Tests
 
         [Theory]
         [MemberData(nameof(DataNotEqualRef))]
-        public void Test_NotEqual_Ref_ArgumentReference<T>(RefTestCaseWithParam<T, T> test)
+        public void NotEqualRefArgumentReference<T>([NotNull] RefTestCaseWithParam<T, T> test)
             where T : class
         {
             TestExtensions.TestValidation(test, v => v.NotEqual(ArgumentReference.For(test.Parameter, "param")));
@@ -132,20 +133,20 @@ namespace ZySharp.Validation.Tests
 
         public static IEnumerable<object[]> DataNotEqualVal => new List<object[]>
         {
-            new object[] { new ValTestCaseWithParam<int     , int     >(0        , 0        , true ) },
-            new object[] { new ValTestCaseWithParam<int     , int     >(null     , 0        , false) },
-            new object[] { new ValTestCaseWithParam<int     , int     >(0        , 1        , false) },
-            new object[] { new ValTestCaseWithParam<Guid    , Guid    >(GuidA    , GuidA    , true ) },
-            new object[] { new ValTestCaseWithParam<Guid    , Guid    >(null     , GuidA    , false) },
-            new object[] { new ValTestCaseWithParam<Guid    , Guid    >(GuidA    , GuidB    , false) },
-            new object[] { new ValTestCaseWithParam<TimeSpan, TimeSpan>(TimeSpanA, TimeSpanA, true ) },
-            new object[] { new ValTestCaseWithParam<TimeSpan, TimeSpan>(null     , TimeSpanA, false) },
-            new object[] { new ValTestCaseWithParam<TimeSpan, TimeSpan>(TimeSpanA, TimeSpanB, false) }
+            new object[] { new ValTestCaseWithParam<int     , int     >(0                      , 0                      , true ) },
+            new object[] { new ValTestCaseWithParam<int     , int     >(null                   , 0                      , false) },
+            new object[] { new ValTestCaseWithParam<int     , int     >(0                      , 1                      , false) },
+            new object[] { new ValTestCaseWithParam<Guid    , Guid    >(TestConstants.GuidA    , TestConstants.GuidA    , true ) },
+            new object[] { new ValTestCaseWithParam<Guid    , Guid    >(null                   , TestConstants.GuidA    , false) },
+            new object[] { new ValTestCaseWithParam<Guid    , Guid    >(TestConstants.GuidA    , TestConstants.GuidB    , false) },
+            new object[] { new ValTestCaseWithParam<TimeSpan, TimeSpan>(TestConstants.TimeSpanA, TestConstants.TimeSpanA, true ) },
+            new object[] { new ValTestCaseWithParam<TimeSpan, TimeSpan>(null                   , TestConstants.TimeSpanA, false) },
+            new object[] { new ValTestCaseWithParam<TimeSpan, TimeSpan>(TestConstants.TimeSpanA, TestConstants.TimeSpanB, false) }
         };
 
         [Theory]
         [MemberData(nameof(DataNotEqualVal))]
-        public void Test_NotEqual_Val<T>(ValTestCaseWithParam<T, T> test)
+        public void NotEqualVal<T>([NotNull] ValTestCaseWithParam<T, T> test)
             where T : struct
         {
             TestExtensions.TestValidation(test, v => v.NotEqual(test.Parameter));
@@ -153,7 +154,7 @@ namespace ZySharp.Validation.Tests
 
         [Theory]
         [MemberData(nameof(DataNotEqualVal))]
-        public void Test_NotEqual_Val_ArgumentReference<T>(ValTestCaseWithParam<T, T> test)
+        public void NotEqualValArgumentReference<T>([NotNull] ValTestCaseWithParam<T, T> test)
             where T : struct
         {
             TestExtensions.TestValidation(test, v => v.NotEqual(ArgumentReference.For(test.Parameter, "param")));
@@ -161,40 +162,40 @@ namespace ZySharp.Validation.Tests
 
         public static IEnumerable<object[]> DataNotEqualRefMultiple => new List<object[]>
         {
-            new object[] { new RefTestCaseWithParam<object, object[]>(null  , new object[]{ Obj.A, null   }, true ) },
-            new object[] { new RefTestCaseWithParam<Obj   , Obj[]   >(Obj.A , new       []{ Obj.B, Obj.A  }, true ) },
-            new object[] { new RefTestCaseWithParam<Obj   , Obj[]   >(Obj.A , new       []{ Obj.B         }, false) },
-            new object[] { new RefTestCaseWithParam<string, string[]>("A"   , new       []{ "B", "A"      }, true ) },
-            new object[] { new RefTestCaseWithParam<string, string[]>("A"   , new       []{ "B", "C", "D" }, false) }
+            new object[] { new RefTestCaseWithParam<object, object?[]                     >(null               , new object?[]{ TestConstants.Obj.A, null                }, true ) },
+            new object[] { new RefTestCaseWithParam<TestConstants.Obj, TestConstants.Obj[]>(TestConstants.Obj.A, new        []{ TestConstants.Obj.B, TestConstants.Obj.A }, true ) },
+            new object[] { new RefTestCaseWithParam<TestConstants.Obj, TestConstants.Obj[]>(TestConstants.Obj.A, new        []{ TestConstants.Obj.B                      }, false) },
+            new object[] { new RefTestCaseWithParam<string, string[]                      >("A"                , new        []{ "B", "A"                                 }, true ) },
+            new object[] { new RefTestCaseWithParam<string, string[]                      >("A"                , new        []{ "B", "C", "D"                            }, false) }
         };
 
         [Theory]
         [MemberData(nameof(DataNotEqualRefMultiple))]
-        public void Test_NotEqual_Ref_Multiple<T>(RefTestCaseWithParam<T, T[]> test)
+        public void NotEqualRefMultiple<T>([NotNull] RefTestCaseWithParam<T, T[]> test)
             where T : class
         {
-            TestExtensions.TestValidation(test, v => v.NotEqual(test.Parameter));
+            TestExtensions.TestValidation(test, v => v.NotEqual(test.Parameter!));
         }
 
         public static IEnumerable<object[]> DataNotEqualValMultiple => new List<object[]>
         {
-            new object[] { new ValTestCaseWithParam<int     , int[]     >(0        , new []{ 1, 0                 }, true ) },
-            new object[] { new ValTestCaseWithParam<int     , int[]     >(null     , new []{ 0                    }, false) },
-            new object[] { new ValTestCaseWithParam<int     , int[]     >(0        , new []{ 1                    }, false) },
-            new object[] { new ValTestCaseWithParam<Guid    , Guid[]    >(GuidA    , new []{ GuidB, GuidA         }, true ) },
-            new object[] { new ValTestCaseWithParam<Guid    , Guid[]    >(null     , new []{ GuidA                }, false) },
-            new object[] { new ValTestCaseWithParam<Guid    , Guid[]    >(GuidA    , new []{ GuidB                }, false) },
-            new object[] { new ValTestCaseWithParam<TimeSpan, TimeSpan[]>(TimeSpanA, new []{ TimeSpanB, TimeSpanA }, true ) },
-            new object[] { new ValTestCaseWithParam<TimeSpan, TimeSpan[]>(null     , new []{ TimeSpanA            }, false) },
-            new object[] { new ValTestCaseWithParam<TimeSpan, TimeSpan[]>(TimeSpanA, new []{ TimeSpanB            }, false) }
+            new object[] { new ValTestCaseWithParam<int     , int[]     >(0                      , new []{ 1, 0                                             }, true ) },
+            new object[] { new ValTestCaseWithParam<int     , int[]     >(null                   , new []{ 0                                                }, false) },
+            new object[] { new ValTestCaseWithParam<int     , int[]     >(0                      , new []{ 1                                                }, false) },
+            new object[] { new ValTestCaseWithParam<Guid    , Guid[]    >(TestConstants.GuidA    , new []{ TestConstants.GuidB, TestConstants.GuidA         }, true ) },
+            new object[] { new ValTestCaseWithParam<Guid    , Guid[]    >(null                   , new []{ TestConstants.GuidA                              }, false) },
+            new object[] { new ValTestCaseWithParam<Guid    , Guid[]    >(TestConstants.GuidA    , new []{ TestConstants.GuidB                              }, false) },
+            new object[] { new ValTestCaseWithParam<TimeSpan, TimeSpan[]>(TestConstants.TimeSpanA, new []{ TestConstants.TimeSpanB, TestConstants.TimeSpanA }, true ) },
+            new object[] { new ValTestCaseWithParam<TimeSpan, TimeSpan[]>(null                   , new []{ TestConstants.TimeSpanA                          }, false) },
+            new object[] { new ValTestCaseWithParam<TimeSpan, TimeSpan[]>(TestConstants.TimeSpanA, new []{ TestConstants.TimeSpanB                          }, false) }
         };
 
         [Theory]
         [MemberData(nameof(DataNotEqualValMultiple))]
-        public void Test_NotEqual_Val_Multiple<T>(ValTestCaseWithParam<T, T[]> test)
+        public void NotEqualValMultiple<T>([NotNull] ValTestCaseWithParam<T, T[]> test)
             where T : struct
         {
-            TestExtensions.TestValidation(test, v => v.NotEqual(test.Parameter));
+            TestExtensions.TestValidation(test, v => v.NotEqual(test.Parameter!));
         }
 
         #endregion NotEqual

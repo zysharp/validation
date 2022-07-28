@@ -4,10 +4,10 @@ using Xunit;
 
 namespace ZySharp.Validation.Tests
 {
-    public sealed partial class Test
+    public sealed class TestSelectors
     {
         [Fact]
-        public void Test_For()
+        public void For()
         {
             var test = new KeyValuePair<int, string>(1337, "test");
             var path = $"{nameof(test)}.{nameof(test.Key)}";
@@ -20,7 +20,7 @@ namespace ZySharp.Validation.Tests
         }
 
         [Fact]
-        public void Test_ForEach()
+        public void ForEach()
         {
             var test = new List<int> { 1, 2, 3 };
             var path = nameof(test);
@@ -35,7 +35,7 @@ namespace ZySharp.Validation.Tests
         }
 
         [Fact]
-        public void Test_For_For()
+        public void ForFor()
         {
             var test = new KeyValuePair<int, KeyValuePair<int, string>>(1337, new KeyValuePair<int, string>(1338, "test"));
             var path = $"{nameof(test)}.{nameof(test.Value)}.{nameof(test.Value.Key)}";
@@ -50,7 +50,7 @@ namespace ZySharp.Validation.Tests
         }
 
         [Fact]
-        public void Test_For_ForEach()
+        public void ForForEach()
         {
             var test = new KeyValuePair<int, List<int>>(1337, new List<int> { 1, 2, 3 });
             var path = $"{nameof(test)}.{nameof(test.Value)}";
@@ -67,7 +67,7 @@ namespace ZySharp.Validation.Tests
         }
 
         [Fact]
-        public void Test_ForEach_For()
+        public void ForEachFor()
         {
             var test = new List<KeyValuePair<int, string>> { new(1337, "test") };
 
@@ -84,7 +84,7 @@ namespace ZySharp.Validation.Tests
         }
 
         [Fact]
-        public void Test_ForEach_Property()
+        public void ForEachProperty()
         {
             var test = new KeyValuePair<int, List<int>>(1337, new List<int> { 1, 2, 3 });
             var path = $"{nameof(test)}.{nameof(test.Value)}";
@@ -96,6 +96,41 @@ namespace ZySharp.Validation.Tests
                     .AssertEqualValueAndPathIndexed(test.Value[i], $"{path}[{i}]", ref i)
                 )
             );
+        }
+
+        [Fact]
+        public void AsEnumerable()
+        {
+            var test = new List<int> { 1, 2, 3 };
+
+            ValidateArgument.For(test, nameof(test), v => v
+                .AsEnumerable(x => x, v => v
+                    .NotEmpty()
+                )
+            );
+        }
+
+        [Fact]
+        public void AsEnumerableProperty()
+        {
+            var test = new { List = new List<int> { 1, 2, 3 } };
+
+            ValidateArgument.For(test, nameof(test), v => v
+                .AsEnumerable(x => x.List, v => v
+                    .NotEmpty()
+                )
+            );
+        }
+
+        [Fact]
+        public void ReferenceFor()
+        {
+            var test = new KeyValuePair<int, string>(1337, "test");
+            var path = $"{nameof(test)}.{nameof(test.Key)}";
+
+            var reference = ArgumentReference.For(test, nameof(test))
+                .For(x => x.Key);
+            reference.AssertEqualValueAndPath(test.Key, path);
         }
     }
 }

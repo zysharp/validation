@@ -10,7 +10,7 @@ namespace ZySharp.Validation.Tests
     [ExcludeFromCodeCoverage]
     internal static class TestExtensions
     {
-        public static IValidatorContext<T> AssertEqualValueAndPath<T>(this IValidatorContext<T> validator, T value, string path)
+        public static IValidatorContext<T?> AssertEqualValueAndPath<T>(this IValidatorContext<T?> validator, T value, string path)
         {
             Contract.Assert(validator is not null);
             Contract.Assert(!string.IsNullOrEmpty(path));
@@ -21,7 +21,18 @@ namespace ZySharp.Validation.Tests
             return validator;
         }
 
-        public static IValidatorContext<T> AssertEqualValueAndPathIndexed<T>(this IValidatorContext<T> validator, T value,
+        public static IArgumentReference<T?> AssertEqualValueAndPath<T>(this IArgumentReference<T?> reference, T value, string path)
+        {
+            Contract.Assert(reference is not null);
+            Contract.Assert(!string.IsNullOrEmpty(path));
+
+            Assert.Equal(value, reference.Value);
+            Assert.Equal(path, string.Join('.', reference.Path));
+
+            return reference;
+        }
+
+        public static IValidatorContext<T?> AssertEqualValueAndPathIndexed<T>(this IValidatorContext<T?> validator, T value,
             string path, ref int index)
         {
             Contract.Assert(validator is not null);
@@ -32,8 +43,8 @@ namespace ZySharp.Validation.Tests
             return validator.AssertEqualValueAndPath(value, path);
         }
 
-        public static void TestValidation<TValue>(TValue value, Func<IValidatorContext<TValue>, IValidatorContext<TValue>> action,
-            bool expectThrow, Type exceptionType = null)
+        public static void TestValidation<TValue>(TValue value, Func<IValidatorContext<TValue?>, IValidatorContext<TValue?>> action,
+            bool expectThrow, Type? exceptionType = null)
         {
             Contract.Assert(action is not null);
 
@@ -50,8 +61,8 @@ namespace ZySharp.Validation.Tests
 
                 var frame = new StackTrace(exception, true).GetFrame(0);
                 Assert.NotNull(frame);
-                Assert.True(frame.HasMethod());
-                var method = frame.GetMethod();
+                Assert.True(frame!.HasMethod());
+                var method = frame!.GetMethod();
 
                 // The compiler allocates a hidden class for the `action` closure ...
                 Assert.Equal(typeof(TestExtensions), method?.DeclaringType?.DeclaringType);
@@ -64,7 +75,7 @@ namespace ZySharp.Validation.Tests
         }
 
         public static void TestValidation<TValue>(RefTestCase<TValue> test,
-            Func<IValidatorContext<TValue>, IValidatorContext<TValue>> action)
+            Func<IValidatorContext<TValue?>, IValidatorContext<TValue?>> action)
             where TValue : class
         {
             TestValidation(test.Value, action, test.ExpectThrow, test.ExceptionType);
@@ -82,13 +93,13 @@ namespace ZySharp.Validation.Tests
     public class RefTestCase<TValue>
         where TValue : class
     {
-        public TValue Value { get; }
+        public TValue? Value { get; }
 
         public bool ExpectThrow { get; }
 
-        public Type ExceptionType { get; }
+        public Type? ExceptionType { get; }
 
-        public RefTestCase(TValue value, bool expectThrow, Type exceptionType = null)
+        public RefTestCase(TValue? value, bool expectThrow, Type? exceptionType = null)
         {
             Value = value;
             ExpectThrow = expectThrow;
@@ -104,9 +115,9 @@ namespace ZySharp.Validation.Tests
 
         public bool ExpectThrow { get; }
 
-        public Type ExceptionType { get; }
+        public Type? ExceptionType { get; }
 
-        public ValTestCase(TValue? value, bool expectThrow, Type exceptionType = null)
+        public ValTestCase(TValue? value, bool expectThrow, Type? exceptionType = null)
         {
             Value = value;
             ExpectThrow = expectThrow;
@@ -119,9 +130,9 @@ namespace ZySharp.Validation.Tests
         RefTestCase<TValue>
         where TValue : class
     {
-        public TParam Parameter { get; }
+        public TParam? Parameter { get; }
 
-        public RefTestCaseWithParam(TValue value, TParam parameter, bool expectThrow, Type exceptionType = null) :
+        public RefTestCaseWithParam(TValue? value, TParam? parameter, bool expectThrow, Type? exceptionType = null) :
             base(value, expectThrow, exceptionType)
         {
             Parameter = parameter;
@@ -133,9 +144,9 @@ namespace ZySharp.Validation.Tests
         ValTestCase<TValue>
         where TValue : struct
     {
-        public TParam Parameter { get; }
+        public TParam? Parameter { get; }
 
-        public ValTestCaseWithParam(TValue? value, TParam parameter, bool expectThrow, Type exceptionType = null) :
+        public ValTestCaseWithParam(TValue? value, TParam? parameter, bool expectThrow, Type? exceptionType = null) :
             base(value, expectThrow, exceptionType)
         {
             Parameter = parameter;

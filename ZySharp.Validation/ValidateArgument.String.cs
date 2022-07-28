@@ -11,13 +11,13 @@ namespace ZySharp.Validation
         /// <param name="validator">The current validator context.</param>
         /// <param name="regex">The regular expression containing the pattern.</param>
         /// <returns>The unmodified validator context.</returns>
-        public static IValidatorContext<string> MustMatchPattern(this IValidatorContext<string> validator, Regex regex)
+        public static IValidatorContext<string?> MustMatchPattern(this IValidatorContext<string?> validator, Regex regex)
         {
-            ValidationInternals.ValidateNotNull(validator, nameof(regex));
+            ValidationInternals.ValidateNotNull(regex, nameof(regex));
 
             return validator.Perform(() =>
             {
-                if (!regex.IsMatch(validator.Value))
+                if (!regex.IsMatch(validator.Value!))
                 {
                     validator.SetArgumentException(
                         string.Format(CultureInfo.InvariantCulture, Resources.StringMustMatchPattern,
@@ -27,7 +27,7 @@ namespace ZySharp.Validation
         }
 
         /// <inheritdoc cref="MustMatchPattern(IValidatorContext{string},Regex)"/>
-        public static IValidatorContext<string> MustMatchPattern(this IValidatorContext<string> validator, string regex)
+        public static IValidatorContext<string?> MustMatchPattern(this IValidatorContext<string?> validator, string regex)
         {
             ValidationInternals.ValidateNotNull(regex, nameof(regex));
 
