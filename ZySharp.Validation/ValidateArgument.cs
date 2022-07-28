@@ -17,12 +17,12 @@ namespace ZySharp.Validation
         /// <param name="name">The name of the argument to validate.</param>
         /// <param name="action">The action to perform for the selected parameter.</param>
         /// <returns>The value of the validated argument.</returns>
-        public static T For<T>([ValidatedNotNull][NoEnumeration] T value, string name, Action<IValidatorContext<T>> action)
+        public static T? For<T>([ValidatedNotNull][NoEnumeration] T? value, string name, Action<IValidatorContext<T?>> action)
         {
             ValidationInternals.ValidateNotNull(name, nameof(name));
             ValidationInternals.ValidateNotNull(action, nameof(action));
 
-            var context = new ValidatorContext<T>(value, name);
+            var context = new ValidatorContext<T?>(value, name);
             action(context);
 
             if (context.Exception is null)

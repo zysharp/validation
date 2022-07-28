@@ -11,12 +11,12 @@ namespace ZySharp.Validation
         /// <typeparam name="T">The type of the current value.</typeparam>
         /// <param name="validator">The current validator context.</param>
         /// <returns>The unmodified validator context.</returns>
-        public static IValidatorContext<T> IsReadable<T>(this IValidatorContext<T> validator)
+        public static IValidatorContext<T?> IsReadable<T>(this IValidatorContext<T?> validator)
             where T : Stream
         {
             return validator.Perform(() =>
             {
-                if (!validator.Value.CanRead)
+                if (!validator.Value!.CanRead)
                 {
                     validator.SetArgumentException(
                         string.Format(CultureInfo.InvariantCulture, Resources.StreamMustBeReadable,
@@ -31,12 +31,12 @@ namespace ZySharp.Validation
         /// <typeparam name="T">The type of the current value.</typeparam>
         /// <param name="validator">The current validator context.</param>
         /// <returns>The unmodified validator context.</returns>
-        public static IValidatorContext<T> IsWritable<T>(this IValidatorContext<T> validator)
+        public static IValidatorContext<T?> IsWritable<T>(this IValidatorContext<T?> validator)
             where T : Stream
         {
             return validator.Perform(() =>
             {
-                if (!validator.Value.CanWrite)
+                if (!validator.Value!.CanWrite)
                 {
                     validator.SetArgumentException(
                         string.Format(CultureInfo.InvariantCulture, Resources.StreamMustBeWriteable,
@@ -51,12 +51,12 @@ namespace ZySharp.Validation
         /// <typeparam name="T">The type of the current value.</typeparam>
         /// <param name="validator">The current validator context.</param>
         /// <returns>The unmodified validator context.</returns>
-        public static IValidatorContext<T> IsSeekable<T>(this IValidatorContext<T> validator)
+        public static IValidatorContext<T?> IsSeekable<T>(this IValidatorContext<T?> validator)
             where T : Stream
         {
             return validator.Perform(() =>
             {
-                if (!validator.Value.CanSeek)
+                if (!validator.Value!.CanSeek)
                 {
                     validator.SetArgumentException(
                         string.Format(CultureInfo.InvariantCulture, Resources.StreamMustBeSeekable,

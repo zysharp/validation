@@ -13,11 +13,11 @@ namespace ZySharp.Validation
         /// <param name="validator">The current validator context.</param>
         /// <param name="value">The expected value.</param>
         /// <returns>The unmodified validator context.</returns>
-        public static IValidatorContext<T> Equal<T>(this IValidatorContext<T> validator, T value)
+        public static IValidatorContext<T?> Equal<T>(this IValidatorContext<T?> validator, T? value)
         {
             return validator.Perform(() =>
             {
-                if (!EqualityComparer<T>.Default.Equals(validator.Value, value))
+                if (!EqualityComparer<T?>.Default.Equals(validator.Value, value))
                 {
                     validator.SetArgumentException(
                         string.Format(CultureInfo.InvariantCulture, Resources.ArgumentMustBeValue,
@@ -45,14 +45,14 @@ namespace ZySharp.Validation
         /// <param name="validator">The current validator context.</param>
         /// <param name="reference">A reference to the expected value.</param>
         /// <returns>The unmodified validator context.</returns>
-        public static IValidatorContext<T> Equal<T>(this IValidatorContext<T> validator,
-            IArgumentReference<T> reference)
+        public static IValidatorContext<T?> Equal<T>(this IValidatorContext<T?> validator,
+            IArgumentReference<T?> reference)
         {
             ValidationInternals.ValidateNotNull(reference, nameof(reference));
 
             return validator.Perform(() =>
             {
-                if (!EqualityComparer<T>.Default.Equals(validator.Value, reference.Value))
+                if (!EqualityComparer<T?>.Default.Equals(validator.Value, reference.Value))
                 {
                     validator.SetArgumentException(
                         string.Format(CultureInfo.InvariantCulture, Resources.ArgumentMustBeEqualToReference,
@@ -79,13 +79,13 @@ namespace ZySharp.Validation
         /// <param name="validator">The current validator context.</param>
         /// <param name="values">The allowed values.</param>
         /// <returns>The unmodified validator context.</returns>
-        public static IValidatorContext<T> Equal<T>(this IValidatorContext<T> validator, params T[] values)
+        public static IValidatorContext<T?> Equal<T>(this IValidatorContext<T?> validator, params T?[] values)
         {
             ValidationInternals.ValidateNotNull(values, nameof(values));
 
             return validator.Perform(() =>
             {
-                var isValidValue = values.Any(x => EqualityComparer<T>.Default.Equals(validator.Value, x));
+                var isValidValue = values.Any(x => EqualityComparer<T?>.Default.Equals(validator.Value, x));
                 if (!isValidValue)
                 {
                     validator.SetArgumentException(
@@ -111,11 +111,11 @@ namespace ZySharp.Validation
         /// <param name="validator">The current validator context.</param>
         /// <param name="value">The blacklisted value.</param>
         /// <returns>The unmodified validator context.</returns>
-        public static IValidatorContext<T> NotEqual<T>(this IValidatorContext<T> validator, T value)
+        public static IValidatorContext<T?> NotEqual<T>(this IValidatorContext<T?> validator, T? value)
         {
             return validator.Perform(() =>
             {
-                if (EqualityComparer<T>.Default.Equals(validator.Value, value))
+                if (EqualityComparer<T?>.Default.Equals(validator.Value, value))
                 {
                     validator.SetArgumentException(
                         string.Format(CultureInfo.InvariantCulture, Resources.ArgumentMustNotBeValue,
@@ -143,14 +143,14 @@ namespace ZySharp.Validation
         /// <param name="validator">The current validator context.</param>
         /// <param name="reference">A reference to the blacklisted value.</param>
         /// <returns>The unmodified validator context.</returns>
-        public static IValidatorContext<T> NotEqual<T>(this IValidatorContext<T> validator,
-            IArgumentReference<T> reference)
+        public static IValidatorContext<T?> NotEqual<T>(this IValidatorContext<T?> validator,
+            IArgumentReference<T?> reference)
         {
             ValidationInternals.ValidateNotNull(reference, nameof(reference));
 
             return validator.Perform(() =>
             {
-                if (EqualityComparer<T>.Default.Equals(validator.Value, reference.Value))
+                if (EqualityComparer<T?>.Default.Equals(validator.Value, reference.Value))
                 {
                     validator.SetArgumentException(
                         string.Format(CultureInfo.InvariantCulture, Resources.ArgumentMustNotBeEqualToReference,
@@ -177,13 +177,13 @@ namespace ZySharp.Validation
         /// <param name="validator">The current validator context.</param>
         /// <param name="values">The blacklisted values.</param>
         /// <returns>The unmodified validator context.</returns>
-        public static IValidatorContext<T> NotEqual<T>(this IValidatorContext<T> validator, params T[] values)
+        public static IValidatorContext<T?> NotEqual<T>(this IValidatorContext<T?> validator, params T?[] values)
         {
             ValidationInternals.ValidateNotNull(values, nameof(values));
 
             return validator.Perform(() =>
             {
-                var isInvalidValue = values.Any(x => EqualityComparer<T>.Default.Equals(validator.Value, x));
+                var isInvalidValue = values.Any(x => EqualityComparer<T?>.Default.Equals(validator.Value, x));
                 if (isInvalidValue)
                 {
                     validator.SetArgumentException(

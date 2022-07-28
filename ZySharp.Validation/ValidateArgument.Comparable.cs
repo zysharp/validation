@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Globalization;
 
 namespace ZySharp.Validation
@@ -14,12 +15,12 @@ namespace ZySharp.Validation
         /// <param name="validator">The current validator context.</param>
         /// <param name="threshold">The threshold value.</param>
         /// <returns>The unmodified validator context.</returns>
-        public static IValidatorContext<T> GreaterThan<T>(this IValidatorContext<T> validator, T threshold)
+        public static IValidatorContext<T?> GreaterThan<T>(this IValidatorContext<T?> validator, T? threshold)
             where T : IComparable<T>
         {
             return validator.Perform(() =>
             {
-                if (validator.Value.CompareTo(threshold) <= 0)
+                if (Comparer<T?>.Default.Compare(validator.Value, threshold) <= 0)
                 {
                     validator.SetArgumentException(
                         string.Format(CultureInfo.InvariantCulture, Resources.ArgumentMustBeGreaterThan,
@@ -47,15 +48,15 @@ namespace ZySharp.Validation
         /// <param name="validator">The current validator context.</param>
         /// <param name="threshold">A reference to the threshold value.</param>
         /// <returns>The unmodified validator context.</returns>
-        public static IValidatorContext<T> GreaterThan<T>(this IValidatorContext<T> validator,
-            IArgumentReference<T> threshold)
+        public static IValidatorContext<T?> GreaterThan<T>(this IValidatorContext<T?> validator,
+            IArgumentReference<T?> threshold)
             where T : IComparable<T>
         {
             ValidationInternals.ValidateNotNull(threshold, nameof(threshold));
 
             return validator.Perform(() =>
             {
-                if (validator.Value.CompareTo(threshold.Value) <= 0)
+                if (Comparer<T?>.Default.Compare(validator.Value, threshold.Value) <= 0)
                 {
                     validator.SetArgumentException(
                         string.Format(CultureInfo.InvariantCulture, Resources.ArgumentMustBeGreaterThanReference,
@@ -86,12 +87,12 @@ namespace ZySharp.Validation
         /// <param name="validator">The current validator context.</param>
         /// <param name="threshold">The threshold value.</param>
         /// <returns>The unmodified validator context.</returns>
-        public static IValidatorContext<T> GreaterThanOrEqualTo<T>(this IValidatorContext<T> validator, T threshold)
+        public static IValidatorContext<T?> GreaterThanOrEqualTo<T>(this IValidatorContext<T?> validator, T? threshold)
             where T : IComparable<T>
         {
             return validator.Perform(() =>
             {
-                if (validator.Value.CompareTo(threshold) < 0)
+                if (Comparer<T?>.Default.Compare(validator.Value, threshold) < 0)
                 {
                     validator.SetArgumentException(
                         string.Format(CultureInfo.InvariantCulture, Resources.ArgumentMustBeGreaterThanOrEqualTo,
@@ -119,15 +120,15 @@ namespace ZySharp.Validation
         /// <param name="validator">The current validator context.</param>
         /// <param name="threshold">A reference to the threshold value.</param>
         /// <returns>The unmodified validator context.</returns>
-        public static IValidatorContext<T> GreaterThanOrEqualTo<T>(this IValidatorContext<T> validator,
-            IArgumentReference<T> threshold)
+        public static IValidatorContext<T?> GreaterThanOrEqualTo<T>(this IValidatorContext<T?> validator,
+            IArgumentReference<T?> threshold)
             where T : IComparable<T>
         {
             ValidationInternals.ValidateNotNull(threshold, nameof(threshold));
 
             return validator.Perform(() =>
             {
-                if (validator.Value.CompareTo(threshold.Value) < 0)
+                if (Comparer<T?>.Default.Compare(validator.Value, threshold.Value) < 0)
                 {
                     validator.SetArgumentException(
                         string.Format(CultureInfo.InvariantCulture, Resources.ArgumentMustBeGreaterThanOrEqualToReference,
@@ -158,12 +159,12 @@ namespace ZySharp.Validation
         /// <param name="validator">The current validator context.</param>
         /// <param name="threshold">The threshold value.</param>
         /// <returns>The unmodified validator context.</returns>
-        public static IValidatorContext<T> LessThan<T>(this IValidatorContext<T> validator, T threshold)
+        public static IValidatorContext<T?> LessThan<T>(this IValidatorContext<T?> validator, T? threshold)
             where T : IComparable<T>
         {
             return validator.Perform(() =>
             {
-                if (validator.Value.CompareTo(threshold) >= 0)
+                if (Comparer<T?>.Default.Compare(validator.Value, threshold) >= 0)
                 {
                     validator.SetArgumentException(
                         string.Format(CultureInfo.InvariantCulture, Resources.ArgumentMustBeLessThan,
@@ -190,15 +191,15 @@ namespace ZySharp.Validation
         /// <param name="validator">The current validator context.</param>
         /// <param name="threshold">A reference to the threshold value.</param>
         /// <returns>The unmodified validator context.</returns>
-        public static IValidatorContext<T> LessThan<T>(this IValidatorContext<T> validator,
-            IArgumentReference<T> threshold)
+        public static IValidatorContext<T?> LessThan<T>(this IValidatorContext<T?> validator,
+            IArgumentReference<T?> threshold)
             where T : IComparable<T>
         {
             ValidationInternals.ValidateNotNull(threshold, nameof(threshold));
 
             return validator.Perform(() =>
             {
-                if (validator.Value.CompareTo(threshold.Value) >= 0)
+                if (Comparer<T?>.Default.Compare(validator.Value, threshold.Value) >= 0)
                 {
                     validator.SetArgumentException(
                         string.Format(CultureInfo.InvariantCulture, Resources.ArgumentMustBeLessThanReference,
@@ -228,12 +229,12 @@ namespace ZySharp.Validation
         /// <param name="validator">The current validator context.</param>
         /// <param name="threshold">The threshold value.</param>
         /// <returns>The unmodified validator context.</returns>
-        public static IValidatorContext<T> LessThanOrEqualTo<T>(this IValidatorContext<T> validator, T threshold)
+        public static IValidatorContext<T?> LessThanOrEqualTo<T>(this IValidatorContext<T?> validator, T? threshold)
             where T : IComparable<T>
         {
             return validator.Perform(() =>
             {
-                if (validator.Value.CompareTo(threshold) > 0)
+                if (Comparer<T?>.Default.Compare(validator.Value, threshold) > 0)
                 {
                     validator.SetArgumentException(
                         string.Format(CultureInfo.InvariantCulture, Resources.ArgumentMustBeLessThanOrEqualTo,
@@ -261,15 +262,15 @@ namespace ZySharp.Validation
         /// <param name="validator">The current validator context.</param>
         /// <param name="threshold">A reference to the threshold value.</param>
         /// <returns>The unmodified validator context.</returns>
-        public static IValidatorContext<T> LessThanOrEqualTo<T>(this IValidatorContext<T> validator,
-            IArgumentReference<T> threshold)
+        public static IValidatorContext<T?> LessThanOrEqualTo<T>(this IValidatorContext<T?> validator,
+            IArgumentReference<T?> threshold)
             where T : IComparable<T>
         {
             ValidationInternals.ValidateNotNull(threshold, nameof(threshold));
 
             return validator.Perform(() =>
             {
-                if (validator.Value.CompareTo(threshold.Value) > 0)
+                if (Comparer<T?>.Default.Compare(validator.Value, threshold.Value) > 0)
                 {
                     validator.SetArgumentException(
                         string.Format(CultureInfo.InvariantCulture, Resources.ArgumentMustBeLessThanOrEqualToReference,
@@ -304,12 +305,13 @@ namespace ZySharp.Validation
         /// <param name="min">The minimum allowed value.</param>
         /// <param name="max">The maximum allowed value.</param>
         /// <returns>The unmodified validator context.</returns>
-        public static IValidatorContext<T> InRange<T>(this IValidatorContext<T> validator, T min, T max)
+        public static IValidatorContext<T?> InRange<T>(this IValidatorContext<T?> validator, T? min, T? max)
             where T : IComparable<T>
         {
             return validator.Perform(() =>
             {
-                if ((validator.Value.CompareTo(min) < 0) || (validator.Value.CompareTo(max) > 0))
+                if ((Comparer<T?>.Default.Compare(validator.Value, min) < 0) ||
+                    (Comparer<T?>.Default.Compare(validator.Value, max) > 0))
                 {
                     validator.SetArgumentException(
                         string.Format(CultureInfo.InvariantCulture, Resources.ArgumentMustBeInRange,

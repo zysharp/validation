@@ -10,7 +10,7 @@ namespace ZySharp.Validation
 {
     internal static class ValidationInternals
     {
-        public static void ValidateNotNull<T>([ValidatedNotNull] T value, string name)
+        public static void ValidateNotNull<T>([ValidatedNotNull] T? value, string name)
             where T : class
         {
             if (value is null)
@@ -20,12 +20,11 @@ namespace ZySharp.Validation
             }
         }
 
-        public static string GetPropertyName<TSource, TProperty>(Expression<Func<TSource, TProperty>> selector)
+        public static string GetPropertyName<TSource, TProperty>(Expression<Func<TSource, TProperty?>> selector)
         {
-            Contract.Assert(selector != null);
-            Contract.Assert(selector!.NodeType == ExpressionType.Lambda);
+            Contract.Assert(selector is not null);
 
-            if ((selector.Body is not MemberExpression member) || (member.Expression!.NodeType != ExpressionType.Parameter))
+            if ((selector!.Body is not MemberExpression { Expression: ParameterExpression } member))
             {
                 throw new ArgumentException(string.Format(CultureInfo.InvariantCulture,
                     Resources.ExpressionMustBeMemberExpression, selector), nameof(selector));
@@ -34,7 +33,7 @@ namespace ZySharp.Validation
             return member.Member.Name;
         }
 
-        public static IReadOnlyCollection<string> GetPropertyPath<TSource, TProperty>(Expression<Func<TSource, TProperty>> selector)
+        public static IReadOnlyCollection<string> GetPropertyPath<TSource, TProperty>(Expression<Func<TSource, TProperty?>> selector)
         {
             Contract.Assert(selector != null);
             Contract.Assert(selector!.NodeType == ExpressionType.Lambda);
@@ -84,6 +83,7 @@ namespace ZySharp.Validation
         /// </summary>
         /// <remarks>This does only work when called from inside a <c>catch</c> block.</remarks>
         /// <param name="exception">The exception.</param>
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Major Code Smell", "S3011", Justification = "reviewed")]
         public static void RemoveStackFrame(Exception exception)
         {
             Contract.Assert(exception is not null);

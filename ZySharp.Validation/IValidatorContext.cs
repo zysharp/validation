@@ -17,7 +17,7 @@ namespace ZySharp.Validation
         /// <summary>
         /// The current value.
         /// </summary>
-        public T Value { get; }
+        public T? Value { get; }
 
         /// <summary>
         /// The current exception object.

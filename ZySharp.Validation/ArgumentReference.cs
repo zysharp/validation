@@ -18,11 +18,11 @@ namespace ZySharp.Validation
         /// <param name="value">The value of the argument to validate.</param>
         /// <param name="name">The name of the argument to validate.</param>
         /// <returns>A new reference to the given argument.</returns>
-        public static IArgumentReference<T> For<T>([ValidatedNotNull][NoEnumeration] T value, string name)
+        public static IArgumentReference<T?> For<T>([ValidatedNotNull][NoEnumeration] T? value, string name)
         {
             ValidationInternals.ValidateNotNull(name, nameof(name));
 
-            return new ValidatorContext<T>(value, name);
+            return new ValidatorContext<T?>(value, name);
         }
 
         /// <summary>
@@ -41,8 +41,8 @@ namespace ZySharp.Validation
         ///     </para>
         /// </param>
         /// <returns>A new reference to the selected property.</returns>
-        public static IArgumentReference<TNext> For<T, TNext>(this IArgumentReference<T> reference,
-            Expression<Func<T, TNext>> selector)
+        public static IArgumentReference<TNext?> For<T, TNext>(this IArgumentReference<T?> reference,
+            Expression<Func<T, TNext?>> selector)
         {
             ValidationInternals.ValidateNotNull(reference, nameof(reference));
             ValidationInternals.ValidateNotNull(selector, nameof(selector));
@@ -55,7 +55,7 @@ namespace ZySharp.Validation
             var path = ValidationInternals.GetPropertyPath(selector);
             var value = selector.Compile().Invoke(reference.Value);
 
-            var result = new ValidatorContext<TNext>(value, reference.Path.Concat(path), null);
+            var result = new ValidatorContext<TNext?>(value, reference.Path.Concat(path), null);
 
             return result;
         }

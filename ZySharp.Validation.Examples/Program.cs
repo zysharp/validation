@@ -4,7 +4,7 @@ using System.Reflection;
 
 namespace ZySharp.Validation.Examples
 {
-    internal class Program
+    public static class Program
     {
         private static void ValidateProperty(Assembly assembly)
         {
@@ -52,7 +52,7 @@ namespace ZySharp.Validation.Examples
             );
         }
 
-        private static void Main(string[] args)
+        private static void Main()
         {
             ValidateProperty(Assembly.GetExecutingAssembly());
             ValidateEnumerable(new List<Guid> { Guid.NewGuid(), Guid.NewGuid(), Guid.NewGuid() });

@@ -11,12 +11,12 @@ namespace ZySharp.Validation
         /// <typeparam name="T">The type of the current value.</typeparam>
         /// <param name="validator">The current validator context.</param>
         /// <returns>The unmodified validator context.</returns>
-        public static IValidatorContext<T> IsAbsolute<T>(this IValidatorContext<T> validator)
+        public static IValidatorContext<T?> IsAbsolute<T>(this IValidatorContext<T?> validator)
             where T : Uri
         {
             return validator.Perform(() =>
             {
-                if (!validator.Value.IsAbsoluteUri)
+                if (!validator.Value!.IsAbsoluteUri)
                 {
                     validator.SetArgumentException(
                         string.Format(CultureInfo.InvariantCulture, Resources.UriMustBeAbsolute,
