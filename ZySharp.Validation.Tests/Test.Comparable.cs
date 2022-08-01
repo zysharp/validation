@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Diagnostics.CodeAnalysis;
 
 using Xunit;
 
@@ -22,7 +21,7 @@ namespace ZySharp.Validation.Tests
 
         [Theory]
         [MemberData(nameof(DataGreaterThanRef))]
-        public void GreaterThanRef<T>([NotNull] RefTestCaseWithParam<T, T> test)
+        public void GreaterThanRef<T>(RefTestCaseWithParam<T, T> test)
             where T : class, IComparable<T>
         {
             TestExtensions.TestValidation(test, v => v.GreaterThan(test.Parameter));
@@ -30,7 +29,7 @@ namespace ZySharp.Validation.Tests
 
         [Theory]
         [MemberData(nameof(DataGreaterThanRef))]
-        public void GreaterThanRefArgumentReference<T>([NotNull] RefTestCaseWithParam<T, T> test)
+        public void GreaterThanRefArgumentReference<T>(RefTestCaseWithParam<T, T> test)
             where T : class, IComparable<T>
         {
             TestExtensions.TestValidation(test, v => v.GreaterThan(ArgumentReference.For(test.Parameter, "param")));
@@ -54,7 +53,7 @@ namespace ZySharp.Validation.Tests
 
         [Theory]
         [MemberData(nameof(DataGreaterThanVal))]
-        public void GreaterThanVal<T>([NotNull] ValTestCaseWithParam<T, T> test)
+        public void GreaterThanVal<T>(ValTestCaseWithParam<T, T> test)
             where T : struct, IComparable<T>
         {
             TestExtensions.TestValidation(test, v => v.GreaterThan(test.Parameter));
@@ -62,7 +61,7 @@ namespace ZySharp.Validation.Tests
 
         [Theory]
         [MemberData(nameof(DataGreaterThanVal))]
-        public void GreaterThanValArgumentReference<T>([NotNull] ValTestCaseWithParam<T, T> test)
+        public void GreaterThanValArgumentReference<T>(ValTestCaseWithParam<T, T> test)
             where T : struct, IComparable<T>
         {
             TestExtensions.TestValidation(test, v => v.GreaterThan(ArgumentReference.For(test.Parameter, "param")));
@@ -84,7 +83,7 @@ namespace ZySharp.Validation.Tests
 
         [Theory]
         [MemberData(nameof(DataGreaterThanOrEqualToRef))]
-        public void GreaterThanOrEqualToRef<T>([NotNull] RefTestCaseWithParam<T, T> test)
+        public void GreaterThanOrEqualToRef<T>(RefTestCaseWithParam<T, T> test)
             where T : class, IComparable<T>
         {
             TestExtensions.TestValidation(test, v => v.GreaterThanOrEqualTo(test.Parameter));
@@ -92,7 +91,7 @@ namespace ZySharp.Validation.Tests
 
         [Theory]
         [MemberData(nameof(DataGreaterThanOrEqualToRef))]
-        public void GreaterThanOrEqualToRefArgumentReference<T>([NotNull] RefTestCaseWithParam<T, T> test)
+        public void GreaterThanOrEqualToRefArgumentReference<T>(RefTestCaseWithParam<T, T> test)
             where T : class, IComparable<T>
         {
             TestExtensions.TestValidation(test, v => v.GreaterThanOrEqualTo(ArgumentReference.For(test.Parameter, "param")));
@@ -116,7 +115,7 @@ namespace ZySharp.Validation.Tests
 
         [Theory]
         [MemberData(nameof(DataGreaterThanOrEqualToVal))]
-        public void GreaterThanOrEqualToVal<T>([NotNull] ValTestCaseWithParam<T, T> test)
+        public void GreaterThanOrEqualToVal<T>(ValTestCaseWithParam<T, T> test)
             where T : struct, IComparable<T>
         {
             TestExtensions.TestValidation(test, v => v.GreaterThanOrEqualTo(test.Parameter));
@@ -124,7 +123,7 @@ namespace ZySharp.Validation.Tests
 
         [Theory]
         [MemberData(nameof(DataGreaterThanOrEqualToVal))]
-        public void GreaterThanOrEqualToValArgumentReference<T>([NotNull] ValTestCaseWithParam<T, T> test)
+        public void GreaterThanOrEqualToValArgumentReference<T>(ValTestCaseWithParam<T, T> test)
             where T : struct, IComparable<T>
         {
             TestExtensions.TestValidation(test, v => v.GreaterThanOrEqualTo(ArgumentReference.For(test.Parameter, "param")));
@@ -146,7 +145,7 @@ namespace ZySharp.Validation.Tests
 
         [Theory]
         [MemberData(nameof(DataLessThanRef))]
-        public void LessThanRef<T>([NotNull] RefTestCaseWithParam<T, T> test)
+        public void LessThanRef<T>(RefTestCaseWithParam<T, T> test)
             where T : class, IComparable<T>
         {
             TestExtensions.TestValidation(test, v => v.LessThan(test.Parameter));
@@ -154,7 +153,7 @@ namespace ZySharp.Validation.Tests
 
         [Theory]
         [MemberData(nameof(DataLessThanRef))]
-        public void LessThanRefArgumentReference<T>([NotNull] RefTestCaseWithParam<T, T> test)
+        public void LessThanRefArgumentReference<T>(RefTestCaseWithParam<T, T> test)
             where T : class, IComparable<T>
         {
             TestExtensions.TestValidation(test, v => v.LessThan(ArgumentReference.For(test.Parameter, "param")));
@@ -178,7 +177,7 @@ namespace ZySharp.Validation.Tests
 
         [Theory]
         [MemberData(nameof(DataLessThanVal))]
-        public void LessThanVal<T>([NotNull] ValTestCaseWithParam<T, T> test)
+        public void LessThanVal<T>(ValTestCaseWithParam<T, T> test)
             where T : struct, IComparable<T>
         {
             TestExtensions.TestValidation(test, v => v.LessThan(test.Parameter));
@@ -186,7 +185,7 @@ namespace ZySharp.Validation.Tests
 
         [Theory]
         [MemberData(nameof(DataLessThanVal))]
-        public void LessThanValArgumentReference<T>([NotNull] ValTestCaseWithParam<T, T> test)
+        public void LessThanValArgumentReference<T>(ValTestCaseWithParam<T, T> test)
             where T : struct, IComparable<T>
         {
             TestExtensions.TestValidation(test, v => v.LessThan(ArgumentReference.For(test.Parameter, "param")));
@@ -208,7 +207,7 @@ namespace ZySharp.Validation.Tests
 
         [Theory]
         [MemberData(nameof(DataLessThanOrEqualToRef))]
-        public void LessThanOrEqualToRef<T>([NotNull] RefTestCaseWithParam<T, T> test)
+        public void LessThanOrEqualToRef<T>(RefTestCaseWithParam<T, T> test)
             where T : class, IComparable<T>
         {
             TestExtensions.TestValidation(test, v => v.LessThanOrEqualTo(test.Parameter));
@@ -216,7 +215,7 @@ namespace ZySharp.Validation.Tests
 
         [Theory]
         [MemberData(nameof(DataLessThanOrEqualToRef))]
-        public void LessThanOrEqualToRefArgumentReference<T>([NotNull] RefTestCaseWithParam<T, T> test)
+        public void LessThanOrEqualToRefArgumentReference<T>(RefTestCaseWithParam<T, T> test)
             where T : class, IComparable<T>
         {
             TestExtensions.TestValidation(test, v => v.LessThanOrEqualTo(ArgumentReference.For(test.Parameter, "param")));
@@ -240,7 +239,7 @@ namespace ZySharp.Validation.Tests
 
         [Theory]
         [MemberData(nameof(DataLessThanOrEqualToVal))]
-        public void LessThanOrEqualToVal<T>([NotNull] ValTestCaseWithParam<T, T> test)
+        public void LessThanOrEqualToVal<T>(ValTestCaseWithParam<T, T> test)
             where T : struct, IComparable<T>
         {
             TestExtensions.TestValidation(test, v => v.LessThanOrEqualTo(test.Parameter));
@@ -248,7 +247,7 @@ namespace ZySharp.Validation.Tests
 
         [Theory]
         [MemberData(nameof(DataLessThanOrEqualToVal))]
-        public void LessThanOrEqualToValArgumentReference<T>([NotNull] ValTestCaseWithParam<T, T> test)
+        public void LessThanOrEqualToValArgumentReference<T>(ValTestCaseWithParam<T, T> test)
             where T : struct, IComparable<T>
         {
             TestExtensions.TestValidation(test, v => v.LessThanOrEqualTo(ArgumentReference.For(test.Parameter, "param")));
@@ -274,7 +273,7 @@ namespace ZySharp.Validation.Tests
 
         [Theory]
         [MemberData(nameof(DataInRangeRef))]
-        public void InRangeRef<T>([NotNull] RefTestCaseWithParam<T, T[]> test)
+        public void InRangeRef<T>(RefTestCaseWithParam<T, T[]> test)
             where T : class, IComparable<T>
         {
             TestExtensions.TestValidation(test, v => v.InRange(test.Parameter![0], test.Parameter![1]));
@@ -301,7 +300,7 @@ namespace ZySharp.Validation.Tests
 
         [Theory]
         [MemberData(nameof(DataInRangeVal))]
-        public void InRangeVal<T>([NotNull] ValTestCaseWithParam<T, T[]> test)
+        public void InRangeVal<T>(ValTestCaseWithParam<T, T[]> test)
             where T : struct, IComparable<T>
         {
             TestExtensions.TestValidation(test, v => v.InRange(test.Parameter![0], test.Parameter![1]));

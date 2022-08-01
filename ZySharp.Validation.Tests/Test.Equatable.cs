@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Diagnostics.CodeAnalysis;
 
 using Xunit;
 
@@ -21,7 +20,7 @@ namespace ZySharp.Validation.Tests
 
         [Theory]
         [MemberData(nameof(DataEqualRef))]
-        public void EqualRef<T>([NotNull] RefTestCaseWithParam<T, T> test)
+        public void EqualRef<T>(RefTestCaseWithParam<T, T> test)
             where T : class
         {
             TestExtensions.TestValidation(test, v => v.Equal(test.Parameter));
@@ -29,7 +28,7 @@ namespace ZySharp.Validation.Tests
 
         [Theory]
         [MemberData(nameof(DataEqualRef))]
-        public void EqualRefArgumentReference<T>([NotNull] RefTestCaseWithParam<T, T> test)
+        public void EqualRefArgumentReference<T>(RefTestCaseWithParam<T, T> test)
             where T : class
         {
             TestExtensions.TestValidation(test, v => v.Equal(ArgumentReference.For(test.Parameter, "param")));
@@ -50,7 +49,7 @@ namespace ZySharp.Validation.Tests
 
         [Theory]
         [MemberData(nameof(DataEqualVal))]
-        public void EqualVal<T>([NotNull] ValTestCaseWithParam<T, T> test)
+        public void EqualVal<T>(ValTestCaseWithParam<T, T> test)
             where T : struct
         {
             TestExtensions.TestValidation(test, v => v.Equal(test.Parameter));
@@ -58,7 +57,7 @@ namespace ZySharp.Validation.Tests
 
         [Theory]
         [MemberData(nameof(DataEqualVal))]
-        public void EqualValArgumentReference<T>([NotNull] ValTestCaseWithParam<T, T> test)
+        public void EqualValArgumentReference<T>(ValTestCaseWithParam<T, T> test)
             where T : struct
         {
             TestExtensions.TestValidation(test, v => v.Equal(ArgumentReference.For(test.Parameter, "param")));
@@ -75,7 +74,7 @@ namespace ZySharp.Validation.Tests
 
         [Theory]
         [MemberData(nameof(DataEqualRefMultiple))]
-        public void EqualRefMultiple<T>([NotNull] RefTestCaseWithParam<T, T[]> test)
+        public void EqualRefMultiple<T>(RefTestCaseWithParam<T, T[]> test)
             where T : class
         {
             TestExtensions.TestValidation(test, v => v.Equal(test.Parameter!));
@@ -96,7 +95,7 @@ namespace ZySharp.Validation.Tests
 
         [Theory]
         [MemberData(nameof(DataEqualValMultiple))]
-        public void EqualValMultiple<T>([NotNull] ValTestCaseWithParam<T, T[]> test)
+        public void EqualValMultiple<T>(ValTestCaseWithParam<T, T[]> test)
             where T : struct
         {
             TestExtensions.TestValidation(test, v => v.Equal(test.Parameter!));
@@ -117,7 +116,7 @@ namespace ZySharp.Validation.Tests
 
         [Theory]
         [MemberData(nameof(DataNotEqualRef))]
-        public void NotEqualRef<T>([NotNull] RefTestCaseWithParam<T, T> test)
+        public void NotEqualRef<T>(RefTestCaseWithParam<T, T> test)
             where T : class
         {
             TestExtensions.TestValidation(test, v => v.NotEqual(test.Parameter));
@@ -125,7 +124,7 @@ namespace ZySharp.Validation.Tests
 
         [Theory]
         [MemberData(nameof(DataNotEqualRef))]
-        public void NotEqualRefArgumentReference<T>([NotNull] RefTestCaseWithParam<T, T> test)
+        public void NotEqualRefArgumentReference<T>(RefTestCaseWithParam<T, T> test)
             where T : class
         {
             TestExtensions.TestValidation(test, v => v.NotEqual(ArgumentReference.For(test.Parameter, "param")));
@@ -146,7 +145,7 @@ namespace ZySharp.Validation.Tests
 
         [Theory]
         [MemberData(nameof(DataNotEqualVal))]
-        public void NotEqualVal<T>([NotNull] ValTestCaseWithParam<T, T> test)
+        public void NotEqualVal<T>(ValTestCaseWithParam<T, T> test)
             where T : struct
         {
             TestExtensions.TestValidation(test, v => v.NotEqual(test.Parameter));
@@ -154,7 +153,7 @@ namespace ZySharp.Validation.Tests
 
         [Theory]
         [MemberData(nameof(DataNotEqualVal))]
-        public void NotEqualValArgumentReference<T>([NotNull] ValTestCaseWithParam<T, T> test)
+        public void NotEqualValArgumentReference<T>(ValTestCaseWithParam<T, T> test)
             where T : struct
         {
             TestExtensions.TestValidation(test, v => v.NotEqual(ArgumentReference.For(test.Parameter, "param")));
@@ -171,7 +170,7 @@ namespace ZySharp.Validation.Tests
 
         [Theory]
         [MemberData(nameof(DataNotEqualRefMultiple))]
-        public void NotEqualRefMultiple<T>([NotNull] RefTestCaseWithParam<T, T[]> test)
+        public void NotEqualRefMultiple<T>(RefTestCaseWithParam<T, T[]> test)
             where T : class
         {
             TestExtensions.TestValidation(test, v => v.NotEqual(test.Parameter!));
@@ -192,7 +191,7 @@ namespace ZySharp.Validation.Tests
 
         [Theory]
         [MemberData(nameof(DataNotEqualValMultiple))]
-        public void NotEqualValMultiple<T>([NotNull] ValTestCaseWithParam<T, T[]> test)
+        public void NotEqualValMultiple<T>(ValTestCaseWithParam<T, T[]> test)
             where T : struct
         {
             TestExtensions.TestValidation(test, v => v.NotEqual(test.Parameter!));
