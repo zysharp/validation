@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Diagnostics;
 using System.Diagnostics.CodeAnalysis;
 using System.Diagnostics.Contracts;
 
@@ -16,7 +15,11 @@ namespace ZySharp.Validation.Tests
             Contract.Assert(!string.IsNullOrEmpty(path));
 
             Assert.Equal(value, validator.Value);
+#if NETFRAMEWORK
+            Assert.Equal(path, string.Join(".", validator.Path));
+#else
             Assert.Equal(path, string.Join('.', validator.Path));
+#endif
 
             return validator;
         }
@@ -27,7 +30,11 @@ namespace ZySharp.Validation.Tests
             Contract.Assert(!string.IsNullOrEmpty(path));
 
             Assert.Equal(value, reference.Value);
+#if NETFRAMEWORK
+            Assert.Equal(path, string.Join(".", reference.Path));
+#else
             Assert.Equal(path, string.Join('.', reference.Path));
+#endif
 
             return reference;
         }
@@ -56,16 +63,12 @@ namespace ZySharp.Validation.Tests
                     ValidateArgument.For(value, nameof(value), v => action(v)
                         .AssertEqualValueAndPath(value, nameof(value))));
 
-                // Ensure that the topmost stack frame always points to this class and not to the
-                // library code
-
-                var frame = new StackTrace(exception, true).GetFrame(0);
-                Assert.NotNull(frame);
-                Assert.True(frame!.HasMethod());
-                var method = frame!.GetMethod();
-
-                // The compiler allocates a hidden class for the `action` closure ...
-                Assert.Equal(typeof(TestExtensions), method?.DeclaringType?.DeclaringType);
+#if NET6_0_OR_GREATER
+                // Ensure that the validator method is excluded from the stacktrace string
+                Assert.DoesNotContain(nameof(ValidateArgument), exception.StackTrace, StringComparison.InvariantCultureIgnoreCase);
+#else
+                _ = exception;
+#endif
             }
             else
             {
@@ -85,7 +88,7 @@ namespace ZySharp.Validation.Tests
             Func<IValidatorContext<TValue?>, IValidatorContext<TValue?>> action)
             where TValue : struct
         {
-            TestValidation<TValue?>(test.Value, action, test.ExpectThrow, test.ExceptionType);
+            TestValidation(test.Value, action, test.ExpectThrow, test.ExceptionType);
         }
     }
 

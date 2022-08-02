@@ -1,4 +1,6 @@
 ﻿using System;
+using System.Diagnostics;
+using System.Diagnostics.CodeAnalysis;
 
 using JetBrains.Annotations;
 
@@ -7,6 +9,10 @@ namespace ZySharp.Validation
     /// <summary>
     /// Provides various methods for basic argument validation.
     /// </summary>
+#if NET6_0_OR_GREATER
+    [StackTraceHidden]
+#endif
+    [DebuggerNonUserCode]
     public static partial class ValidateArgument
     {
         /// <summary>
@@ -17,6 +23,7 @@ namespace ZySharp.Validation
         /// <param name="name">The name of the argument to validate.</param>
         /// <param name="action">The action to perform for the selected parameter.</param>
         /// <returns>The value of the validated argument.</returns>
+        [return: NotNullIfNotNull("value")]
         public static T? For<T>([ValidatedNotNull][NoEnumeration] T? value, string name, Action<IValidatorContext<T?>> action)
         {
             ValidationInternals.ValidateNotNull(name, nameof(name));
@@ -30,15 +37,7 @@ namespace ZySharp.Validation
                 return value;
             }
 
-            try
-            {
-                throw context.Exception;
-            }
-            catch (Exception e)
-            {
-                ValidationInternals.RemoveStackFrame(e);
-                throw;
-            }
+            throw context.Exception;
         }
     }
 }
