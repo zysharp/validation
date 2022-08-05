@@ -5,6 +5,7 @@ using Xunit;
 
 namespace ZySharp.Validation.Tests
 {
+    [Trait("Category", "Unit")]
     public sealed class TestBasic
     {
         #region NotNull

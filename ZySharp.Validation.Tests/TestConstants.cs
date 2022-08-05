@@ -1,10 +1,12 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics.CodeAnalysis;
 
 namespace ZySharp.Validation.Tests
 {
     internal static class TestConstants
     {
+        [ExcludeFromCodeCoverage]
         public class Obj :
             IComparable<Obj>
         {

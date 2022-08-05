@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Diagnostics.CodeAnalysis;
 using System.Globalization;
 using System.Linq;
 
@@ -13,6 +14,7 @@ namespace ZySharp.Validation
         /// <param name="validator">The current validator context.</param>
         /// <param name="type">The expected type.</param>
         /// <returns>The unmodified validator context.</returns>
+        [ExcludeFromCodeCoverage]
         public static IValidatorContext<T> HasType<T>(this IValidatorContext<T> validator, Type type)
             where T : class
         {
@@ -36,6 +38,7 @@ namespace ZySharp.Validation
         /// <param name="validator">The current validator context.</param>
         /// <param name="types">The allowed types.</param>
         /// <returns>The unmodified validator context.</returns>
+        [ExcludeFromCodeCoverage]
         public static IValidatorContext<T> HasType<T>(this IValidatorContext<T> validator, params Type[] types)
         {
             ValidationInternals.ValidateNotNull(types, nameof(types));
@@ -61,6 +64,7 @@ namespace ZySharp.Validation
         /// <param name="validator">The current validator context.</param>
         /// <param name="type">The blacklisted type.</param>
         /// <returns>The unmodified validator context.</returns>
+        [ExcludeFromCodeCoverage]
         public static IValidatorContext<T> NotHasType<T>(this IValidatorContext<T> validator, Type type)
             where T : class
         {
@@ -84,6 +88,7 @@ namespace ZySharp.Validation
         /// <param name="validator">The current validator context.</param>
         /// <param name="types">The blacklisted types.</param>
         /// <returns>The unmodified validator context.</returns>
+        [ExcludeFromCodeCoverage]
         public static IValidatorContext<T> NotHasType<T>(this IValidatorContext<T> validator, params Type[] types)
         {
             ValidationInternals.ValidateNotNull(types, nameof(types));
@@ -109,6 +114,7 @@ namespace ZySharp.Validation
         /// <param name="validator">The current validator context.</param>
         /// <param name="type">The parent type.</param>
         /// <returns>The unmodified validator context.</returns>
+        [ExcludeFromCodeCoverage]
         public static IValidatorContext<T> DerivesFrom<T>(this IValidatorContext<T> validator, Type type)
             where T : class
         {
@@ -133,6 +139,7 @@ namespace ZySharp.Validation
         /// <param name="validator">The current validator context.</param>
         /// <param name="types">The allowed parent types.</param>
         /// <returns>The unmodified validator context.</returns>
+        [ExcludeFromCodeCoverage]
         public static IValidatorContext<T> DerivesFrom<T>(this IValidatorContext<T> validator, params Type[] types)
         {
             ValidationInternals.ValidateNotNull(types, nameof(types));
@@ -158,6 +165,7 @@ namespace ZySharp.Validation
         /// <param name="validator">The current validator context.</param>
         /// <param name="type">The blacklisted parent types.</param>
         /// <returns>The unmodified validator context.</returns>
+        [ExcludeFromCodeCoverage]
         public static IValidatorContext<T> NotDerivesFrom<T>(this IValidatorContext<T> validator, Type type)
             where T : class
         {
@@ -182,6 +190,7 @@ namespace ZySharp.Validation
         /// <param name="validator">The current validator context.</param>
         /// <param name="types">The blacklisted types.</param>
         /// <returns>The unmodified validator context.</returns>
+        [ExcludeFromCodeCoverage]
         public static IValidatorContext<T> NotDerivesFrom<T>(this IValidatorContext<T> validator, params Type[] types)
         {
             ValidationInternals.ValidateNotNull(types, nameof(types));
