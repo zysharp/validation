@@ -38,7 +38,7 @@ namespace ZySharp.Validation.Examples
 
             ValidateArgument.For(value, nameof(value), v => v
                 .When(x => x.HasValue, v => v
-                    .Select(x => x.Value, v => v
+                    .Select(x => x!.Value, v => v
                         .NotEmpty()
                     )
                 )
