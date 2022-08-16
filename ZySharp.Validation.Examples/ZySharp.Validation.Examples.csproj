@@ -6,6 +6,10 @@
     <Nullable>enable</Nullable>
     <ImplicitUsings>disable</ImplicitUsings>
 
+    <RestorePackagesWithLockFile>true</RestorePackagesWithLockFile>
+    <RestoreLockedMode Condition="'$(ContinuousIntegrationBuild)' == 'true'" />
+
+    <OutputType>Exe</OutputType>
     <IsPackable>false</IsPackable>
 
     <EnableNETAnalyzers>true</EnableNETAnalyzers>
