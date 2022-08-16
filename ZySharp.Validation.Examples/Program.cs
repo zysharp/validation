@@ -1,9 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics.CodeAnalysis;
 using System.Reflection;
 
 namespace ZySharp.Validation.Examples
 {
+    [ExcludeFromCodeCoverage]
     public static class Program
     {
         private static void ValidateProperty(Assembly assembly)
@@ -21,7 +23,7 @@ namespace ZySharp.Validation.Examples
             ValidateArgument.For(ids, nameof(ids), v => v
                 .NotNullOrEmpty()               // <- The enumerable must not be `null` and must contain at least one element
                 .ForEach(x => x, v => v         // <- Validate all elements in the enumerable
-                    .NotEmpty()                 // <- Each individual element in the enumerable must not be empty an empty GUID
+                    .NotEmpty()                 // <- Each individual element in the enumerable must not be an empty GUID
                 )
             );
         }

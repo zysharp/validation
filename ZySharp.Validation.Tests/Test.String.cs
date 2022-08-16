@@ -4,6 +4,7 @@ using Xunit;
 
 namespace ZySharp.Validation.Tests
 {
+    [Trait("Category", "Unit")]
     public sealed class TestString
     {
         [Fact]
@@ -15,9 +16,12 @@ namespace ZySharp.Validation.Tests
                 .MustMatchPattern(".*")
             );
 
-            Assert.Throws<ArgumentException>(() => ValidateArgument.For(test, nameof(test), v => v
-                .MustMatchPattern("[0-9]")
-            ));
+            Assert.Throws<ArgumentException>(() =>
+            {
+                ValidateArgument.For(test, nameof(test), v => v
+                    .MustMatchPattern("[0-9]")
+                );
+            });
         }
     }
 }

@@ -1,9 +1,11 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 
 using Xunit;
 
 namespace ZySharp.Validation.Tests
 {
+    [Trait("Category", "Unit")]
     public sealed class TestSelectors
     {
         [Fact]
@@ -17,6 +19,20 @@ namespace ZySharp.Validation.Tests
                     .AssertEqualValueAndPath(test.Key, path)
                 )
             );
+        }
+
+        [Fact]
+        public void ForRequiresMember()
+        {
+            var test = new KeyValuePair<int, string>(1337, "test");
+
+            Assert.Throws<ArgumentException>(() =>
+            {
+                ValidateArgument.For(test, nameof(test), v => v
+                    .For(x => x.ToString(), v => v.NotNull()
+                    )
+                );
+            });
         }
 
         [Fact]
@@ -131,6 +147,17 @@ namespace ZySharp.Validation.Tests
             var reference = ArgumentReference.For(test, nameof(test))
                 .For(x => x.Key);
             reference.AssertEqualValueAndPath(test.Key, path);
+        }
+
+        [Fact]
+        public void ReferenceForRequiresMember()
+        {
+            var test = new KeyValuePair<int, string>(1337, "test");
+
+            Assert.Throws<ArgumentException>(() =>
+            {
+                ArgumentReference.For(test, nameof(test)).For(x => x.ToString());
+            });
         }
     }
 }
