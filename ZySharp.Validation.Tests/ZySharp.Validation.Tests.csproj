@@ -13,6 +13,7 @@
     <!--<RestoreLockedMode Condition="'$(ContinuousIntegrationBuild)' == 'true'" />-->
     <!--<RuntimeIdentifiers>win7-x64</RuntimeIdentifiers>-->
 
+    <IsPublishable>false</IsPublishable>
     <IsPackable>false</IsPackable>
 
     <EnableNETAnalyzers>true</EnableNETAnalyzers>

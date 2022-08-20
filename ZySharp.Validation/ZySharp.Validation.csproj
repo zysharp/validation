@@ -21,6 +21,7 @@
     <Product>ZySharp</Product>
     <NeutralLanguage>en</NeutralLanguage>
 
+    <IsPublishable>false</IsPublishable>
     <IsPackable>true</IsPackable>
     <GeneratePackageOnBuild>false</GeneratePackageOnBuild>
     <IncludeSymbols>true</IncludeSymbols>
