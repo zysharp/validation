@@ -36,7 +36,7 @@ jobs:
   sonarcloud:
     name: SonarCloud
     uses: flobernd/workflows/.github/workflows/sonarcloud_dotnet.yml@v1
-    needs: [find_solution, run_tests]
+    needs: find_solution
     with:
       sonar_organization: flobernd
       sonar_project_key: flobernd_zysharp-validation
