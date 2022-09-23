@@ -1,7 +1,7 @@
 # ZySharp Validation
 
 ![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg)
-[![Build](https://github.com/zysharp/validation/actions/workflows/ci.yml/badge.svg)](https://github.com/zysharp/validation/actions/workflows/ci.yml)
+[![Build](https://github.com/zysharp/validation/actions/workflows/ci.yaml/badge.svg)](https://github.com/zysharp/validation/actions/workflows/ci.yaml)
 [![Quality Gate Status](https://sonarcloud.io/api/project_badges/measure?project=zysharp-_validation&metric=alert_status)](https://sonarcloud.io/summary/new_code?id=zysharp_validation)
 [![Coverage](https://sonarcloud.io/api/project_badges/measure?project=zysharp_validation&metric=coverage)](https://sonarcloud.io/summary/new_code?id=zysharp_validation)
 [![NuGet](https://img.shields.io/nuget/v/ZySharp.Validation.svg)](https://nuget.org/packages/ZySharp.Validation)
