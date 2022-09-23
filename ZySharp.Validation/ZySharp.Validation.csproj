@@ -17,8 +17,8 @@
     <PackageIcon>logo.png</PackageIcon>
     <PackageLicenseFile>LICENSE</PackageLicenseFile>
     <PackageReadmeFile>README.md</PackageReadmeFile>
-    <PackageProjectUrl>https://github.com/flobernd/zysharp-validation</PackageProjectUrl>
-    <RepositoryUrl>https://github.com/flobernd/zysharp-validation</RepositoryUrl>
+    <PackageProjectUrl>https://github.com/zysharp/validation</PackageProjectUrl>
+    <RepositoryUrl>https://github.com/zysharp/validation</RepositoryUrl>
     <PublishRepositoryUrl>true</PublishRepositoryUrl>
     <RepositoryType>Git</RepositoryType>
     <Product>ZySharp</Product>
