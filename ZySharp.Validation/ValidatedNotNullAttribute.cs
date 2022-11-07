@@ -1,12 +1,11 @@
-﻿using System;
+using System;
 
-namespace ZySharp.Validation
+namespace ZySharp.Validation;
+
+/// <summary>
+/// Indicates to Code Analysis that a method validates a particular parameter.
+/// </summary>
+[AttributeUsage(AttributeTargets.Parameter, AllowMultiple = false, Inherited = false)]
+public sealed class ValidatedNotNullAttribute : Attribute
 {
-    /// <summary>
-    /// Indicates to Code Analysis that a method validates a particular parameter.
-    /// </summary>
-    [AttributeUsage(AttributeTargets.Parameter, AllowMultiple = false, Inherited = false)]
-    public sealed class ValidatedNotNullAttribute : Attribute
-    {
-    }
 }
