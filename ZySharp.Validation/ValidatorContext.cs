@@ -1,56 +1,55 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Diagnostics.Contracts;
 using System.Linq;
 
-namespace ZySharp.Validation
+namespace ZySharp.Validation;
+
+internal sealed class ValidatorContext<T> :
+    IValidatorContext<T>,
+    IArgumentReference<T>
 {
-    internal sealed class ValidatorContext<T> :
-        IValidatorContext<T>,
-        IArgumentReference<T>
+    public IList<string> Path { get; internal set; }
+
+    public T? Value { get; internal set; }
+
+    public Exception? Exception { get; internal set; }
+
+    internal ValidatorContext(T? value, string name)
     {
-        public IList<string> Path { get; internal set; }
+        Value = value;
+        Path = new List<string> { name };
+    }
 
-        public T? Value { get; internal set; }
+    internal ValidatorContext(T? value, IEnumerable<string> path, string? name)
+    {
+        Value = value;
+        Path = new List<string>(path);
 
-        public Exception? Exception { get; internal set; }
-
-        internal ValidatorContext(T? value, string name)
+        if (name is not null)
         {
-            Value = value;
-            Path = new List<string> { name };
+            Path.Add(name);
         }
+    }
 
-        internal ValidatorContext(T? value, IEnumerable<string> path, string? name)
-        {
-            Value = value;
-            Path = new List<string>(path);
+    void IValidatorContext<T>.SetArgumentException(string message)
+    {
+        Contract.Assert(!string.IsNullOrEmpty(message));
 
-            if (name is not null)
-            {
-                Path.Add(name);
-            }
-        }
+        Exception = new ArgumentException(message, Path.First());
+    }
 
-        void IValidatorContext<T>.SetArgumentException(string message)
-        {
-            Contract.Assert(!string.IsNullOrEmpty(message));
+    void IValidatorContext<T>.SetArgumentNullException(string message)
+    {
+        Contract.Assert(!string.IsNullOrEmpty(message));
 
-            Exception = new ArgumentException(message, Path.First());
-        }
+        Exception = new ArgumentNullException(Path.First(), message);
+    }
 
-        void IValidatorContext<T>.SetArgumentNullException(string message)
-        {
-            Contract.Assert(!string.IsNullOrEmpty(message));
+    void IValidatorContext<T>.SetForeignException<TOther>(IValidatorContext<TOther> validator)
+    {
+        Contract.Assert(validator is not null);
 
-            Exception = new ArgumentNullException(Path.First(), message);
-        }
-
-        void IValidatorContext<T>.SetForeignException<TOther>(IValidatorContext<TOther> validator)
-        {
-            Contract.Assert(validator is not null);
-
-            Exception = validator!.Exception;
-        }
+        Exception = validator!.Exception;
     }
 }

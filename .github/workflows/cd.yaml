@@ -10,6 +10,6 @@ concurrency:
 jobs:
   main:
     name: CD
-    uses: ZySharp/workflows/.github/workflows/cd.yaml@master
+    uses: zysharp/workflows/.github/workflows/cd.yaml@master
     secrets:
       NUGET_API_KEY: ${{ secrets.NUGET_API_KEY }}

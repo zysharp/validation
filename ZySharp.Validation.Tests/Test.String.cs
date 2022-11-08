@@ -1,27 +1,26 @@
-﻿using System;
+using System;
 
 using Xunit;
 
-namespace ZySharp.Validation.Tests
+namespace ZySharp.Validation.Tests;
+
+[Trait("Category", "Unit")]
+public sealed class TestString
 {
-    [Trait("Category", "Unit")]
-    public sealed class TestString
+    [Fact]
+    public void MustMatchPattern()
     {
-        [Fact]
-        public void MustMatchPattern()
+        var test = "test";
+
+        ValidateArgument.For(test, nameof(test), v => v
+            .MustMatchPattern(".*")
+        );
+
+        Assert.Throws<ArgumentException>(() =>
         {
-            var test = "test";
-
             ValidateArgument.For(test, nameof(test), v => v
-                .MustMatchPattern(".*")
+                .MustMatchPattern("[0-9]")
             );
-
-            Assert.Throws<ArgumentException>(() =>
-            {
-                ValidateArgument.For(test, nameof(test), v => v
-                    .MustMatchPattern("[0-9]")
-                );
-            });
-        }
+        });
     }
 }
