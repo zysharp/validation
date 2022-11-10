@@ -7,7 +7,7 @@ namespace ZySharp.Validation.Tests;
 internal static class TestConstants
 {
     [ExcludeFromCodeCoverage]
-    public class Obj :
+    public sealed class Obj :
         IComparable<Obj>
     {
         public static readonly Obj A = new() { _v = 1 };
