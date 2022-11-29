@@ -56,10 +56,11 @@ indent_size = 2
 
 # Markdown Files
 [*.{md,mdx}]
+indent_size = 2
 trim_trailing_whitespace = false
 
 # Web Files
-[*.{htm,html,js,jsm,ts,tsx,cjs,cts,ctsx,mjs,mts,mtsx,css,sass,scss,less,pcss,svg,vue}]
+[*.{htm,html,js,jsm,jsx,ts,tsx,cjs,cts,ctsx,mjs,mts,mtsx,css,sass,scss,less,pcss,svg,vue}]
 indent_size = 2
 
 # Batch Scripts
@@ -1198,6 +1199,51 @@ dotnet_diagnostic.IDE0076.severity = warning
 # IDE0077: Avoid legacy format target in global 'SuppressMessageAttribute'
 dotnet_diagnostic.IDE0077.severity = warning
 
+### Undocumented -----------------------------------------------------------------------------------
+
+# Source:
+# https://github.com/dotnet/docs/issues/30361
+# https://github.com/dotnet/roslyn/blob/main/src/EditorFeatures/Test/Diagnostics/IDEDiagnosticIDConfigurationTests.cs
+
+# IDE0200: Remove unnecessary lambda expression
+dotnet_diagnostic.IDE0200.severity = warning
+csharp_style_prefer_method_group_conversion = true
+# IDE0210: Convert to top-level statements
+dotnet_diagnostic.IDE0210.severity = none
+# IDE0211: Convert to 'Program.Main' style program
+dotnet_diagnostic.IDE0211.severity = none
+# IDE0210 and IDE0211:
+csharp_style_prefer_top_level_statements = false
+# IDE0220: Add explicit cast
+dotnet_diagnostic.IDE0220.severity = suggestion
+dotnet_style_prefer_foreach_explicit_cast_in_source = false
+# IDE0230: Use UTF-8 string literal
+dotnet_diagnostic.IDE0230.severity = warning
+csharp_style_prefer_utf8_string_literals = true
+# IDE0240: Remove redundant nullable directive
+dotnet_diagnostic.IDE0240.severity = warning
+# IDE0241: Remove unnecessary nullable directive
+dotnet_diagnostic.IDE0241.severity = warning
+# IDE0250: Make struct 'readonly'
+dotnet_diagnostic.IDE0250.severity = warning
+csharp_style_prefer_readonly_struct = true
+
+# IDE2000: 
+dotnet_diagnostic.IDE2000.severity = suggestion
+dotnet_style_allow_multiple_blank_lines_experimental = false
+# IDE2001: 
+dotnet_diagnostic.IDE2001.severity = warning
+csharp_style_allow_embedded_statements_on_same_line_experimental = false
+# IDE2002: 
+dotnet_diagnostic.IDE2002.severity = warning
+csharp_style_allow_blank_lines_between_consecutive_braces_experimental = false
+# IDE2003: 
+dotnet_diagnostic.IDE2003.severity = suggestion
+dotnet_style_allow_statement_immediately_after_block_experimental = false
+# IDE2004: 
+dotnet_diagnostic.IDE2004.severity = suggestion
+csharp_style_allow_blank_line_after_colon_in_constructor_initializer_experimental = true
+
 ### ------------------------------------------------------------------------------------------------
 
 ### Formatting rules ###############################################################################
@@ -1213,6 +1259,7 @@ dotnet_diagnostic.IDE0055.severity = warning
 dotnet_sort_system_directives_first = true
 dotnet_separate_import_directive_groups = true
 dotnet_style_namespace_match_folder = true
+dotnet_style_operator_placement_when_wrapping = end_of_line
 
 ### New-line options -------------------------------------------------------------------------------
 
@@ -1453,48 +1500,6 @@ dotnet_naming_style.camelcase.word_separator =
 dotnet_naming_style.camelcase.capitalization = camel_case
 
 ### ------------------------------------------------------------------------------------------------
-
-### Undocumented ###################################################################################
-
-# IDE0200: Remove unnecessary lambda expression
-dotnet_diagnostic.IDE0200.severity = warning
-csharp_style_prefer_method_group_conversion = true
-# IDE0210: Convert to top-level statements
-dotnet_diagnostic.IDE0210.severity = none
-csharp_style_prefer_top_level_statements = false
-# IDE0211: Convert to 'Program.Main' style program
-dotnet_diagnostic.IDE0211.severity = none
-# IDE0220: Add explicit cast
-dotnet_diagnostic.IDE0220.severity = suggestion
-dotnet_style_prefer_foreach_explicit_cast_in_source = false
-# IDE0230: Use UTF-8 string literal
-dotnet_diagnostic.IDE0230.severity = warning
-csharp_style_prefer_utf8_string_literals = true
-# IDE0240: Remove redundant nullable directive
-dotnet_diagnostic.IDE0240.severity = warning
-# IDE0241: Remove unnecessary nullable directive
-dotnet_diagnostic.IDE0241.severity = warning
-# IDE0250: Make struct 'readonly'
-dotnet_diagnostic.IDE0250.severity = warning
-
-# IDE2000: 
-dotnet_diagnostic.IDE2000.severity = suggestion
-dotnet_style_allow_multiple_blank_lines_experimental = false
-# IDE2001: 
-dotnet_diagnostic.IDE2001.severity = warning
-csharp_style_allow_embedded_statements_on_same_line_experimental = false
-# IDE2002: 
-dotnet_diagnostic.IDE2002.severity = warning
-csharp_style_allow_blank_lines_between_consecutive_braces_experimental = false
-# IDE2003: 
-dotnet_diagnostic.IDE2003.severity = suggestion
-dotnet_style_allow_statement_immediately_after_block_experimental = false
-# IDE2004: 
-dotnet_diagnostic.IDE2004.severity = suggestion
-csharp_style_allow_blank_line_after_colon_in_constructor_initializer_experimental = true
-
-# 
-dotnet_style_operator_placement_when_wrapping = end_of_line
 
 ### License ########################################################################################
 
