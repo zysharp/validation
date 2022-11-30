@@ -53,7 +53,7 @@ public static class ArgumentReference
         }
 
         var path = ValidationInternals.GetPropertyPath(selector);
-        var value = selector.Compile().Invoke(reference.Value);
+        var value = ValidationInternals.GetPropertyValue(reference.Value, selector);
 
         var result = new ValidatorContext<TNext?>(value, reference.Path.Concat(path), null);
 

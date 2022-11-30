@@ -5,6 +5,7 @@ using System.Diagnostics.Contracts;
 using System.Globalization;
 using System.Linq;
 using System.Linq.Expressions;
+using System.Reflection;
 
 namespace ZySharp.Validation;
 
@@ -57,6 +58,42 @@ internal static class ValidationInternals
         result.Reverse();
 
         return result;
+    }
+
+    public static TProperty? GetPropertyValue<TSource, TProperty>(TSource? instance, Expression<Func<TSource, TProperty?>> selector)
+    {
+        Contract.Assert(selector != null);
+        Contract.Assert(selector!.NodeType == ExpressionType.Lambda);
+
+        var stack = new Stack<MemberExpression>();
+
+        var current = selector.Body;
+        do
+        {
+            if (current is not MemberExpression member)
+            {
+                throw new ArgumentException(string.Format(CultureInfo.InvariantCulture,
+                    Resources.ExpressionMustBeMemberExpression, selector), nameof(selector));
+            }
+
+            stack.Push(member);
+            current = member.Expression!;
+        } while (current is not ParameterExpression);
+
+        var value = (object?)instance;
+
+        while (stack.Count != 0)
+        {
+            var expression = stack.Pop();
+            value = expression switch
+            {
+                { Member: FieldInfo field } => field.GetValue(value),
+                { Member: PropertyInfo property } => property.GetValue(value),
+                _ => throw new InvalidOperationException()
+            };
+        }
+
+        return (TProperty?)value;
     }
 
     public static string? FormatName(IList<string> path, string? name)
