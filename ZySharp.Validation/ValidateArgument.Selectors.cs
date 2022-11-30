@@ -33,7 +33,7 @@ public static partial class ValidateArgument
         return validator.Perform(() =>
         {
             var name = ValidationInternals.GetPropertyName(selector);
-            var value = selector.Compile().Invoke(validator.Value!);
+            var value = ValidationInternals.GetPropertyValue(validator.Value!, selector);
 
             var context = new ValidatorContext<TNext?>(value, validator.Path, name);
             action.Invoke(context);
@@ -73,7 +73,9 @@ public static partial class ValidateArgument
             var name = (selector.Body is ParameterExpression)
                 ? null
                 : ValidationInternals.GetPropertyName(selector);
-            var value = selector.Compile().Invoke(validator.Value!);
+            var value = (selector.Body is ParameterExpression)
+                ? (IEnumerable<TItem?>)validator.Value!
+                : ValidationInternals.GetPropertyValue(validator.Value!, selector);
 
             if (value is null)
             {
@@ -178,7 +180,9 @@ public static partial class ValidateArgument
             var name = (selector.Body is ParameterExpression)
                 ? null
                 : ValidationInternals.GetPropertyName(selector);
-            var value = selector.Compile().Invoke(validator.Value!);
+            var value = (selector.Body is ParameterExpression)
+                ? (IEnumerable<TNext?>)validator.Value!
+                : ValidationInternals.GetPropertyValue(validator.Value!, selector);
 
             var context = new ValidatorContext<IEnumerable<TNext?>?>(value, validator.Path, name);
             action.Invoke(context);
