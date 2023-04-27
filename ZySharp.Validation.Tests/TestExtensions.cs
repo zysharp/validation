@@ -155,3 +155,18 @@ public class ValTestCaseWithParam<TValue, TParam> :
         Parameter = parameter;
     }
 }
+
+[ExcludeFromCodeCoverage]
+public class ValTestCaseWithValParam<TValue, TParam> :
+    ValTestCase<TValue>
+    where TValue : struct
+    where TParam : struct
+{
+    public TParam? Parameter { get; }
+
+    public ValTestCaseWithValParam(TValue? value, TParam? parameter, bool expectThrow, Type? exceptionType = null) :
+        base(value, expectThrow, exceptionType)
+    {
+        Parameter = parameter;
+    }
+}

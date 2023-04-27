@@ -143,4 +143,56 @@ public sealed class TestBasic
     }
 
     #endregion NotNullOrEmpty
+
+    #region MutuallyExclusive
+
+    public static IEnumerable<object[]> DataMutuallyExclusiveRef => new List<object[]>
+    {
+        new object[] { new RefTestCaseWithParam<object, object                      >(null               , null                , false) },
+        new object[] { new RefTestCaseWithParam<TestConstants.Obj, TestConstants.Obj>(TestConstants.Obj.A, TestConstants.Obj.A , true ) },
+        new object[] { new RefTestCaseWithParam<TestConstants.Obj, TestConstants.Obj>(TestConstants.Obj.A, TestConstants.Obj.B , true ) },
+        new object[] { new RefTestCaseWithParam<TestConstants.Obj, TestConstants.Obj>(TestConstants.Obj.A, null                , false) },
+        new object[] { new RefTestCaseWithParam<TestConstants.Obj, TestConstants.Obj>(null               , TestConstants.Obj.B , false) },
+        new object[] { new RefTestCaseWithParam<string, string                      >("A"                , "A"                 , true ) },
+        new object[] { new RefTestCaseWithParam<string, string                      >("A"                , "B"                 , true ) },
+        new object[] { new RefTestCaseWithParam<string, string                      >("A"                , null                , false) },
+        new object[] { new RefTestCaseWithParam<string, string                      >(null               , "B"                 , false) }
+    };
+
+    [Theory]
+    [MemberData(nameof(DataMutuallyExclusiveRef))]
+    public void MutuallyExclusiveRef<T>(RefTestCaseWithParam<T, T> test)
+        where T : class
+    {
+        TestExtensions.TestValidation(test, v => v.MutuallyExclusive(ArgumentReference.For(test.Parameter, "param")));
+    }
+
+    public static IEnumerable<object[]> DataMutuallyExclusiveVal => new List<object[]>
+    {
+        new object[] { new ValTestCaseWithValParam<int     , int     >(null                   , null                   , false) },
+        new object[] { new ValTestCaseWithValParam<int     , int     >(0                      , 0                      , true ) },
+        new object[] { new ValTestCaseWithValParam<int     , int     >(0                      , 1                      , true ) },
+        new object[] { new ValTestCaseWithValParam<int     , int     >(0                      , null                   , false) },
+        new object[] { new ValTestCaseWithValParam<int     , int     >(null                   , 1                      , false) },
+        new object[] { new ValTestCaseWithValParam<Guid    , Guid    >(null                   , null                   , false) },
+        new object[] { new ValTestCaseWithValParam<Guid    , Guid    >(TestConstants.GuidA    , TestConstants.GuidA    , true ) },
+        new object[] { new ValTestCaseWithValParam<Guid    , Guid    >(TestConstants.GuidA    , TestConstants.GuidB    , true ) },
+        new object[] { new ValTestCaseWithValParam<Guid    , Guid    >(TestConstants.GuidA    , null                   , false) },
+        new object[] { new ValTestCaseWithValParam<Guid    , Guid    >(null                   , TestConstants.GuidB    , false) },
+        new object[] { new ValTestCaseWithValParam<TimeSpan, TimeSpan>(null                   , null                   , false) },
+        new object[] { new ValTestCaseWithValParam<TimeSpan, TimeSpan>(TestConstants.TimeSpanA, TestConstants.TimeSpanA, true ) },
+        new object[] { new ValTestCaseWithValParam<TimeSpan, TimeSpan>(TestConstants.TimeSpanA, TestConstants.TimeSpanB, true ) },
+        new object[] { new ValTestCaseWithValParam<TimeSpan, TimeSpan>(TestConstants.TimeSpanA, null                   , false) },
+        new object[] { new ValTestCaseWithValParam<TimeSpan, TimeSpan>(null                   , TestConstants.TimeSpanB, false) }
+    };
+
+    [Theory]
+    [MemberData(nameof(DataMutuallyExclusiveVal))]
+    public void MutuallyExclusiveVal<T>(ValTestCaseWithValParam<T, T> test)
+        where T : struct
+    {
+        TestExtensions.TestValidation(test, v => v.MutuallyExclusive(ArgumentReference.For(test.Parameter, "param")));
+    }
+
+    #endregion MutuallyExclusive
 }

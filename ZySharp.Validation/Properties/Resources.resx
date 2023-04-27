@@ -153,6 +153,9 @@
   <data name="ArgumentMustBeLessThanReference" xml:space="preserve">
     <value>The value of argument '{0}' must be less than the value of argument `{1}`. Values: '{0}' = '{2}', '{1}' = '{3}'</value>
   </data>
+  <data name="ArgumentMustBeMutuallyExclusive" xml:space="preserve">
+    <value>The argument '{0}' must be used mutually exclusive to the argument '{1}'.</value>
+  </data>
   <data name="ArgumentMustBeOfType" xml:space="preserve">
     <value>The type of argument '{0}' must be '{1}'.</value>
   </data>
