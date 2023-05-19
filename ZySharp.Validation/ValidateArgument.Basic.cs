@@ -179,4 +179,32 @@ public static partial class ValidateArgument
     }
 
     #endregion NotNullOrEmpty
+
+    #region MutuallyExclusive
+
+    /// <summary>
+    /// Throws if both, the current value and the <paramref name="reference"/> value is not <c>null</c>.
+    /// </summary>
+    /// <typeparam name="T">The type of the current value.</typeparam>
+    /// <param name="validator">The current validator context.</param>
+    /// <param name="reference">A reference to the other value.</param>
+    /// <returns>The unmodified validator context.</returns>
+    public static IValidatorContext<T?> MutuallyExclusive<T>(this IValidatorContext<T?> validator,
+        IArgumentReference<T?> reference)
+    {
+        ValidationInternals.ValidateNotNull(reference, nameof(reference));
+
+        return validator.Perform(() =>
+        {
+            if ((validator.Value is not null) && (reference.Value is not null))
+            {
+                validator.SetArgumentException(
+                    string.Format(CultureInfo.InvariantCulture, Resources.ArgumentMustBeMutuallyExclusive,
+                        ValidationInternals.FormatName(validator.Path, null),
+                        ValidationInternals.FormatName(reference.Path, null)));
+            }
+        }, false);
+    }
+
+    #endregion
 }

@@ -169,6 +169,15 @@ namespace ZySharp.Validation {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to The argument &apos;{0}&apos; must be used mutually exclusive to the argument &apos;{1}&apos;..
+        /// </summary>
+        internal static string ArgumentMustBeMutuallyExclusive {
+            get {
+                return ResourceManager.GetString("ArgumentMustBeMutuallyExclusive", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to The type of argument &apos;{0}&apos; must be &apos;{1}&apos;..
         /// </summary>
         internal static string ArgumentMustBeOfType {
