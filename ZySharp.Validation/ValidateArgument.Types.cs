@@ -15,7 +15,7 @@ public static partial class ValidateArgument
     /// <param name="type">The expected type.</param>
     /// <returns>The unmodified validator context.</returns>
     [ExcludeFromCodeCoverage]
-    public static IValidatorContext<T> HasType<T>(this IValidatorContext<T> validator, Type type)
+    public static IValidatorContext<T?> HasType<T>(this IValidatorContext<T?> validator, Type type)
         where T : class
     {
         ValidationInternals.ValidateNotNull(type, nameof(type));
@@ -39,14 +39,14 @@ public static partial class ValidateArgument
     /// <param name="types">The allowed types.</param>
     /// <returns>The unmodified validator context.</returns>
     [ExcludeFromCodeCoverage]
-    public static IValidatorContext<T> HasType<T>(this IValidatorContext<T> validator, params Type[] types)
+    public static IValidatorContext<T?> HasType<T>(this IValidatorContext<T?> validator, params Type[] types)
     {
         ValidationInternals.ValidateNotNull(types, nameof(types));
 
         return validator.Perform(() =>
         {
             var type = validator.Value?.GetType();
-            var isValidValue = types.Any(x => (type == x));
+            var isValidValue = Array.Exists(types, x => (type == x));
             if (!isValidValue)
             {
                 validator.SetArgumentException(
@@ -65,7 +65,7 @@ public static partial class ValidateArgument
     /// <param name="type">The blacklisted type.</param>
     /// <returns>The unmodified validator context.</returns>
     [ExcludeFromCodeCoverage]
-    public static IValidatorContext<T> NotHasType<T>(this IValidatorContext<T> validator, Type type)
+    public static IValidatorContext<T?> NotHasType<T>(this IValidatorContext<T?> validator, Type type)
         where T : class
     {
         ValidationInternals.ValidateNotNull(type, nameof(type));
@@ -89,14 +89,14 @@ public static partial class ValidateArgument
     /// <param name="types">The blacklisted types.</param>
     /// <returns>The unmodified validator context.</returns>
     [ExcludeFromCodeCoverage]
-    public static IValidatorContext<T> NotHasType<T>(this IValidatorContext<T> validator, params Type[] types)
+    public static IValidatorContext<T?> NotHasType<T>(this IValidatorContext<T?> validator, params Type[] types)
     {
         ValidationInternals.ValidateNotNull(types, nameof(types));
 
         return validator.Perform(() =>
         {
             var type = validator.Value?.GetType();
-            var isInvalidValue = types.Any(x => (type == x));
+            var isInvalidValue = Array.Exists(types, x => (type == x));
             if (isInvalidValue)
             {
                 validator.SetArgumentException(
@@ -115,7 +115,7 @@ public static partial class ValidateArgument
     /// <param name="type">The parent type.</param>
     /// <returns>The unmodified validator context.</returns>
     [ExcludeFromCodeCoverage]
-    public static IValidatorContext<T> DerivesFrom<T>(this IValidatorContext<T> validator, Type type)
+    public static IValidatorContext<T?> DerivesFrom<T>(this IValidatorContext<T?> validator, Type type)
         where T : class
     {
         ValidationInternals.ValidateNotNull(type, nameof(type));
@@ -129,7 +129,7 @@ public static partial class ValidateArgument
                         ValidationInternals.FormatName(validator.Path, null),
                         type.FullName));
             }
-        });
+        }, false);
     }
 
     /// <summary>
@@ -140,14 +140,14 @@ public static partial class ValidateArgument
     /// <param name="types">The allowed parent types.</param>
     /// <returns>The unmodified validator context.</returns>
     [ExcludeFromCodeCoverage]
-    public static IValidatorContext<T> DerivesFrom<T>(this IValidatorContext<T> validator, params Type[] types)
+    public static IValidatorContext<T?> DerivesFrom<T>(this IValidatorContext<T?> validator, params Type[] types)
     {
         ValidationInternals.ValidateNotNull(types, nameof(types));
 
         return validator.Perform(() =>
         {
             var type = validator.Value?.GetType();
-            var isValidValue = types.Any(x => x.IsAssignableFrom(type));
+            var isValidValue = Array.Exists(types, x => x.IsAssignableFrom(type));
             if (!isValidValue)
             {
                 validator.SetArgumentException(
@@ -155,7 +155,7 @@ public static partial class ValidateArgument
                         ValidationInternals.FormatName(validator.Path, null),
                         string.Join(", ", types.Select(x => $"'{x?.FullName ?? "null"}'").ToList())));
             }
-        });
+        }, false);
     }
 
     /// <summary>
@@ -166,7 +166,7 @@ public static partial class ValidateArgument
     /// <param name="type">The blacklisted parent types.</param>
     /// <returns>The unmodified validator context.</returns>
     [ExcludeFromCodeCoverage]
-    public static IValidatorContext<T> NotDerivesFrom<T>(this IValidatorContext<T> validator, Type type)
+    public static IValidatorContext<T?> NotDerivesFrom<T>(this IValidatorContext<T?> validator, Type type)
         where T : class
     {
         ValidationInternals.ValidateNotNull(type, nameof(type));
@@ -180,7 +180,7 @@ public static partial class ValidateArgument
                         ValidationInternals.FormatName(validator.Path, null),
                         type.FullName));
             }
-        });
+        }, false);
     }
 
     /// <summary>
@@ -191,14 +191,14 @@ public static partial class ValidateArgument
     /// <param name="types">The blacklisted types.</param>
     /// <returns>The unmodified validator context.</returns>
     [ExcludeFromCodeCoverage]
-    public static IValidatorContext<T> NotDerivesFrom<T>(this IValidatorContext<T> validator, params Type[] types)
+    public static IValidatorContext<T?> NotDerivesFrom<T>(this IValidatorContext<T?> validator, params Type[] types)
     {
         ValidationInternals.ValidateNotNull(types, nameof(types));
 
         return validator.Perform(() =>
         {
             var type = validator.Value?.GetType();
-            var isInvalidValue = types.Any(x => x.IsAssignableFrom(type));
+            var isInvalidValue = Array.Exists(types, x => x.IsAssignableFrom(type));
             if (isInvalidValue)
             {
                 validator.SetArgumentException(
@@ -206,6 +206,6 @@ public static partial class ValidateArgument
                         ValidationInternals.FormatName(validator.Path, null),
                         string.Join(", ", types.Select(x => $"'{x?.FullName ?? "null"}'").ToList())));
             }
-        });
+        }, false);
     }
 }

@@ -23,7 +23,7 @@ public static partial class ValidateArgument
     /// <param name="name">The name of the argument to validate.</param>
     /// <param name="action">The action to perform for the selected parameter.</param>
     /// <returns>The value of the validated argument.</returns>
-    [return: NotNullIfNotNull("value")]
+    [return: NotNullIfNotNull(nameof(value))]
     public static T? For<T>([ValidatedNotNull][NoEnumeration] T? value, string name, Action<IValidatorContext<T?>> action)
     {
         ValidationInternals.ValidateNotNull(name, nameof(name));
